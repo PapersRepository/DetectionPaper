@@ -1,0 +1,774 @@
+- Resolved style values:
+//   popupTheme = @style/ThemeOverlay.AppCompat.Light
+//   colorControlHighlight = #3fff
+//   colorControlNormal = @android:color/white
+//   theme = @style/Toolbar
+//   android:minHeight = ?attr/actionBarSize
+//   titleTextAppearance = @style/ToolbarTitleTextAppearance
+//   subtitleTextAppearance = @style/ToolbarSubtitleTextAppearance
+//   windowNoTitle = true
+//   windowActionBar = false
+
+- Screen: ReminderActivity
+- Layout: activity_reminder_actvity.xml
+
+- XML Layout:
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/ToolbarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:navigationIcon="@drawable/ic_clear"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="2"
+            android:paddingLeft="@dimen/sixteen_dp"
+            android:paddingRight="@dimen/sixteen_dp"
+            android:text="@string/reminder_message"
+            android:textColor="@android:color/white"
+            android:textSize="30sp" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/contentFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+- Associated Layout Files & Full XML:
+    (none)
+
+- Embedded Fragments:
+  (1) ReminderFragment:
+    // XML: fragment_reminder.xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/sixteen_dp"
+            android:paddingLeft="@dimen/sixteen_dp"
+            android:paddingRight="@dimen/sixteen_dp"
+            android:paddingTop="@dimen/sixteen_dp">
+
+            <com.vishwajeeth.medicinetime.views.RobotoBoldTextView
+                android:id="@+id/tv_med_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="23:20"
+                android:textColor="#4d4d4d"
+                android:textSize="40sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/eight_dp"
+            android:paddingLeft="@dimen/sixteen_dp"
+            android:paddingRight="@dimen/sixteen_dp"
+            android:paddingTop="@dimen/eight_dp">
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@null"
+                android:src="@drawable/icon_blister" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/iv_icon"
+                android:layout_toLeftOf="@+id/linearLayout"
+                android:layout_toRightOf="@+id/iv_icon"
+                android:layout_toStartOf="@+id/linearLayout"
+                android:orientation="vertical"
+                android:padding="4dp">
+
+                <com.vishwajeeth.medicinetime.views.RobotoBoldTextView
+                    android:id="@+id/tv_medicine_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Paracetamol"
+                    android:textColor="#4d4d4d" />
+
+                <com.vishwajeeth.medicinetime.views.RobotoRegularTextView
+                    android:id="@+id/tv_dose_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="1.0 adhesive(s)" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+
+                <ImageView
+                    android:id="@+id/iv_ignore_med"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/background_configure_alarm_button"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_take_med"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/background_take_alarm_button"
+                    android:contentDescription="@null"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+```
+    // Media Element: id=iv_icon, type=ImageView
+    //   contentDescriptionPresent: true
+    //   hasCaptionSibling: false
+    //   hasSubtitleOrTextTrack: false
+    //   hasTranscriptLink: false
+    
+    // Media Element: id=iv_ignore_med, type=ImageView
+    //   contentDescriptionPresent: true
+    //   hasCaptionSibling: false
+    //   hasSubtitleOrTextTrack: false
+    //   hasTranscriptLink: false
+    
+    // Media Element: id=iv_take_med, type=ImageView
+    //   contentDescriptionPresent: true
+    //   hasCaptionSibling: false
+    //   hasSubtitleOrTextTrack: false
+    //   hasTranscriptLink: false
+    
+
+    // Full source (ReminderFragment.java)
+```java
+package com.vishwajeeth.medicinetime.alarm;
+
+
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.os.Vibrator;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.vishwajeeth.medicinetime.R;
+import com.vishwajeeth.medicinetime.data.source.History;
+import com.vishwajeeth.medicinetime.data.source.MedicineAlarm;
+import com.vishwajeeth.medicinetime.medicine.MedicineActivity;
+import com.vishwajeeth.medicinetime.views.RobotoBoldTextView;
+import com.vishwajeeth.medicinetime.views.RobotoRegularTextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
+import static android.content.Context.VIBRATOR_SERVICE;
+
+/**
+ * Created by vishwajeeth on 13/07/17.
+ */
+
+public class ReminderFragment extends Fragment implements ReminderContract.View {
+
+    public static final String EXTRA_ID = "extra_id";
+
+    @BindView(R.id.tv_med_time)
+    RobotoBoldTextView tvMedTime;
+
+    @BindView(R.id.tv_medicine_name)
+    RobotoBoldTextView tvMedicineName;
+
+    @BindView(R.id.tv_dose_details)
+    RobotoRegularTextView tvDoseDetails;
+
+    @BindView(R.id.iv_ignore_med)
+    ImageView ivIgnoreMed;
+
+    @BindView(R.id.iv_take_med)
+    ImageView ivTakeMed;
+
+    @BindView(R.id.linearLayout)
+    LinearLayout linearLayout;
+
+    Unbinder unbinder;
+
+    private MedicineAlarm medicineAlarm;
+
+    private long id;
+
+    private MediaPlayer mMediaPlayer;
+
+    private Vibrator mVibrator;
+
+    private ReminderContract.Presenter presenter;
+
+    static ReminderFragment newInstance(long id) {
+        Bundle args = new Bundle();
+        args.putLong(EXTRA_ID, id);
+        ReminderFragment fragment = new ReminderFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        id = getArguments().getLong(EXTRA_ID);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_reminder, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void setPresenter(ReminderContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void showMedicine(MedicineAlarm medicineAlarm) {
+        this.medicineAlarm = medicineAlarm;
+        mVibrator = (Vibrator) getContext().getSystemService(VIBRATOR_SERVICE);
+        long[] pattern = {0, 1000, 10000};
+        mVibrator.vibrate(pattern, 0);
+
+        mMediaPlayer = MediaPlayer.create(getContext(), R.raw.cuco_sound);
+        mMediaPlayer.setLooping(true);
+        mMediaPlayer.start();
+
+        tvMedTime.setText(medicineAlarm.getStringTime());
+        tvMedicineName.setText(medicineAlarm.getPillName());
+        tvDoseDetails.setText(medicineAlarm.getFormattedDose());
+    }
+
+    @Override
+    public void showNoData() {
+        //
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.onStart(id);
+    }
+
+    @OnClick(R.id.iv_take_med)
+    void onMedTakeClick() {
+        onMedicineTaken();
+        stopMedialPlayer();
+        stopVibrator();
+    }
+
+    @OnClick(R.id.iv_ignore_med)
+    void onMedIgnoreClick() {
+        onMedicineIgnored();
+        stopMedialPlayer();
+        stopVibrator();
+    }
+
+    private void stopMedialPlayer() {
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            mMediaPlayer.stop();
+            mMediaPlayer.release();
+        }
+    }
+
+    private void stopVibrator() {
+        if (mVibrator != null) {
+            mVibrator.cancel();
+        }
+    }
+
+    private void onMedicineTaken() {
+        History history = new History();
+
+        Calendar takeTime = Calendar.getInstance();
+        Date date = takeTime.getTime();
+        String dateString = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date);
+
+        int hour = takeTime.get(Calendar.HOUR_OF_DAY);
+        int minute = takeTime.get(Calendar.MINUTE);
+        String am_pm = (hour < 12) ? "am" : "pm";
+
+        history.setHourTaken(hour);
+        history.setMinuteTaken(minute);
+        history.setDateString(dateString);
+        history.setPillName(medicineAlarm.getPillName());
+        history.setAction(1);
+        history.setDoseQuantity(medicineAlarm.getDoseQuantity());
+        history.setDoseUnit(medicineAlarm.getDoseUnit());
+
+        presenter.addPillsToHistory(history);
+
+        String stringMinute;
+        if (minute < 10)
+            stringMinute = "0" + minute;
+        else
+            stringMinute = "" + minute;
+
+        int nonMilitaryHour = hour % 12;
+        if (nonMilitaryHour == 0)
+            nonMilitaryHour = 12;
+
+        Toast.makeText(getContext(), medicineAlarm.getPillName() + " was taken at " + nonMilitaryHour + ":" + stringMinute + " " + am_pm + ".", Toast.LENGTH_SHORT).show();
+
+        Intent returnHistory = new Intent(getContext(), MedicineActivity.class);
+        startActivity(returnHistory);
+        getActivity().finish();
+    }
+
+
+    private void onMedicineIgnored() {
+        History history = new History();
+
+        Calendar takeTime = Calendar.getInstance();
+        Date date = takeTime.getTime();
+        String dateString = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date);
+
+        int hour = takeTime.get(Calendar.HOUR_OF_DAY);
+        int minute = takeTime.get(Calendar.MINUTE);
+        String am_pm = (hour < 12) ? "am" : "pm";
+
+        history.setHourTaken(hour);
+        history.setMinuteTaken(minute);
+        history.setDateString(dateString);
+        history.setPillName(medicineAlarm.getPillName());
+        history.setAction(2);
+        history.setDoseQuantity(medicineAlarm.getDoseQuantity());
+        history.setDoseUnit(medicineAlarm.getDoseUnit());
+
+        presenter.addPillsToHistory(history);
+
+        String stringMinute;
+        if (minute < 10)
+            stringMinute = "0" + minute;
+        else
+            stringMinute = "" + minute;
+
+        int nonMilitaryHour = hour % 12;
+        if (nonMilitaryHour == 0)
+            nonMilitaryHour = 12;
+
+        Toast.makeText(getContext(), medicineAlarm.getPillName() + " was ignored at " + nonMilitaryHour + ":" + stringMinute + " " + am_pm + ".", Toast.LENGTH_SHORT).show();
+
+        Intent returnHistory = new Intent(getContext(), MedicineActivity.class);
+        startActivity(returnHistory);
+        getActivity().finish();
+    }
+
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
+    @Override
+    public void onFinish() {
+        stopMedialPlayer();
+        stopVibrator();
+        getActivity().finish();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+}
+```
+
+    // methods called within the inlined fragment (ReminderFragment.java)
+    // from MedicineAlarm.java: getStringTime
+    public String getStringTime() {
+        int nonMilitaryHour = hour % 12;
+        if (nonMilitaryHour == 0)
+            nonMilitaryHour = 12;
+        String min = minute < 10 ? "0" + minute : Integer.toString(minute);
+        return String.format(Locale.getDefault(), "%d:%s %s", nonMilitaryHour, min, getAm_pm());
+    }
+    
+    // from MedicineAlarm.java: getPillName
+    public String getPillName() {
+        return pillName;
+    }
+    
+    // from MedicineAlarm.java: getFormattedDose
+    public String getFormattedDose() {
+        return String.format(Locale.getDefault(), "%s %s", doseQuantity, doseUnit);
+    }
+    
+    // from ReminderPresenter.java: onStart
+    @Override
+    public void onStart(long id) {
+        loadMedicineById(id);
+    }
+    
+    // from History.java: History
+    public History() {
+    }
+    
+    // from History.java: setHourTaken
+    public void setHourTaken(int hourTaken) {
+        this.hourTaken = hourTaken;
+    }
+    
+    // from History.java: setMinuteTaken
+    public void setMinuteTaken(int minuteTaken) {
+        this.minuteTaken = minuteTaken;
+    }
+    
+    // from History.java: setDateString
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+    
+    // from History.java: setPillName
+    public void setPillName(String pillName) {
+        this.pillName = pillName;
+    }
+    
+    // from History.java: setAction
+    public void setAction(int action) {
+        this.action = action;
+    }
+    
+    // from MedicineAlarm.java: getDoseQuantity
+    public String getDoseQuantity() {
+        return doseQuantity;
+    }
+    
+    // from History.java: setDoseQuantity
+    public void setDoseQuantity(String doseQuantity) {
+        this.doseQuantity = doseQuantity;
+    }
+    
+    // from MedicineAlarm.java: getDoseUnit
+    public String getDoseUnit() {
+        return doseUnit;
+    }
+    
+    // from History.java: setDoseUnit
+    public void setDoseUnit(String doseUnit) {
+        this.doseUnit = doseUnit;
+    }
+    
+    // from ReminderPresenter.java: addPillsToHistory
+    @Override
+    public void addPillsToHistory(History history) {
+        mMedicineRepository.saveToHistory(history);
+    }
+
+- Associated Menus & Full XML:
+    (none)
+
+- Resolved Attributes:
+    (none)
+
+- Source (ReminderActivity.java):
+package com.vishwajeeth.medicinetime.alarm;
+
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import android.view.MenuItem;
+
+import com.vishwajeeth.medicinetime.Injection;
+import com.vishwajeeth.medicinetime.R;
+import com.vishwajeeth.medicinetime.utils.ActivityUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class ReminderActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    ReminderPresenter mReminderPresenter;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reminder_actvity);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        Intent intent = getIntent();
+        if (!intent.hasExtra(ReminderFragment.EXTRA_ID)) {
+            finish();
+            return;
+        }
+        long id = intent.getLongExtra(ReminderFragment.EXTRA_ID, 0);
+        ReminderFragment reminderFragment = (ReminderFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if (reminderFragment == null) {
+            reminderFragment = ReminderFragment.newInstance(id);
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), reminderFragment, R.id.contentFrame);
+        }
+
+        //Create MedicinePresenter
+        mReminderPresenter = new ReminderPresenter(Injection.provideMedicineRepository(ReminderActivity.this), reminderFragment);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (mReminderPresenter != null) {
+                mReminderPresenter.finishActivity();
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mReminderPresenter != null) {
+            mReminderPresenter.finishActivity();
+        }
+    }
+}
+
+
+- Related code:
+    // from ReminderFragment.java: newInstance
+    static ReminderFragment newInstance(long id) {
+        Bundle args = new Bundle();
+        args.putLong(EXTRA_ID, id);
+        ReminderFragment fragment = new ReminderFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    
+    // from ActivityUtils.java: addFragmentToActivity
+    /**
+     * The {@code fragment} is added to the container view with id {@code frameId}. The operation is
+     * performed by the {@code fragmentManager}.
+     */
+    public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment, int frameId) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(frameId, fragment);
+        transaction.commit();
+    }
+    
+    // from Injection.java: provideMedicineRepository
+    public static MedicineRepository provideMedicineRepository(@NonNull Context context) {
+        return MedicineRepository.getInstance(MedicinesLocalDataSource.getInstance(context));
+    }
+    
+    // from ReminderPresenter.java: ReminderPresenter
+    ReminderPresenter(@NonNull MedicineRepository medicineRepository, @NonNull ReminderContract.View reminderView) {
+        this.mMedicineRepository = medicineRepository;
+        this.mReminderView = reminderView;
+        mReminderView.setPresenter(this);
+    }
+    
+    // from ReminderPresenter.java: finishActivity
+    @Override
+    public void finishActivity() {
+        mReminderView.onFinish();
+    }
+
+
+- Resolved Strings (screen-local)
+  • @string/reminder_message = "It\'s Time to take your medicine"
+
+- Raw Evidence — Inputs (XML)
+  (none)
+
+- Raw Evidence — View Bindings
+  • toolbar ⇄ R.id.toolbar
+  • tvMedTime ⇄ R.id.tv_med_time
+  • tvMedicineName ⇄ R.id.tv_medicine_name
+  • tvDoseDetails ⇄ R.id.tv_dose_details
+  • ivIgnoreMed ⇄ R.id.iv_ignore_med
+  • ivTakeMed ⇄ R.id.iv_take_med
+  • linearLayout ⇄ R.id.linearLayout
+  • Annotated Handlers:
+    - @OnClick R.id.iv_take_med → onMedTakeClick @line 128
+    - @OnClick R.id.iv_ignore_med → onMedIgnoreClick @line 135
+
+- Clickables (XML + Code)
+  (none)
+
+- Raw Evidence — Gesture Handlers & Swipe Behaviors (screen-local)
+  (none)
+
+- Raw Evidence — Input Callsites (addTextChangedListener/setFilters/setInputType/...)
+  (none)
+
+- Raw Evidence — Search Callbacks (code)
+  (none)
+
+- Raw Evidence — Search Query Sources (verbatim SQL)
+  (none)
+
+- Raw Evidence — Filter Widgets (XML + listeners)
+  (none)
+
+- Raw Evidence — Adapter Filtering
+  (none)
+
+- Raw Evidence — Error Handling (try/catch, user-visible surfaces, guards, logs)
+  • try/catch: (none)
+  • error surfaces:
+    - Toast.makeText(getContext(), medicineAlarm.getPillName() + " was taken at " + nonMilitaryHour + ":" + stringMinute + " " + am_pm + ".", Toast.LENGTH_SHORT) @line 186 in onMedicineTaken
+    - Toast.makeText(getContext(), medicineAlarm.getPillName() + " was ignored at " + nonMilitaryHour + ":" + stringMinute + " " + am_pm + ".", Toast.LENGTH_SHORT) @line 225 in onMedicineIgnored
+  • guards:
+    - if (actionBar != null) @line 32
+    - if (!intent.hasExtra(ReminderFragment.EXTRA_ID)) @line 37
+    - if (reminderFragment == null) @line 43
+    - if (mReminderPresenter != null) @line 55
+    - if (item.getItemId() == android.R.id.home) @line 54
+    - if (mReminderPresenter != null) @line 64
+    - if (mMediaPlayer != null && mMediaPlayer.isPlaying()) @line 143
+    - if (mVibrator != null) @line 150
+    - if (minute < 10) @line 177
+    - if (nonMilitaryHour == 0) @line 183
+    - if (minute < 10) @line 216
+    - if (nonMilitaryHour == 0) @line 222
+  • logs: (none)
+  • results/navigation:
+    - finish() @line 38 in onCreate
+    - getActivity().finish() @line 190 in onMedicineTaken
+    - getActivity().finish() @line 229 in onMedicineIgnored
+    - getActivity().finish() @line 242 in onFinish
+
+- Raw Evidence — Context Signals (screen-local)
+  CALL | (none)
+
+- Raw Evidence — Guards Using Context
+  COND | (none)
+
+- Raw Evidence — Outgoing Network Calls (screen-local)
+  NET | (none)
+
+- Raw Evidence — Dynamic Feedback & State (AST)
+  • dynamic:
+    - setText on tvMedTime @line 112
+    - setText on tvMedicineName @line 113
+    - setText on tvDoseDetails @line 114
+    - show on Toast.makeText(getContext(), medicineAlarm.getPillName() + " was taken at " + nonMilitaryHour + ":" + stringMinute + " " + am_pm + ".", Toast.LENGTH_SHORT) @line 186
+    - show on Toast.makeText(getContext(), medicineAlarm.getPillName() + " was ignored at " + nonMilitaryHour + ":" + stringMinute + " " + am_pm + ".", Toast.LENGTH_SHORT) @line 225
+
+- Raw Evidence — Notifications (screen-local)
+  (none)
+
+- Raw Evidence — Alert Effects (screen-local)
+  • CALL#1 VIBRATE → mVibrator.vibrate(pattern, 0) @line 106 in showMedicine
+  • CALL#2 SOUND → MediaPlayer.create(getContext(), R.raw.cuco_sound) @line 108 in showMedicine
+  • CALL#3 SOUND → mMediaPlayer.setLooping(true) @line 109 in showMedicine
+  • CALL#4 SOUND → mMediaPlayer.start() @line 110 in showMedicine
+
+- Raw Evidence — Scheduling (screen-local)
+  (none)
+
+- Control Guards for Alert Calls (screen-local)
+  (none)
+
+- Raw Evidence — SharedPreferences (screen-local)
+  (none)
+
+- Top App Bar & Menu Items (merged)
+  (none)
+
+- Lifecycle → Calls (screen-local)
+  • onCreate → onCreate | at ReminderActivity.java#?:25
+  • onCreate → setContentView | at ReminderActivity.java#?:25
+  • onCreate → bind | at ReminderActivity.java#?:25
+  • onCreate → setSupportActionBar | at ReminderActivity.java#?:25
+  • onCreate → getSupportActionBar | at ReminderActivity.java#?:25
+  • onCreate → androidx.appcompat.app.ActionBar.setDisplayHomeAsUpEnabled(boolean) | at ReminderActivity.java#?:25
+  • onCreate → getIntent | at ReminderActivity.java#?:25
+  • onCreate → hasExtra | at ReminderActivity.java#?:25
+  • onCreate → finish | at ReminderActivity.java#?:25
+  • onCreate → getLongExtra | at ReminderActivity.java#?:25
+  • onCreate → findFragmentById | at ReminderActivity.java#?:25
+  • onCreate → getSupportFragmentManager | at ReminderActivity.java#?:25
+  • onCreate → newInstance | at ReminderActivity.java#?:25
+  • onCreate → addFragmentToActivity | at ReminderActivity.java#?:25
+  • onCreate → getSupportFragmentManager | at ReminderActivity.java#?:25
+  • onCreate → provideMedicineRepository | at ReminderActivity.java#?:25
+
+- Actions & Intents from this screen
+  (none)

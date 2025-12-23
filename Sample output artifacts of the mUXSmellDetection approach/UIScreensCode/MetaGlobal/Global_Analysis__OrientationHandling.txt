@@ -1,0 +1,9 @@
+// OrientationHandling:
+  - ADAPTER notify=notifyDataSetChanged site=HistoryAdapter.java#replaceData:34
+  - STATE method=onSaveInstanceState owner=com.vishwajeeth.medicinetime.addmedicine.AddMedicineActivity site=AddMedicineActivity.java#onSaveInstanceState:76
+  - ADAPTER notify=notifyDataSetChanged site=MedicineAdapter.java#replaceData:31
+  - ADAPTER notify=notifyItemRemoved site=MedicineAdapter.java#removeMedicine:113
+  - ADAPTER notify=notifyItemRemoved site=DeletedMedicineAdapter.java#onBindViewHolder:57
+  - ADAPTER notify=notifyItemRangeChanged site=DeletedMedicineAdapter.java#onBindViewHolder:58
+  - STATE method=onSaveInstanceState owner=com.vishwajeeth.medicinetime.report.MonthlyReportActivity site=MonthlyReportActivity.java#onSaveInstanceState:67
+

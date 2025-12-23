@@ -1,0 +1,3 @@
+// Animations:
+  - ANIM call=view.animate() site=MedicineActivity.java#toggleCalendarExpansion:157
+

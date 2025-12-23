@@ -1,0 +1,1209 @@
+SYSTEM:
+You are a UX smell detector. You will be shown:
+- A list of UX smells  
+- Parsed metadata extracted from Android app screens, including:
+  - layout names, XML layout content, associated layout files  
+  - resolved attributes, hosting Java source files  
+  - related method bodies, listeners, and event handlers  
+- embedded fragments and one-level inlined methods, including those from both the screen’s activity and its embedded fragments
+- Additional global code metadata (preferences, values, exception handlers, etc.)  
+- App Domain and User Profile metadata  
+Each screen’s metadata is structured using consistent section markers
+(e.g., “- XML Layout:”, “- Related code:”, “- Raw Evidence — …”).
+Treat each section as a distinct factual data block, not prose.
+---
+
+ RULES AND CONSTRAINTS:
+- Do not infer intentions, design goals, or user behavior.  
+- Do not guess or assume missing information — if it is not explicitly found, treat it as absent.  
+- If a section explicitly states “(none)”, treat that feature as absent.  
+- Only rely on structural evidence from parsed metadata, including:
+  - XML tags and attributes  
+  - Java methods, calls, and guards  
+  - “Raw Evidence — …” and “Related code:” sections  
+  - Inlined fragment or presenter logic  
+  - Annotated handlers (@OnClick, @OnItemSelected, etc.)  
+- Evaluate each UX smell independently and per screen.  
+- If fragments, presenters, or inlined code appear, treat them as part of the screen’s total logic.  
+- Be precise and conservative: only flag if pseudocode conditions are explicitly satisfied.  
+- Keep reasoning concise (2–4 lines) and reference identifiers like method names or XML tags.  
+- Output results in the same order as listed in “UX Smells Data”.
+---
+
+OUTPUT FORMAT (JSON):
+If one or more smells are detected:
+{
+  "Screen_name": "<Current screen name>",
+  "Presented_smells": {
+    "<Smell_ID>": {
+      "evidence": ["<short factual pointers>"],
+      "reason": "<concise rationale (≤2 lines)>",
+      "recommendation": "<specific actionable fix>"
+    },
+    ...
+  }
+}
+
+If no smells are found:
+{
+  "Screen_name": "<Current screen name>",
+  "Presented_smells": {}
+}
+---
+ ===ANALYSIS DATA ===  
+== UX Smells Data ==  
+-- Smell: No Customization (ID 3)
+- Description:
+The application does not provide any meaningful customization options—such as adjustable layouts, themes, or shortcuts—forcing all users into a rigid interface without accommodating diverse needs.
+- Example:
+A note-taking app that only has one font style, no option to adjust its size, and no color/theme changes. Users cannot rearrange menus or set shortcuts.
+- Pseudocode:
+manualControls := hasPreferenceScreen(screen) || hasPrefReadsWrites(screen) || hasSettingsNav(screen)
+if !manualControls: flag("No Customization")
+
+-- Smell: Absent Error Prevention (ID 4)
+- Description:
+The application lacks essential features to prevent user errors before they occur. This goes beyond basic form validation—it includes real-time checks (e.g., disallowing incorrect formats immediately), constraints (e.g., limiting input range), or visual cues (e.g., hints, placeholders, warnings) that guide users.
+- Example:
+A scheduling form allows users to enter an impossible date (e.g., February 30) or set the end date before the start date without any immediate warning or prevention.
+- Pseudocode:
+// Only consider true data-entry inputs (e.g., EditText, TextInputEditText)
+userInputs = filter(Screen.Inputs where input.isUserEntered())
+preventiveInputs = 0
+For input in userInputs:
+  If input.hasConstraints OR input.hasValidation OR input.hasVisualCues:
+    preventiveInputs += 1
+
+if size(userInputs) > 0:
+  if preventiveInputs < size(userInputs):
+    flag("Absent Error Prevention")
+
+-- Smell: Absent Error Handling (ID 5)
+- Description:
+The application fails to handle errors once they occur—silent crashes, cryptic errors, or no guidance for recovery. Users see no clear message, no fallback, and no corrective suggestions.
+- Example:
+An app crashes without any error message or fails to provide recovery options for invalid input.
+- Pseudocode:
+// Only consider data-entry fields that can produce user input errors
+userInputs = filter(Screen.Inputs where input.isUserEntered())
+handledInputs = 0
+For input in userInputs:
+  If hasLocalHandling(input) OR showsUserFeedback(input):
+    handledInputs += 1
+
+if size(userInputs) > 0:
+  if handledInputs < size(userInputs):
+    flag("Absent Error Handling")
+  else if handledInputs == 0 AND !hasGlobalUEH():
+    flag("Absent Error Handling")
+
+-- Smell: Media Without Captions or Transcripts (ID 11)
+- Description:
+The app includes media elements (images, animations, videos) that lack captions, subtitles, or transcripts—reducing accessibility for users with hearing or vision impairments.
+- Example:
+A tutorial screen uses an ImageView or LottieAnimationView to convey information but provides no content description or nearby label.
+- Pseudocode:
+For media in Screen.MediaElements:
+if media.type in {"image","lottie"}:
+if !media.contentDescriptionPresent && !media.hasCaptionSibling:
+flag("Media Without Captions/Transcripts")
+else if media.type in {"video","player"}:
+if !media.hasSubtitleOrTextTrack && !media.hasTranscriptLink:
+flag("Media Without Captions/Transcripts")
+
+-- Smell: Missing Essential Collaboration Features (ID 13)
+- Description:
+Essential collaboration cues, such as invite buttons or team chat options, are missing or obscured, hindering player interaction and teamwork.
+- Example:
+A social or multiplayer app where users can’t find an Invite Friends button, a Share action, chat entry point, or a friend/team list.
+- Pseudocode:
+evidence := tokensIn(UI + Menu + Values + Drawable)
+            ∪ intentsIn(UI/Globals)
+            ∪ collabSDKs(GlobalLibs)
+if app_domain_requires_collaboration_features && evidence.isEmpty():
+flag("Missing Essential Collaboration Features")
+
+-- Smell: Limited Help Modalities (ID 14)
+- Description:
+The application lacks comprehensive support options, such as detailed tutorials, a help center, live chat, or contact information, limiting the depth and variety of assistance available to users.
+- Example:
+A mobile banking app offers only a sparse FAQ section that covers very basic queries. There is no additional support such as live chat, detailed guides, or contact information for further assistance.
+- Pseudocode:
+count := helpChannelsFound(screen+globals)
+if count == 1: flag("Limited Help Modalities")
+
+-- Smell: No Help Modalities (ID 15)
+- Description:
+The application does not include any help resources—no FAQ, no help center, no contact info—leaving users with no guidance.
+- Example:
+An e-commerce mobile app with no help button, no FAQ page, and no visible contact details for customer support.
+- Pseudocode:
+count := helpChannelsFound(screen+globals)
+if count == 0: flag("No help Modalities")
+
+-- Smell: Forced External Checks (ID 16)
+- Description:
+The app relies on external or system-level checks (e.g., camera, mic, network) for essential functions instead of performing them internally, forcing users to leave the app.
+- Example:
+A conference app instructs users to test their microphone and camera on a separate website or within device settings, forcing them to exit the app and manually navigate back for the meeting.
+- Pseudocode:
+if essentialCheck(screen):
+  if launchesExternalCheck(screen) && !hasInAppCheck(screen):
+    flag("Forced External Checks")
+
+-- Smell: Version Discrepancy (ID 17)
+- Description:
+New updates exist but aren’t effectively pushed or prompted, leaving users on outdated versions.
+- Example:
+Many users keep reporting bugs already fixed in newer versions because updates never appear.
+- Pseudocode:
+FOR each screen in App.Screens:
+  if isEntryScreen(screen):  // e.g., has LAUNCHER intent or main entry flag
+    hasManual := any(MANUAL_VERSION compare=present)
+    hasPrompt := any(DIALOG_PROMPT || STORE_INTENT)
+    hasPlayCore := any(PLAY_CORE_IMPORT || PLAY_CORE_CALL)
+    triggered := any(entryPoints → (checkForUpdate|getAppUpdateInfo|startUpdateFlow|completeUpdate|dialog|market))
+
+    if (!hasManual && !hasPlayCore) ||
+       (hasPlayCore && !any(PLAY_CORE_CALL)) ||
+       (hasManual && !hasPrompt) ||
+       ((hasPlayCore || hasManual) && !triggered):
+      flag("Version Discrepancy")
+
+-- Smell: Over-Reliance on User Customization (ID 24)
+- Description:
+The app leans on users to manually configure behavior (switches, inputs, lists) instead of providing smart defaults or adaptive logic, leading to tedious setup and weaker outcomes.
+- Example:
+A fitness app that asks users to set all goals manually but never pre-fills sensible defaults, learns from usage, or recommends personalized plans.
+- Pseudocode:
+if usesManualPrefs(screen):
+  keys = keysUsedBy(screen)
+  // A1–A4 refer to smart/adaptive preference evidence:
+  // A1: hasAdaptiveDefault(key)
+  // A2: defaultResolved != false
+  // A3: autoResolvesFromContext(key)
+  // A4: linkedToSmartFeature(key)
+  smart = any(A1 | A2(defaultResolved != false) | A3 | A4 for keys)
+  if !smart:
+    flag("Over-Reliance on User Customization")
+
+-- Smell: Context-Ignoring Alerts (ID 27)
+- Description:
+Notifications or alerts (notify, sound, vibrate, loop, or high-importance) trigger without checking user context (DND, calendar/meetings, quiet hours, or user preferences), causing disruption.
+- Example:
+A reminder screen plays a looping ringtone and vibrates during a meeting because no DND, calendar, or preference guard exists.
+- Pseudocode:
+emits := has(Notifications || AlertEffects || Vibrator.vibrate || Sound.play)
+schedules := has(AlarmManager.*schedule* || Handler.postDelayed)
+guards := has(ContextChecks referencing DND || CalendarEvents || QuietHours || UserPrefs)
+if emits && !guards && !app_domain_sensitive:
+  flag("Context-Ignoring Alerts")
+if emits && isHighIntrusion && !guards && !app_domain_sensitive:
+  flag("Context-Ignoring Alerts — High Intrusion")
+
+-- Smell: Unaware Context (ID 28)
+- Description:
+The app fails to recognize and adapt to the user's real-world context (such as location, network connectivity, or device capabilities), causing behavior that does not reflect actual user conditions.
+- Example:
+A food-delivery app keeps showing restaurants that are unavailable in the user's current location because it ignores GPS or connectivity state.
+- Pseudocode:
+hasSignals := any(CALL in {LOCATION, CONNECTIVITY, DEVICE})
+hasGuards := any(COND/EFFECT referencing those signals)
+app_domain_requires_context := app domain needs contextual signals
+screen_requires_context := screen should adapt to device or environment context
+
+if !hasSignals && !hasGuards && app_domain_requires_context && screen_requires_context:
+  flag("Unaware Context")
+else if hasSignals && !hasGuards && app_domain_requires_context && screen_requires_context:
+  flag("Unaware Context — Inconsistent")
+
+-- Smell: No Adaptive Responsiveness (ID 31)
+- Description:
+The app fails to provide responsive feedback or adapt to user inputs or environmental changes (e.g., orientation, connectivity), resulting in a static and potentially frustrating experience.
+- Example:
+1. Users must manually refresh because the UI never auto-updates after data changes.
+2. A form loses all input when the device rotates from portrait to landscape.
+- Pseudocode:
+// Determine whether the screen adapts to user or environment changes
+hasDynamicUpdates := detects real-time UI changes or reactive feedback (e.g., Toasts, visibility toggles)
+hasEnvHandlers := handles environmental changes (e.g., orientation, theme, configuration)
+hasStatePreservation := preserves UI state across configuration changes (e.g., onSaveInstanceState)
+manifestHandlesConfig := manifest explicitly handles configuration changes
+hasConnectivityListeners := monitors network or connectivity state
+
+// If the screen lacks all adaptive mechanisms, flag the smell
+if !hasDynamicUpdates(screen) &&
+   !hasEnvHandlers(screen) &&
+   !hasStatePreservation(screen) &&
+   !manifestHandlesConfig(screen) &&
+   !hasConnectivityListeners(screen):
+  flag("No Adaptive Responsiveness")
+
+-- Smell: Inconsistent Gesture Controls (ID 35)
+- Description:
+  Inconsistent use of gestures for similar actions within the same task or context across different app sections leads to user confusion and a disrupted experience.
+- Example:
+  In a mail app, swiping right archives emails in one folder but deletes them in another, causing repeated undo attempts.
+- Pseudocode:
+  FOR each (gesture, direction, listId) across screens IN same_context:
+    IF action differs THEN
+      flag_as("Inconsistent Gesture Controls")
+  // Use current screen’s gestures as focal point;
+  // compare with gestures listed in the 'Gesture Handlers & Swipe Behaviors (across all screens)' section.
+
+-- Smell: Underpowered Query Tools (ID 37)
+- Description:
+Emerges when an existing search field lacks filtering, partial matching, or predictive suggestions—so even accurate queries do not surface the right information.
+- Example:
+In a banking app, users searching for “monthly transactions” get hundreds of results but cannot filter by date range or transaction type, making it difficult to find specific details.
+- Pseudocode:
+if hasSearchField(screen):
+  if !supportsFiltering(SearchField) && !supportsSuggestions(SearchField):
+    flag("Underpowered Query Tools")
+
+
+== Code Metadata ==  
+CURRENT SCREEN CONTEXT: DeletedMedicinesActivity
+
+- Resolved style values:
+//   windowNoTitle = true
+//   windowActionBar = false
+
+- Screen: DeletedMedicinesActivity
+- Layout: activity_deleted_medicines.xml
+
+- XML Layout:
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Top App Bar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/deleted_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:title="Deleted Medicines"
+        android:titleTextColor="@android:color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!-- RecyclerView that shows deleted medicine cards -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/deleted_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp" />
+
+    <!-- Empty state message -->
+    <TextView
+        android:id="@+id/empty_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No deleted medicines."
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="center"
+        android:padding="16dp"
+        android:visibility="gone"/>
+</LinearLayout>
+
+
+- Associated Layout Files & Full XML:
+  (1) row_medicine.xml:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Time block -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/sixteen_dp"
+            android:paddingLeft="@dimen/sixteen_dp"
+            android:paddingRight="@dimen/sixteen_dp"
+            android:paddingTop="@dimen/sixteen_dp">
+
+            <com.vishwajeeth.medicinetime.views.RobotoBoldTextView
+                android:id="@+id/tv_med_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="23:20"
+                android:textColor="#4d4d4d"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0" />
+
+        <!-- Medicine info block -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/eight_dp"
+            android:paddingLeft="@dimen/sixteen_dp"
+            android:paddingRight="@dimen/sixteen_dp"
+            android:paddingTop="@dimen/eight_dp">
+
+            <!-- Medicine icon -->
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@null"
+                android:src="@drawable/icon_blister" />
+
+            <!-- Name + Dose block -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/iv_icon"
+                android:layout_toStartOf="@+id/iv_alarm_delete"
+                android:orientation="vertical"
+                android:padding="4dp">
+
+                <com.vishwajeeth.medicinetime.views.RobotoBoldTextView
+                    android:id="@+id/tv_medicine_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4d4d4d"
+                    tools:text="Paracetamol" />
+
+                <com.vishwajeeth.medicinetime.views.RobotoRegularTextView
+                    android:id="@+id/tv_dose_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="1.0 adhesive(s)" />
+            </LinearLayout>
+
+            <!-- NEW: Medicine action icon (e.g., reminder taken) -->
+            <ImageView
+                android:id="@+id/iv_medicine_action"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="4dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/image_reminder_taken"
+                android:visibility="gone"
+                android:contentDescription="@null" />
+
+            <!-- Delete icon -->
+            <ImageView
+                android:id="@+id/iv_alarm_delete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/iv_medicine_action"
+                android:layout_marginTop="4dp"
+                android:contentDescription="@null"
+                android:visibility="gone"
+                android:src="@drawable/image_reminder_not_taken" />
+
+            <!-- Restore icon -->
+            <ImageView
+                android:id="@+id/iv_restore"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/iv_alarm_delete"
+                android:layout_marginTop="4dp"
+                android:contentDescription="Restore"
+                android:visibility="gone"
+                android:src="@android:drawable/ic_menu_revert" />
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+```
+
+- Associated Menus & Full XML:
+    (none)
+
+- Resolved Attributes:
+    (none)
+
+- Source (DeletedMedicinesActivity.java):
+package com.vishwajeeth.medicinetime.medicine;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.vishwajeeth.medicinetime.R;
+import com.vishwajeeth.medicinetime.data.source.MedicineAlarm;
+
+import java.util.List;
+
+public class DeletedMedicinesActivity extends AppCompatActivity implements MedicineAdapter.OnItemClickListener {
+
+    public static List<MedicineAlarm> deletedMedicinesList;
+    private MedicineAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_deleted_medicines);
+
+        Toolbar toolbar = findViewById(R.id.deleted_toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        RecyclerView recyclerView = findViewById(R.id.deleted_recycler_view);
+        TextView emptyText = findViewById(R.id.empty_text);
+
+        if (deletedMedicinesList == null || deletedMedicinesList.isEmpty()) {
+            emptyText.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new MedicineAdapter(deletedMedicinesList, true);
+            adapter.setOnItemClickListener(this); // ✅ Set the click listener!
+            recyclerView.setAdapter(adapter);
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyText.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    // ✅ Implement the delete action if needed
+    @Override
+    public void onMedicineDeleteClicked(MedicineAlarm medicineAlarm) {
+        // No-op or optional: delete from deleted list?
+    }
+
+    // ✅ Restore logic
+    @Override
+    public void onMedicineRestoreClicked(MedicineAlarm medicineAlarm) {
+        if (deletedMedicinesList != null) {
+            deletedMedicinesList.remove(medicineAlarm);
+            MedicineActivity.addRestoredMedicine(medicineAlarm);
+            adapter.replaceData(deletedMedicinesList);  // Refresh deleted UI
+        }
+    }
+
+
+}
+
+- Related code:
+    // from MedicineAdapter.java: MedicineAdapter
+    // Update constructor to accept a boolean as well
+    public MedicineAdapter(List<MedicineAlarm> medicineAlarmList, boolean isDeletedUI) {
+        this.medicineAlarmList = medicineAlarmList;
+        // Set whether this is the deleted UI or not
+        this.isDeletedUI = isDeletedUI;
+    }
+    
+    // from MedicineAdapter.java: setOnItemClickListener
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+    
+    // from MedicineActivity.java: addRestoredMedicine
+    public static void addRestoredMedicine(MedicineAlarm restoredAlarm) {
+        if (instance != null && instance.presenter != null) {
+            // Reset ID so it's treated as a new item
+            restoredAlarm.setId(0);
+            // ✅ Set only today = true in dayOfWeek[]
+            boolean[] days = new boolean[7];
+            // Calendar.SUNDAY=1, so subtract 1
+            int todayIndex = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
+            days[todayIndex] = true;
+            // <-- This is the fix!
+            restoredAlarm.setDayOfWeek(days);
+            // Save and refresh
+            instance.presenter.saveMedicineAlarm(restoredAlarm);
+        }
+        // Remove from deleted list and persist
+        deletedMedicines.remove(restoredAlarm);
+        saveDeletedMedicines();
+    }
+    
+    // from MedicineAdapter.java: replaceData
+    public void replaceData(List<MedicineAlarm> medicineAlarmList) {
+        this.medicineAlarmList = medicineAlarmList;
+        notifyDataSetChanged();
+    }
+
+
+- Raw Evidence — Inputs (XML)
+  (none)
+
+- Raw Evidence — View Bindings
+  • toolbar ⇄ R.id.deleted_toolbar
+  • recyclerView ⇄ R.id.deleted_recycler_view
+  • emptyText ⇄ R.id.empty_text
+
+- Clickables (XML + Code)
+  (none)
+
+- Raw Evidence — Gesture Handlers & Swipe Behaviors (screen-local)
+  (none)
+
+- Raw Evidence — Input Callsites (addTextChangedListener/setFilters/setInputType/...)
+  (none)
+
+- Raw Evidence — Search Callbacks (code)
+  (none)
+
+- Raw Evidence — Search Query Sources (verbatim SQL)
+  (none)
+
+- Raw Evidence — Filter Widgets (XML + listeners)
+  (none)
+
+- Raw Evidence — Adapter Filtering
+  (none)
+
+- Raw Evidence — Error Handling (try/catch, user-visible surfaces, guards, logs)
+  • try/catch: (none)
+  • error surfaces: (none)
+  • guards:
+    - if (getSupportActionBar() != null) @line 30
+    - if (deletedMedicinesList == null || deletedMedicinesList.isEmpty()) @line 37
+    - if (deletedMedicinesList != null) @line 65
+  • logs: (none)
+  • results/navigation:
+    - finish() @line 52 in onSupportNavigateUp
+
+- Raw Evidence — Context Signals (screen-local)
+  CALL | (none)
+
+- Raw Evidence — Guards Using Context
+  COND | (none)
+
+- Raw Evidence — Outgoing Network Calls (screen-local)
+  NET | (none)
+
+- Raw Evidence — Dynamic Feedback & State (AST)
+  • dynamic:
+    - setVisibility on emptyText @line 38
+    - setVisibility on recyclerView @line 39
+    - setVisibility on recyclerView @line 45
+    - setVisibility on emptyText @line 46
+    - notifyDataSetChanged on this(MedicineAdapter) @line 31
+    - setText on holder.tvMedTime @line 50
+    - setText on holder.tvMedicineName @line 51
+    - setText on holder.tvDoseDetails @line 52
+    - setVisibility on holder.ivAlarmDelete @line 56
+    - setVisibility on holder.ivRestore @line 67
+    - setVisibility on holder.ivRestore @line 74
+    - notifyItemRemoved on this(MedicineAdapter) @line 113
+
+- Raw Evidence — Notifications (screen-local)
+  (none)
+
+- Raw Evidence — Alert Effects (screen-local)
+  (none)
+
+- Raw Evidence — Scheduling (screen-local)
+  (none)
+
+- Control Guards for Alert Calls (screen-local)
+  (none)
+
+- Raw Evidence — SharedPreferences (screen-local)
+  (none)
+
+- Top App Bar & Menu Items (merged)
+  (none)
+
+- Lifecycle → Calls (screen-local)
+  • onCreate → onCreate | at DeletedMedicinesActivity.java#?:23
+  • onCreate → setContentView | at DeletedMedicinesActivity.java#?:23
+  • onCreate → findViewById | at DeletedMedicinesActivity.java#?:23
+  • onCreate → setSupportActionBar | at DeletedMedicinesActivity.java#?:23
+  • onCreate → getSupportActionBar | at DeletedMedicinesActivity.java#?:23
+  • onCreate → setDisplayHomeAsUpEnabled | at DeletedMedicinesActivity.java#?:23
+  • onCreate → getSupportActionBar | at DeletedMedicinesActivity.java#?:23
+  • onCreate → findViewById | at DeletedMedicinesActivity.java#?:23
+  • onCreate → findViewById | at DeletedMedicinesActivity.java#?:23
+  • onCreate → isEmpty | at DeletedMedicinesActivity.java#?:23
+  • onCreate → android.view.View.setVisibility(int) | at DeletedMedicinesActivity.java#?:23
+  • onCreate → android.view.View.setVisibility(int) | at DeletedMedicinesActivity.java#?:23
+  • onCreate → androidx.recyclerview.widget.RecyclerView.setLayoutManager(androidx.recyclerview.widget.RecyclerView.LayoutManager) | at DeletedMedicinesActivity.java#?:23
+  • onCreate → setOnItemClickListener | at DeletedMedicinesActivity.java#?:23
+  • onCreate → setAdapter | at DeletedMedicinesActivity.java#?:23
+  • onCreate → android.view.View.setVisibility(int) | at DeletedMedicinesActivity.java#?:23
+  • onCreate → android.view.View.setVisibility(int) | at DeletedMedicinesActivity.java#?:23
+
+- Actions & Intents from this screen
+  (none)
+
+
+== Global Code Metadata ==  
+-- Global Section: AndroidManifest.xml
+// AndroidManifest.xml:
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
+    <application
+        android:allowBackup="true"
+        android:name="com.vishwajeeth.medicinetime.MedicineApp"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name="com.vishwajeeth.medicinetime.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- <activity android:name=".MainActivity" /> -->
+        <activity android:name="com.vishwajeeth.medicinetime.medicine.MedicineActivity" />
+        <activity android:name="com.vishwajeeth.medicinetime.addmedicine.AddMedicineActivity" />
+        <activity android:name="com.vishwajeeth.medicinetime.alarm.ReminderActivity" />
+        <activity android:name="com.vishwajeeth.medicinetime.report.MonthlyReportActivity"/>
+        <activity android:name="com.vishwajeeth.medicinetime.medicine.DeletedMedicinesActivity" />
+
+    </application>
+
+</manifest>
+
+
+-- Global Section: build scripts (Groovy & Kotlin DSL)
+// build scripts (Groovy & Kotlin DSL):
+ // File: D:\AndroidApps\Medicine-Time-Android-App-Project\app\build.gradle
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'medicine'
+            keyPassword 'test123'
+            storeFile file('/Users/vishwajeeth/Documents/Projects/MedicineTime/app/medicine')
+            storePassword 'test123'
+        }
+    }
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.vishwajeeth.medicinetime"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        signingConfig signingConfigs.config
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+            pseudoLocalesEnabled true
+            proguardFile '/Users/vishwajeeth/Documents/Projects/MedicineTime/app/proguard-rules.pro'
+        }
+    }
+    flavorDimensions "default"
+    // If you need to add more flavors, consider using flavor dimensions.
+    productFlavors {
+        mock {
+            applicationIdSuffix = ".mock"
+            dimension "default"
+        }
+        prod {
+            dimension "default"
+            signingConfig signingConfigs.config
+        }
+    }
+    namespace 'com.vishwajeeth.medicinetime'
+    // Remove mockRelease as it's not needed.
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'release'
+                && variant.getFlavors().get(0).name == 'mock') {
+            variant.setIgnore(true);
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestImplementation "junit:junit:$rootProject.ext.junitVersion"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation "com.github.sundeepk:compact-calendar-view:$rootProject.compactCalendarViewVersion"
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+}
+
+
+tasks.register("printAllDependencies") {
+    group = "help"
+    description = "Dump all .jar files from every non-test RuntimeClasspath"
+    doLast {
+        // find every configuration whose name ends with "RuntimeClasspath"
+        // but exclude unit-test & android-test variants
+        def runtimeConfs = configurations.findAll { conf ->
+            conf.name.endsWith("RuntimeClasspath") &&
+                    !conf.name.toLowerCase().contains("unittest") &&
+                    !conf.name.toLowerCase().contains("androidtest")
+        }
+
+        runtimeConfs.each { conf ->
+            println "\n--- ${conf.name} ---"
+            try {
+                // resolve() will give us all files for that configuration
+                conf.resolve()
+                        .findAll { it.name.endsWith(".jar") }
+                        .each { jar ->
+                            println jar.absolutePath
+                        }
+            } catch (Exception e) {
+                println "⚠️  failed to resolve ${conf.name}: ${e.message}"
+            }
+        }
+    }
+}
+---
+ // File: D:\AndroidApps\Medicine-Time-Android-App-Project\build.gradle
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    repositories {
+        google()
+        //jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.9.0'
+
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        //jcenter()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    minSdkVersion = 16
+    targetSdkVersion = 29
+    compileSdkVersion = 259
+
+    //App Dependencies Version
+    supportLibraryVersion = '28.0.0'
+    compactCalendarViewVersion = '3.0.0'
+    butterKniferVersion = '10.2.1'
+    junitVersion = '4.13'
+}
+
+---
+ // File: D:\AndroidApps\Medicine-Time-Android-App-Project\settings.gradle
+include ':app'
+
+---
+
+
+-- Global Section: 3rd-Party Libraries & Binary Code
+// 3rd-Party Libraries & Binary Code:
+// 3rd-Party Libraries & Binary Code — Relevant SDKs
+(none)
+
+// 3rd-Party Libraries & Binary Code — Possibly Relevant
+LIB group=com.google.code.gson artifact=gson version=2.8.8 TAG=JSON
+LIB group=com.jakewharton artifact=butterknife version=10.2.1 TAG=UI_BINDING
+
+LIB group=com.vishwajeeth source=AST
+
+// 3rd-Party Libraries & Binary Code — AndroidX & Platform
+LIB group=androidx.appcompat artifact=appcompat version=1.1.0 TAG=ANDROIDX
+LIB group=androidx.cardview artifact=cardview version=1.0.0 TAG=ANDROIDX
+LIB group=androidx.legacy artifact=legacy-support-v4 version=1.0.0 TAG=ANDROIDX
+LIB group=androidx.recyclerview artifact=recyclerview version=1.1.0 TAG=ANDROIDX
+LIB group=com.android.support artifact=appcompat-v7 version=28.0.0 TAG=ANDROIDX
+LIB group=com.google.android.material artifact=material version=1.1.0 TAG=ANDROIDX
+
+// 3rd-Party (embedded binaries):
+(none)
+
+
+-- Global Section: Application subclass
+// Application subclass:
+  (no signals detected)
+
+package com.vishwajeeth.medicinetime;
+
+import android.app.Application;
+import android.content.Context;
+import android.util.Log; // Import Log if you haven't already
+
+
+/**
+ * Created by vishwajeeth on 12/07/17.
+ */
+
+public class MedicineApp extends Application {
+
+    private static final String TAG = "MedicineApp"; // Optional: Add a TAG for MedicineApp's own logs
+    private static Context mInstance;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.d(TAG, "MedicineApp onCreate called."); // Optional: Add a log to confirm this is running
+
+        if (mInstance == null) {
+            mInstance = getApplicationContext();
+        }
+
+        // --- Add the EvaluationInjector initialization here ---
+        EvaluationInjector.init(this);
+        // --- End Add ---
+
+
+        Log.d(TAG, "MedicineApp onCreate finished."); // Optional: Add a log
+    }
+
+
+
+    public static Context getInstance() {
+        return mInstance;
+    }
+}
+
+  (none detected)
+
+
+-- Global Section: AppUpdateChecks
+// AppUpdateChecks:
+  (none detected)
+
+
+-- Global Section: OrientationHandling
+// OrientationHandling:
+  - ADAPTER notify=notifyDataSetChanged site=HistoryAdapter.java#replaceData:34
+  - STATE method=onSaveInstanceState owner=com.vishwajeeth.medicinetime.addmedicine.AddMedicineActivity site=AddMedicineActivity.java#onSaveInstanceState:76
+  - ADAPTER notify=notifyDataSetChanged site=MedicineAdapter.java#replaceData:31
+  - ADAPTER notify=notifyItemRemoved site=MedicineAdapter.java#removeMedicine:113
+  - ADAPTER notify=notifyItemRemoved site=DeletedMedicineAdapter.java#onBindViewHolder:57
+  - ADAPTER notify=notifyItemRangeChanged site=DeletedMedicineAdapter.java#onBindViewHolder:58
+  - STATE method=onSaveInstanceState owner=com.vishwajeeth.medicinetime.report.MonthlyReportActivity site=MonthlyReportActivity.java#onSaveInstanceState:67
+
+
+-- Global Section: Centralized Exception Handlers
+// Centralized Exception Handlers:
+  (none detected)
+
+
+-- Global Section: ReflectionInflation
+// ReflectionInflation:
+  - REFL kind=Method.invoke site=EvaluationInjector.java#hook:161
+  - REFL kind=Method.invoke site=EvaluationInjector.java#invoke:211
+
+
+-- Global Section: LocationAPIs
+// LocationAPIs:
+  (none detected)
+
+
+-- Global Section: Calendar
+// Calendar:
+  (none detected)
+
+
+-- Global Section: Scheduling
+// Scheduling:
+  - SCHED tool=AlarmManager op=setRepeating type=AlarmManager.RTC_WAKEUP interval=AlarmManager.INTERVAL_DAY * 7 allowIdle=false site=MedicinePresenter.java#scheduleAlarm:75
+  - MedicinePresenter.java#scheduleAlarm:75 | alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarm_time, AlarmManager.INTERVAL_DAY * 7, operation)
+  - SCHED tool=AlarmManager op=cancel type=operation allowIdle=false site=MedicinePresenter.java#deleteMedicineAlarm:99
+  - MedicinePresenter.java#deleteMedicineAlarm:99 | alarmManager.cancel(operation)
+  - SCHED tool=AlarmManager op=setRepeating type=AlarmManager.RTC_WAKEUP interval=AlarmManager.INTERVAL_DAY * 7 allowIdle=false site=AddMedicineFragment.java#?:278
+  - AddMedicineFragment.java#?:278 | alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtMillis, AlarmManager.INTERVAL_DAY * 7, operation)
+  - SCHED tool=Handler op=postDelayed args=[new Runnable() { @Override public void run() { Intent intent = new Intent(SplashActivity.this, MedicineActivity.class); startActivity(intent); finish(); } }, 3000] site=SplashActivity.java#onCreate:19
+  - SplashActivity.java#onCreate:19 | handler.postDelayed(new Runnable() {
+
+    @Override
+    public void run() {
+        Intent intent = new Intent(SplashActivity.this, MedicineActivity.class);
+        startActivity(intent);
+        finish();
+    }
+}, 3000)
+
+
+-- Global Section: ConnectivityAPIs
+// ConnectivityAPIs:
+  (none detected)
+
+
+-- Global Section: DeviceCapabilities
+// DeviceCapabilities:
+  - DEV call=getSystemService arg=android.content.Context.ALARM_SERVICE owner=com.vishwajeeth.medicinetime.medicine.MedicinePresenter site=MedicinePresenter.java#scheduleAlarm:60
+  - DEV call=getSystemService arg=android.content.Context.ALARM_SERVICE owner=com.vishwajeeth.medicinetime.medicine.MedicinePresenter site=MedicinePresenter.java#deleteMedicineAlarm:97
+  - DEV call=getSystemService arg=android.content.Context.ALARM_SERVICE owner=com.vishwajeeth.medicinetime.addmedicine.AddMedicineFragment site=AddMedicineFragment.java#<lambda>:276
+  - DEV call=getSystemService arg=android.content.Context.VIBRATOR_SERVICE owner=com.vishwajeeth.medicinetime.alarm.ReminderFragment site=ReminderFragment.java#showMedicine:104
+  - DEV buildField=Build.VERSION.SDK_INT owner=com.vishwajeeth.medicinetime.utils.ActivityUtils site=ActivityUtils.java#setBackGround:32
+  - DEV buildField=Build.VERSION_CODES.JELLY_BEAN owner=com.vishwajeeth.medicinetime.utils.ActivityUtils site=ActivityUtils.java#setBackGround:32
+
+
+-- Global Section: DND
+// DND:
+  (none detected)
+
+
+-- Global Section: Preferences
+// Preferences:
+  - MedicineActivity.java
+
+// Preferences (Global Key Index):
+  (none detected)
+
+// Java Cross-References:
+- deleted_medicines (not in Global Key Index)
+  reads:
+    - MedicineActivity.java#loadDeletedMedicines:202 (getString) [file: "DeletedMedicines"]
+  writes:
+    - MedicineActivity.java#saveDeletedMedicines:196 (putString) [file: "DeletedMedicines"]
+
+// Preference Files:
+- DeletedMedicines: MedicineActivity#loadDeletedMedicines:201, MedicineActivity#saveDeletedMedicines:193
+
+// Raw preference evidence (A1–A4):
+PREF_READ_DEFAULT  class=com.vishwajeeth.medicinetime.medicine.MedicineActivity  method=loadDeletedMedicines  call=getString("deleted_medicines", "[]")  defaultExpr="[]"  defaultResolved="[]"
+
+// Preferences (used as guards in if-conditions):
+  (none)
+
+// Normalized Preference Access (per callsite):
+PREF_READ key=deleted_medicines file=DeletedMedicines site=MedicineActivity.java#loadDeletedMedicines:202 default="[]"
+PREF_WRITE key=deleted_medicines file=DeletedMedicines site=MedicineActivity.java#saveDeletedMedicines:196
+  // (no direct conditional uses detected)
+
+
+-- Global Section: Values
+// Values:
+STRING  name=all  text=ALL  src=values/strings.xml
+STRING  name=all_label  text=All Medicines  src=values/strings.xml
+STRING  name=app_name  text=Medicine Time  src=values/strings.xml
+STRING  name=every_day  text=Every day  src=values/strings.xml
+STRING  name=hint_enter_med_name  text=Enter Medicine  src=values/strings.xml
+STRING  name=ignore_label  text=Medicines Ignored  src=values/strings.xml
+STRING  name=ignored  text=IGNORED  src=values/strings.xml
+STRING  name=loading_tasks_error  text=Error while loading medicineAlarms  src=values/strings.xml
+STRING  name=medicine_days  text=Medicine Days  src=values/strings.xml
+STRING  name=menu_filter  text=Filter  src=values/strings.xml
+STRING  name=menu_stats  text=Monthly Report  src=values/strings.xml
+STRING  name=new_medicine  text=NEW MEDICINE  src=values/strings.xml
+STRING  name=no_history  text=No History Found  src=values/strings.xml
+STRING  name=no_ignored_history  text=Well Done  src=values/strings.xml
+STRING  name=no_medicine_added  text=No Medicine Added  src=values/strings.xml
+STRING  name=no_taken_med_history  text=You have not taken any medicine  src=values/strings.xml
+STRING  name=reminder_message  text=It\'s Time to take your medicine  src=values/strings.xml
+STRING  name=successfully_deleted_message  text=Medicine deleted Successfully  src=values/strings.xml
+STRING  name=successfully_saved_me_message  text=Medicine Added Successfully  src=values/strings.xml
+STRING  name=taken  text=TAKEN  src=values/strings.xml
+STRING  name=taken_label  text=Medicine Taken  src=values/strings.xml
+STRING  name=title_continuous_use  text=Continuous use  src=values/strings.xml
+STRING  name=title_medicine_name  text=Medicine Name  src=values/strings.xml
+STRING  name=title_reminder  text=Reminder  src=values/strings.xml
+STRING  name=title_treatment_deadline  text=Treatment deadline  src=values/strings.xml
+ARRAY  name=caregiver_options  items=Help %s | Delete contact | Cancel  src=values/arrays.xml
+ARRAY  name=intervals_array  items=Every 24 hours | Every 12 hours | Every 8 hours | Every 6 hours | Every 4 hours | Every 2 hours  src=values/arrays.xml
+ARRAY  name=medications_shape_array  items=adhesive(s) | capsule(s) | emulsion(s) | drop(s) | inhalation(s) | shot(s) | lotion(s) | tablet(s) | powder(s) | ointment(s) | sachet(s) | unit(s) | solution(s) | spray(s) | suspension(s) | syrup(s)  src=values/arrays.xml
+ARRAY  name=pill_cycle_formats  items=21+7 | 22+6 | 23+5 | 24+4 | 26+2 | 28+0 | 35+7 | 42+7 | 63+7 | 84+7 | 14+14  src=values/arrays.xml
+ARRAY  name=week_days_abbreviations  items=sun | mon | tue | wed | thu | fri | sat  src=values/arrays.xml
+COLOR  name=colorAccent  value=#F40303  src=values/colors.xml
+COLOR  name=colorPrimary  value=#F32121  src=values/colors.xml
+COLOR  name=colorPrimaryDark  value=#D21919  src=values/colors.xml
+COLOR  name=color_light_grey  value=#4d4d4d  src=values/colors.xml
+COLOR  name=splashBackground  value=#FAF7F7  src=values/colors.xml
+DIMEN  name=two_dp  value=2dp  src=values/dimens.xml
+DIMEN  name=four_dp  value=4dp  src=values/dimens.xml
+DIMEN  name=eight_dp  value=8dp  src=values/dimens.xml
+DIMEN  name=sixteen_dp  value=16dp  src=values/dimens.xml
+DIMEN  name=text_medium  value=14sp  src=values/dimens.xml
+DIMEN  name=text_large  value=17sp  src=values/dimens.xml
+DIMEN  name=list_item_padding  value=8dp  src=values/dimens.xml
+STYLE  name=AppTheme  parent=Theme.AppCompat.Light.DarkActionBar  src=values/styles.xml
+STYLE  name=AppTheme.NoActionBar  parent=  src=values/styles.xml
+STYLE  name=AppTheme.AppBarOverlay  parent=ThemeOverlay.AppCompat.Dark.ActionBar  src=values/styles.xml
+STYLE  name=AppTheme.PopupOverlay  parent=ThemeOverlay.AppCompat.Light  src=values/styles.xml
+STYLE  name=Toolbar  parent=Theme.AppCompat  src=values/styles.xml
+STYLE  name=ToolbarStyle  parent=  src=values/styles.xml
+STYLE  name=ToolbarTitleTextAppearance  parent=TextAppearance.Widget.AppCompat.Toolbar.Title  src=values/styles.xml
+STYLE  name=ToolbarSubtitleTextAppearance  parent=TextAppearance.Widget.AppCompat.Toolbar.Subtitle  src=values/styles.xml
+
+
+-- Global Section: XML Resource
+// XML Resource:
+  (none detected)
+
+
+-- Global Section: ExternalLinks
+// ExternalLinks:
+  (none detected)
+
+
+-- Global Section: Notifications
+// Notifications:
+  (none detected)
+
+
+-- Global Section: Animations
+// Animations:
+  - ANIM call=view.animate() site=MedicineActivity.java#toggleCalendarExpansion:157
+
+
+-- Global Section: transition
+// transition:
+  (none detected)
+
+
+-- Global Section: Menu
+// Menu:
+MENU file=filter_history.xml owner=MonthlyReportFragment id=all titleRef=@string/all title="ALL" icon= showAsAction= actionViewClass= groupId= order= checkable=
+MENU file=filter_history.xml owner=MonthlyReportFragment id=taken titleRef=@string/taken title="TAKEN" icon= showAsAction= actionViewClass= groupId= order= checkable=
+MENU file=filter_history.xml owner=MonthlyReportFragment id=ignored titleRef=@string/ignored title="IGNORED" icon= showAsAction= actionViewClass= groupId= order= checkable=
+
+MENU file=history_menu.xml owner=MonthlyReportFragment id=menu_filter titleRef=@string/menu_filter title="Filter" icon=@drawable/ic_filter_list showAsAction=ifRoom actionViewClass= groupId= order= checkable=
+
+MENU file=medicine_menu.xml owner=MedicineActivity id=menu_stats titleRef=@string/menu_stats title="Monthly Report" icon=@drawable/ic_statistics showAsAction=ifRoom actionViewClass= groupId= order= checkable=
+
+
+-- Global Section: Drawable
+// Drawable:
+DRAWABLE name=background_configure_alarm_button type=xml folder=drawable root=selector path=drawable/background_configure_alarm_button.xml
+
+DRAWABLE name=background_configure_medication type=xml folder=drawable root=selector path=drawable/background_configure_medication.xml
+
+DRAWABLE name=background_day_view type=xml folder=drawable root=selector path=drawable/background_day_view.xml
+
+DRAWABLE name=background_status_medication type=xml folder=drawable root=selector path=drawable/background_status_medication.xml
+
+DRAWABLE name=background_take_alarm_button type=xml folder=drawable root=selector path=drawable/background_take_alarm_button.xml
+
+DRAWABLE name=background_take_medication type=xml folder=drawable root=selector path=drawable/background_take_medication.xml
+
+DRAWABLE name=drawable_underline type=xml folder=drawable root=layer-list path=drawable/drawable_underline.xml
+
+DRAWABLE name=ic_add type=png folder=drawable-hdpi path=drawable-hdpi/ic_add.png
+
+DRAWABLE name=ic_arrow_drop_down type=png folder=drawable-hdpi path=drawable-hdpi/ic_arrow_drop_down.png
+
+DRAWABLE name=ic_clear type=png folder=drawable-hdpi path=drawable-hdpi/ic_clear.png
+
+DRAWABLE name=ic_done type=png folder=drawable-hdpi path=drawable-hdpi/ic_done.png
+
+DRAWABLE name=ic_filter_list type=png folder=drawable-hdpi path=drawable-hdpi/ic_filter_list.png
+DREF drawable=ic_filter_list usedBy=history_menu.xml#menu_filter owner=MonthlyReportFragment
+
+DRAWABLE name=ic_launcher type=xml folder=mipmap-anydpi-v26 root=adaptive-icon path=mipmap-anydpi-v26/ic_launcher.xml
+
+DRAWABLE name=ic_launcher_background type=xml folder=drawable root=vector path=drawable/ic_launcher_background.xml
+
+DRAWABLE name=ic_launcher_foreground type=png folder=mipmap-hdpi path=mipmap-hdpi/ic_launcher_foreground.png
+
+DRAWABLE name=ic_launcher_round type=xml folder=mipmap-anydpi-v26 root=adaptive-icon path=mipmap-anydpi-v26/ic_launcher_round.xml
+
+DRAWABLE name=ic_statistics type=png folder=drawable-hdpi path=drawable-hdpi/ic_statistics.png
+DREF drawable=ic_statistics usedBy=medicine_menu.xml#menu_stats owner=MedicineActivity
+
+DRAWABLE name=icon_blister type=png folder=drawable path=drawable/icon_blister.png
+
+DRAWABLE name=icon_my_health type=png folder=drawable path=drawable/icon_my_health.png
+
+DRAWABLE name=image_reminder_configure type=png folder=drawable path=drawable/image_reminder_configure.png
+
+DRAWABLE name=image_reminder_configure_disabled type=png folder=drawable path=drawable/image_reminder_configure_disabled.png
+
+DRAWABLE name=image_reminder_configure_pressed type=png folder=drawable path=drawable/image_reminder_configure_pressed.png
+
+DRAWABLE name=image_reminder_not_taken type=png folder=drawable path=drawable/image_reminder_not_taken.png
+
+DRAWABLE name=image_reminder_take type=png folder=drawable path=drawable/image_reminder_take.png
+
+DRAWABLE name=image_reminder_take_disabled type=png folder=drawable path=drawable/image_reminder_take_disabled.png
+
+DRAWABLE name=image_reminder_take_pressed type=png folder=drawable path=drawable/image_reminder_take_pressed.png
+
+DRAWABLE name=image_reminder_taken type=png folder=drawable path=drawable/image_reminder_taken.png
+
+DRAWABLE name=logo type=png folder=drawable path=drawable/logo.png
+
+DRAWABLE name=touch_feedback type=xml folder=drawable root=selector path=drawable/touch_feedback.xml
+
+
+-- Global Section: Gesture Handlers & Swipe Behaviors (across all screens)
+// Gesture Handlers & Swipe Behaviors:
+  (no UI files found)
+
+
+== App Domain and User Profile ==
+-- App Domain: Health
+-- User Profile: Any (Elderly focus)
+
+---
+
+=== END OF ANALYSIS DATA ===  
+---
+
+QUESTION:  
+For every smell listed above, determine whether it is present **for the current screen only** by checking the metadata in (== Code Metadata ==), (== Global Code Metadata ==), and (== App Domain and User Profile ==) against the pseudocode rules. Only flag a smell if the rule conditions are clearly met.

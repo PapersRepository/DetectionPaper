@@ -1,0 +1,18 @@
+// Scheduling:
+  - SCHED tool=AlarmManager op=setRepeating type=AlarmManager.RTC_WAKEUP interval=AlarmManager.INTERVAL_DAY * 7 allowIdle=false site=MedicinePresenter.java#scheduleAlarm:75
+  - MedicinePresenter.java#scheduleAlarm:75 | alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarm_time, AlarmManager.INTERVAL_DAY * 7, operation)
+  - SCHED tool=AlarmManager op=cancel type=operation allowIdle=false site=MedicinePresenter.java#deleteMedicineAlarm:99
+  - MedicinePresenter.java#deleteMedicineAlarm:99 | alarmManager.cancel(operation)
+  - SCHED tool=AlarmManager op=setRepeating type=AlarmManager.RTC_WAKEUP interval=AlarmManager.INTERVAL_DAY * 7 allowIdle=false site=AddMedicineFragment.java#?:278
+  - AddMedicineFragment.java#?:278 | alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtMillis, AlarmManager.INTERVAL_DAY * 7, operation)
+  - SCHED tool=Handler op=postDelayed args=[new Runnable() { @Override public void run() { Intent intent = new Intent(SplashActivity.this, MedicineActivity.class); startActivity(intent); finish(); } }, 3000] site=SplashActivity.java#onCreate:19
+  - SplashActivity.java#onCreate:19 | handler.postDelayed(new Runnable() {
+
+    @Override
+    public void run() {
+        Intent intent = new Intent(SplashActivity.this, MedicineActivity.class);
+        startActivity(intent);
+        finish();
+    }
+}, 3000)
+

@@ -1,0 +1,8 @@
+// DeviceCapabilities:
+  - DEV call=getSystemService arg=android.content.Context.ALARM_SERVICE owner=com.vishwajeeth.medicinetime.medicine.MedicinePresenter site=MedicinePresenter.java#scheduleAlarm:60
+  - DEV call=getSystemService arg=android.content.Context.ALARM_SERVICE owner=com.vishwajeeth.medicinetime.medicine.MedicinePresenter site=MedicinePresenter.java#deleteMedicineAlarm:97
+  - DEV call=getSystemService arg=android.content.Context.ALARM_SERVICE owner=com.vishwajeeth.medicinetime.addmedicine.AddMedicineFragment site=AddMedicineFragment.java#<lambda>:276
+  - DEV call=getSystemService arg=android.content.Context.VIBRATOR_SERVICE owner=com.vishwajeeth.medicinetime.alarm.ReminderFragment site=ReminderFragment.java#showMedicine:104
+  - DEV buildField=Build.VERSION.SDK_INT owner=com.vishwajeeth.medicinetime.utils.ActivityUtils site=ActivityUtils.java#setBackGround:32
+  - DEV buildField=Build.VERSION_CODES.JELLY_BEAN owner=com.vishwajeeth.medicinetime.utils.ActivityUtils site=ActivityUtils.java#setBackGround:32
+

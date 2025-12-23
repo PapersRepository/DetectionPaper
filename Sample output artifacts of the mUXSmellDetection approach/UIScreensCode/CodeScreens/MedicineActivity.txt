@@ -1,0 +1,1046 @@
+- Resolved style values:
+//   popupTheme = @style/ThemeOverlay.AppCompat.Light
+//   colorControlHighlight = #3fff
+//   colorControlNormal = @android:color/white
+//   theme = @style/Toolbar
+//   android:minHeight = ?attr/actionBarSize
+//   titleTextAppearance = @style/ToolbarTitleTextAppearance
+//   subtitleTextAppearance = @style/ToolbarSubtitleTextAppearance
+//   windowNoTitle = true
+//   windowActionBar = false
+
+- Screen: MedicineActivity
+- Layout: activity_medicine.xml
+
+- XML Layout:
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:expanded="false"
+        app:layout_behavior="com.vishwajeeth.medicinetime.utils.ScrollingCalendarBehavior">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:minHeight="?attr/actionBarSize"
+            app:contentScrim="?attr/colorPrimary"
+            app:titleEnabled="false"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="?attr/colorPrimaryDark">
+
+            <LinearLayout
+                android:id="@+id/compactcalendar_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:paddingTop="?attr/actionBarSize"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="1.0">
+
+                <com.github.sundeepk.compactcalendarview.CompactCalendarView
+                    android:id="@+id/compactcalendar_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    app:compactCalendarBackgroundColor="?attr/colorPrimary"
+                    app:compactCalendarCurrentDayBackgroundColor="#FFC107"
+                    app:compactCalendarCurrentSelectedDayBackgroundColor="#BBDEFB"
+                    app:compactCalendarTextColor="#fff"
+                    app:compactCalendarTextSize="12sp" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/ToolbarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <!-- Date Picker -->
+                    <RelativeLayout
+                        android:id="@+id/date_picker_button"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:id="@+id/date_picker_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/white"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="16dp"/>
+
+                        <ImageView
+                            android:id="@+id/date_picker_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/date_picker_text_view"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            app:srcCompat="@drawable/ic_arrow_drop_down"
+                            tools:ignore="ContentDescription,RtlHardcoded" />
+                    </RelativeLayout>
+
+                    <!-- Deleted Medicines Button -->
+                    <Button
+                        android:id="@+id/btn_view_deleted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Deleted"
+                        android:textColor="@android:color/white"
+                        android:background="@android:color/transparent"
+                        android:padding="8dp"
+                        android:textAllCaps="false"/>
+                </LinearLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Content Frame for Fragment -->
+    <FrameLayout
+        android:id="@+id/contentFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!-- Add Medicine FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/sixteen_dp"
+        app:fabSize="normal"
+        app:layout_anchor="@id/contentFrame"
+        app:layout_anchorGravity="bottom|right|end"
+        app:srcCompat="@drawable/ic_add" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+// Media Element: id=date_picker_arrow, type=ImageView
+//   contentDescriptionPresent: false
+//   hasCaptionSibling: true (siblingId=date_picker_text_view)
+//   hasSubtitleOrTextTrack: true
+//   hasTranscriptLink: false
+//   captionSiblingPosition: prev
+//   captionSiblingTag: TextView
+
+- Associated Layout Files & Full XML:
+    (none)
+
+- Embedded Fragments:
+  (1) MedicineFragment:
+    // XML: fragment_medicine.xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/medicine_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/progressLoader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/no_med_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/noMedIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/icon_my_health" />
+
+        <com.vishwajeeth.medicinetime.views.RobotoLightTextView
+            android:id="@+id/noMedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/list_item_padding"
+            android:text="@string/no_medicine_added" />
+
+        <TextView
+            android:id="@+id/add_med_now"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:background="@drawable/touch_feedback"
+            android:gravity="center"
+            android:text="Add Now" />
+
+    </LinearLayout>
+</RelativeLayout>
+```
+    // Media Element: id=noMedIcon, type=ImageView
+    //   contentDescriptionPresent: true
+    //   hasCaptionSibling: true (siblingId=noMedText)
+    //   hasSubtitleOrTextTrack: false
+    //   hasTranscriptLink: false
+    //   captionSiblingPosition: next
+    //   captionSiblingTag: com.vishwajeeth.medicinetime.views.RobotoLightTextView
+    
+
+    // Full source (MedicineFragment.java)
+```java
+package com.vishwajeeth.medicinetime.medicine;
+
+import android.content.Intent;
+import android.os.Bundle;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.util.Log;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.vishwajeeth.medicinetime.R;
+import com.vishwajeeth.medicinetime.addmedicine.AddMedicineActivity;
+import com.vishwajeeth.medicinetime.data.source.MedicineAlarm;
+import com.vishwajeeth.medicinetime.views.RobotoLightTextView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.core.content.ContextCompat;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+
+public class MedicineFragment extends Fragment implements MedicineContract.View, MedicineAdapter.OnItemClickListener {
+
+    @BindView(R.id.medicine_list)
+    RecyclerView rvMedList;
+
+    @BindView(R.id.noMedIcon)
+    ImageView noMedIcon;
+
+    @BindView(R.id.noMedText)
+    RobotoLightTextView noMedText;
+
+    @BindView(R.id.add_med_now)
+    TextView addMedNow;
+
+    @BindView(R.id.no_med_view)
+    View noMedView;
+
+    @BindView(R.id.progressLoader)
+    ProgressBar progressLoader;
+
+    Unbinder unbinder;
+    private MedicineContract.Presenter presenter;
+    private MedicineAdapter medicineAdapter;
+
+    public static MedicineFragment newInstance() {
+        return new MedicineFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        medicineAdapter = new MedicineAdapter(new ArrayList<>(0), false);
+    }
+
+    public void refreshMedicineList() {
+        if (presenter != null) {
+            int today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+            presenter.reload(today);
+        }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_medicine, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        setAdapter();
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_task);
+        fab.setImageResource(R.drawable.ic_add);
+        fab.setOnClickListener(v -> presenter.addNewMedicine());
+    }
+
+    private void setAdapter() {
+        rvMedList.setAdapter(medicineAdapter);
+        rvMedList.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvMedList.setHasFixedSize(true);
+        medicineAdapter.setOnItemClickListener(this);
+
+        // 🧹 Add swipe-to-delete logic here
+        ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                MedicineAlarm alarmToDelete = medicineAdapter.getMedicineAt(position);
+
+                // Delete and move to deleted list
+                if (getActivity() instanceof MedicineActivity) {
+                    ((MedicineActivity) getActivity()).deleteMedicine(alarmToDelete);
+                }
+
+                // Remove from adapter and delete
+                medicineAdapter.removeMedicine(position);
+                presenter.deleteMedicineAlarm(alarmToDelete, getActivity());
+
+                // Optional: show Snackbar
+                Snackbar.make(rvMedList, "Medicine deleted", Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                    float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+                // Draw red background on swipe
+                ColorDrawable background = new ColorDrawable(Color.RED);
+                background.setBounds(viewHolder.itemView.getRight() + (int) dX,
+                        viewHolder.itemView.getTop(),
+                        viewHolder.itemView.getRight(),
+                        viewHolder.itemView.getBottom());
+                background.draw(c);
+            }
+        };
+
+        new ItemTouchHelper(swipeCallback).attachToRecyclerView(rvMedList);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        presenter.onStart(day);
+    }
+
+    @Override
+    public void setPresenter(MedicineContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void showLoadingIndicator(boolean active) {
+        if (getView() == null) return;
+        progressLoader.setVisibility(active ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showMedicineList(List<MedicineAlarm> medicineAlarmList) {
+        Log.d("DEBUG", "showMedicineList called with " + medicineAlarmList.size() + " items");
+
+        if (medicineAlarmList != null && !medicineAlarmList.isEmpty()) {
+            for (MedicineAlarm alarm : medicineAlarmList) {
+                Log.d("DEBUG", "Fragment received: " + alarm.getPillName());
+            }
+            medicineAdapter.replaceData(medicineAlarmList);
+            rvMedList.setVisibility(View.VISIBLE);
+            noMedView.setVisibility(View.GONE);
+        } else {
+            rvMedList.setVisibility(View.GONE);
+            noMedView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void showAddMedicine() {
+        Intent intent = new Intent(getContext(), AddMedicineActivity.class);
+        startActivityForResult(intent, AddMedicineActivity.REQUEST_ADD_TASK);
+    }
+
+    @Override
+    public void showMedicineDetails(long taskId, String medName) {
+        Intent intent = new Intent(getContext(), AddMedicineActivity.class);
+        intent.putExtra(AddMedicineActivity.EXTRA_TASK_ID, taskId);
+        intent.putExtra(AddMedicineActivity.EXTRA_TASK_NAME, medName);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showLoadingMedicineError() {
+        showMessage(getString(R.string.loading_tasks_error));
+    }
+
+    @Override
+    public void showNoMedicine() {
+        showNoTasksViews(getResources().getString(R.string.no_medicine_added));
+    }
+
+    @Override
+    public void showSuccessfullySavedMessage() {
+        showMessage(getString(R.string.successfully_saved_me_message));
+    }
+
+    @Override
+    public void showMedicineDeletedSuccessfully() {
+        showMessage(getString(R.string.successfully_deleted_message));
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        presenter.onStart(day);
+    }
+
+    private void showMessage(String message) {
+        if (getView() != null)
+            Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void showNoTasksViews(String mainText) {
+        rvMedList.setVisibility(View.GONE);
+        noMedView.setVisibility(View.VISIBLE);
+        noMedText.setText(mainText);
+        noMedIcon.setImageDrawable(getResources().getDrawable(R.drawable.icon_my_health));
+        addMedNow.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.add_med_now)
+    void addMedicine() {
+        showAddMedicine();
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        presenter.result(requestCode, resultCode);
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        presenter.reload(day);
+    }
+
+    @Override
+    public void onMedicineDeleteClicked(MedicineAlarm medicineAlarm) {
+        if (getActivity() instanceof MedicineActivity) {
+            ((MedicineActivity) getActivity()).deleteMedicine(medicineAlarm);
+        }
+        presenter.deleteMedicineAlarm(medicineAlarm, getActivity());
+    }
+
+    @Override
+    public void onMedicineRestoreClicked(MedicineAlarm medicineAlarm) {
+        // No action in main screen
+    }
+}
+```
+
+    // methods called within the inlined fragment (MedicineFragment.java)
+    // from MedicineAdapter.java: MedicineAdapter
+    // Update constructor to accept a boolean as well
+    public MedicineAdapter(List<MedicineAlarm> medicineAlarmList, boolean isDeletedUI) {
+        this.medicineAlarmList = medicineAlarmList;
+        // Set whether this is the deleted UI or not
+        this.isDeletedUI = isDeletedUI;
+    }
+    
+    // from MedicinePresenter.java: reload
+    @Override
+    public void reload(int day) {
+        Log.d("MedicinePresenter", "reload: day=" + day);
+        loadListByDay(day, true);
+    }
+    
+    // from MedicinePresenter.java: addNewMedicine
+    @Override
+    public void addNewMedicine() {
+        mMedView.showAddMedicine();
+    }
+    
+    // from MedicineAdapter.java: setOnItemClickListener
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+    
+    // from MedicineAdapter.java: getMedicineAt
+    public MedicineAlarm getMedicineAt(int position) {
+        return medicineAlarmList.get(position);
+    }
+    
+    // from MedicineActivity.java: deleteMedicine
+    public void deleteMedicine(MedicineAlarm alarm) {
+        deletedMedicines.add(alarm);
+        saveDeletedMedicines();
+    }
+    
+    // from MedicineAdapter.java: removeMedicine
+    public void removeMedicine(int position) {
+        if (medicineAlarmList != null && position >= 0 && position < medicineAlarmList.size()) {
+            medicineAlarmList.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+    
+    // from MedicinePresenter.java: deleteMedicineAlarm
+    @Override
+    public void deleteMedicineAlarm(MedicineAlarm medicineAlarm, Context context) {
+        List<MedicineAlarm> alarms = mMedicineRepository.getAllAlarms(medicineAlarm.getPillName());
+        for (MedicineAlarm alarm : alarms) {
+            mMedicineRepository.deleteAlarm(alarm.getId());
+            Intent intent = new Intent(context, ReminderActivity.class);
+            intent.putExtra(ReminderFragment.EXTRA_ID, alarm.getAlarmId());
+            PendingIntent operation = PendingIntent.getActivity(context, alarm.getAlarmId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager alarmManager = (AlarmManager) Objects.requireNonNull(context).getSystemService(ALARM_SERVICE);
+            if (alarmManager != null) {
+                alarmManager.cancel(operation);
+            }
+        }
+        mMedView.showMedicineDeletedSuccessfully();
+    }
+    
+    // from MedicinePresenter.java: onStart
+    @Override
+    public void onStart(int day) {
+        Log.d("MedicinePresenter", "onStart: day=" + day);
+        loadMedicinesByDay(day, true);
+    }
+    
+    // from MedicineAlarm.java: getPillName
+    public String getPillName() {
+        return pillName;
+    }
+    
+    // from MedicineAdapter.java: replaceData
+    public void replaceData(List<MedicineAlarm> medicineAlarmList) {
+        this.medicineAlarmList = medicineAlarmList;
+        notifyDataSetChanged();
+    }
+    
+    // from MedicinePresenter.java: result
+    @Override
+    public void result(int requestCode, int resultCode) {
+        if (AddMedicineActivity.REQUEST_ADD_TASK == requestCode && Activity.RESULT_OK == resultCode) {
+            Log.d("MedicinePresenter", "Add result received. Reloading...");
+            mMedView.showSuccessfullySavedMessage();
+            int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+            onStart(day);
+        }
+    }
+
+- Associated Menus & Full XML:
+  (1) medicine_menu.xml:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_stats"
+        android:title="@string/menu_stats"
+        android:icon="@drawable/ic_statistics"
+        app:showAsAction="ifRoom" />
+</menu>
+```
+
+- Resolved Attributes:
+    (none)
+
+- Source (MedicineActivity.java):
+package com.vishwajeeth.medicinetime.medicine;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.vishwajeeth.medicinetime.Injection;
+import com.vishwajeeth.medicinetime.R;
+import com.vishwajeeth.medicinetime.data.source.MedicineAlarm;
+import com.vishwajeeth.medicinetime.report.MonthlyReportActivity;
+import com.vishwajeeth.medicinetime.utils.ActivityUtils;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.ViewCompat;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+
+
+public class MedicineActivity extends AppCompatActivity {
+
+    @BindView(R.id.compactcalendar_view)
+    CompactCalendarView mCompactCalendarView;
+    @BindView(R.id.date_picker_text_view)
+    TextView datePickerTextView;
+    @BindView(R.id.date_picker_button)
+    RelativeLayout datePickerButton;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.collapsingToolbarLayout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.app_bar_layout)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.contentFrame)
+    FrameLayout contentFrame;
+    @BindView(R.id.fab_add_task)
+    FloatingActionButton fabAddTask;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.date_picker_arrow)
+    ImageView arrow;
+
+    private MedicinePresenter presenter;
+    private boolean isExpanded = false;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd", Locale.ENGLISH);
+
+    public static MedicineActivity instance;
+    public static final List<MedicineAlarm> deletedMedicines = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_medicine);
+        ButterKnife.bind(this);
+        instance = this;
+        setSupportActionBar(toolbar);
+
+        mCompactCalendarView.setLocale(TimeZone.getDefault(), Locale.ENGLISH);
+        mCompactCalendarView.setShouldDrawDaysHeader(true);
+
+        mCompactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+            @Override
+            public void onDayClick(Date dateClicked) {
+                setSubtitle(dateFormat.format(dateClicked));
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dateClicked);
+                int day = calendar.get(Calendar.DAY_OF_WEEK);
+                toggleCalendarExpansion();
+                presenter.reload(day);
+            }
+
+            @Override
+            public void onMonthScroll(Date firstDayOfNewMonth) {
+                setSubtitle(dateFormat.format(firstDayOfNewMonth));
+            }
+        });
+
+        setCurrentDate(new Date());
+
+        MedicineFragment medicineFragment = (MedicineFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.contentFrame);
+        if (medicineFragment == null) {
+            medicineFragment = MedicineFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), medicineFragment, R.id.contentFrame);
+        }
+
+        presenter = new MedicinePresenter(
+                Injection.provideMedicineRepository(MedicineActivity.this),
+                medicineFragment
+        );
+
+        // View deleted medicines
+        Button btnViewDeleted = findViewById(R.id.btn_view_deleted);
+        btnViewDeleted.setOnClickListener(v -> {
+            DeletedMedicinesActivity.deletedMedicinesList = new ArrayList<>(deletedMedicines);
+            startActivity(new Intent(MedicineActivity.this, DeletedMedicinesActivity.class));
+        });
+
+        loadDeletedMedicines();
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.medicine_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_stats) {
+            startActivity(new Intent(this, MonthlyReportActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setCurrentDate(Date date) {
+        setSubtitle(dateFormat.format(date));
+        mCompactCalendarView.setCurrentDate(date);
+    }
+
+    public void setSubtitle(String subtitle) {
+        datePickerTextView.setText(subtitle);
+    }
+
+    @OnClick(R.id.date_picker_button)
+    void onDatePickerButtonClicked() {
+        toggleCalendarExpansion();
+    }
+
+    private void toggleCalendarExpansion() {
+        ViewCompat.animate(arrow).rotation(isExpanded ? 0 : 180).start();
+        isExpanded = !isExpanded;
+        appBarLayout.setExpanded(isExpanded, true);
+    }
+
+    public void deleteMedicine(MedicineAlarm alarm) {
+        deletedMedicines.add(alarm);
+        saveDeletedMedicines();
+    }
+
+    public static void addRestoredMedicine(MedicineAlarm restoredAlarm) {
+        if (instance != null && instance.presenter != null) {
+            // Reset ID so it's treated as a new item
+            restoredAlarm.setId(0);
+
+            // ✅ Set only today = true in dayOfWeek[]
+            boolean[] days = new boolean[7];
+            int todayIndex = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1; // Calendar.SUNDAY=1, so subtract 1
+            days[todayIndex] = true;
+            restoredAlarm.setDayOfWeek(days);  // <-- This is the fix!
+
+            // Save and refresh
+            instance.presenter.saveMedicineAlarm(restoredAlarm);
+        }
+
+        // Remove from deleted list and persist
+        deletedMedicines.remove(restoredAlarm);
+        saveDeletedMedicines();
+    }
+
+
+
+
+    private static void saveDeletedMedicines() {
+        if (instance == null) return;
+
+        SharedPreferences sharedPreferences = instance.getSharedPreferences("DeletedMedicines", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String json = new Gson().toJson(deletedMedicines);
+        editor.putString("deleted_medicines", json);
+        editor.apply();
+    }
+
+    private void loadDeletedMedicines() {
+        SharedPreferences sharedPreferences = getSharedPreferences("DeletedMedicines", MODE_PRIVATE);
+        String json = sharedPreferences.getString("deleted_medicines", "[]");
+        List<MedicineAlarm> loaded = new Gson().fromJson(json,
+                new com.google.gson.reflect.TypeToken<List<MedicineAlarm>>(){}.getType());
+        deletedMedicines.clear();
+        deletedMedicines.addAll(loaded);
+    }
+
+
+}
+
+- Related code:
+    // from MedicinePresenter.java: reload
+    @Override
+    public void reload(int day) {
+        Log.d("MedicinePresenter", "reload: day=" + day);
+        loadListByDay(day, true);
+    }
+    
+    // from MedicineFragment.java: newInstance
+    public static MedicineFragment newInstance() {
+        return new MedicineFragment();
+    }
+    
+    // from ActivityUtils.java: addFragmentToActivity
+    /**
+     * The {@code fragment} is added to the container view with id {@code frameId}. The operation is
+     * performed by the {@code fragmentManager}.
+     */
+    public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment, int frameId) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(frameId, fragment);
+        transaction.commit();
+    }
+    
+    // from Injection.java: provideMedicineRepository
+    public static MedicineRepository provideMedicineRepository(@NonNull Context context) {
+        return MedicineRepository.getInstance(MedicinesLocalDataSource.getInstance(context));
+    }
+    
+    // from MedicinePresenter.java: MedicinePresenter
+    MedicinePresenter(@NonNull MedicineRepository medicineRepository, @NonNull MedicineContract.View medView) {
+        this.mMedicineRepository = medicineRepository;
+        this.mMedView = medView;
+        medView.setPresenter(this);
+    }
+    
+    // from MedicineAlarm.java: setId
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+    // from MedicineAlarm.java: setDayOfWeek
+    public void setDayOfWeek(boolean[] dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+    
+    // from MedicinePresenter.java: saveMedicineAlarm
+    public void saveMedicineAlarm(MedicineAlarm alarm) {
+        Log.d("DEBUG", "Saving restored alarm: " + alarm.getPillName());
+        mMedicineRepository.saveMedicineAlarm(alarm);
+        // ✅ Add this to reload today’s medicines after saving
+        int today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        reload(today);
+    }
+
+
+- Resolved Strings (screen-local)
+
+- Raw Evidence — Inputs (XML)
+  (none)
+
+- Raw Evidence — View Bindings
+  • btnViewDeleted ⇄ R.id.btn_view_deleted
+  • fab ⇄ R.id.fab_add_task
+  • mCompactCalendarView ⇄ R.id.compactcalendar_view
+  • datePickerTextView ⇄ R.id.date_picker_text_view
+  • datePickerButton ⇄ R.id.date_picker_button
+  • toolbar ⇄ R.id.toolbar
+  • collapsingToolbarLayout ⇄ R.id.collapsingToolbarLayout
+  • appBarLayout ⇄ R.id.app_bar_layout
+  • contentFrame ⇄ R.id.contentFrame
+  • fabAddTask ⇄ R.id.fab_add_task
+  • coordinatorLayout ⇄ R.id.coordinatorLayout
+  • arrow ⇄ R.id.date_picker_arrow
+  • rvMedList ⇄ R.id.medicine_list
+  • noMedIcon ⇄ R.id.noMedIcon
+  • noMedText ⇄ R.id.noMedText
+  • addMedNow ⇄ R.id.add_med_now
+  • noMedView ⇄ R.id.no_med_view
+  • progressLoader ⇄ R.id.progressLoader
+  • Annotated Handlers:
+    - @OnClick R.id.date_picker_button → onDatePickerButtonClicked @line 151
+    - @OnClick R.id.add_med_now → addMedicine @line 231
+
+- Clickables (XML + Code)
+  • origin_type=VIEW | origin_id=R.id.date_picker_button | tag=RelativeLayout | clickable=true | text= | contentDesc= | handler= | decl=activity_medicine.xml:-1
+  • origin_type=VIEW | origin_id=R.id.btn_view_deleted | tag=Button | clickable=true | text=Deleted | contentDesc= | handler=lambda | decl=MedicineActivity.java:118
+  • origin_type=MENU_ITEM | origin_id=menu_stats | tag= | clickable=true | text=Monthly Report | contentDesc= | handler=onOptionsItemSelected | decl=xml:-1
+
+- Raw Evidence — Gesture Handlers & Swipe Behaviors (screen-local)
+  • swipe=ItemTouchHelper.LEFT | recyclerVar=rvMedList (R.id.medicine_list) | onSwiped=true | actions=[delete] | messages=[Medicine deleted] | messageRefs=[] | at ?#setAdapter:103
+
+- Raw Evidence — Input Callsites (addTextChangedListener/setFilters/setInputType/...)
+  (none)
+
+- Raw Evidence — Search Callbacks (code)
+  • MedicineActivity.java#onCreateOptionsMenu:128  boolean onCreateOptionsMenu(Menu menu)
+{
+    getMenuInflater().inflate(R.menu.medicine_menu, menu);
+    return true;
+}
+  • MedicineActivity.java#onCreateOptionsMenu:128  boolean onCreateOptionsMenu(Menu menu)
+{
+    getMenuInflater().inflate(R.menu.medicine_menu, menu);
+    return true;
+}
+
+- Raw Evidence — Search Query Sources (verbatim SQL)
+  (none)
+
+- Raw Evidence — Filter Widgets (XML + listeners)
+  (none)
+
+- Raw Evidence — Adapter Filtering
+  (none)
+
+- Raw Evidence — Error Handling (try/catch, user-visible surfaces, guards, logs)
+  • try/catch: (none)
+  • error surfaces:
+    - Snackbar.make(rvMedList, "Medicine deleted", Snackbar.LENGTH_SHORT) @line 124 in onSwiped
+    - Snackbar.make(getView(), message, Snackbar.LENGTH_LONG) @line 220 in showMessage
+  • guards:
+    - if (medicineFragment == null) @line 106
+    - if (item.getItemId() == R.id.menu_stats) @line 136
+    - if (instance != null && instance.presenter != null) @line 168
+    - if (instance == null) @line 191
+    - if (presenter != null) @line 73
+    - if (getActivity() instanceof MedicineActivity) @line 115
+    - if (getView() == null) @line 160
+    - if (medicineAlarmList != null && !medicineAlarmList.isEmpty()) @line 168
+    - if (getView() != null) @line 219
+    - if (getActivity() instanceof MedicineActivity) @line 257
+  • logs: (none)
+  • results/navigation: (none)
+
+- Raw Evidence — Context Signals (screen-local)
+  CALL | (none)
+
+- Raw Evidence — Guards Using Context
+  COND | (none)
+
+- Raw Evidence — Outgoing Network Calls (screen-local)
+  NET | (none)
+
+- Raw Evidence — Dynamic Feedback & State (AST)
+  • dynamic:
+    - setText on datePickerTextView @line 148
+    - show on Snackbar.make(rvMedList, "Medicine deleted", Snackbar.LENGTH_SHORT) @line 124
+    - setVisibility on progressLoader @line 161
+    - setVisibility on rvMedList @line 173
+    - setVisibility on noMedView @line 174
+    - setVisibility on rvMedList @line 176
+    - setVisibility on noMedView @line 177
+    - show on Snackbar.make(getView(), message, Snackbar.LENGTH_LONG) @line 220
+    - setVisibility on rvMedList @line 224
+    - setVisibility on noMedView @line 225
+    - setText on noMedText @line 226
+    - setVisibility on addMedNow @line 228
+    - notifyDataSetChanged on this(MedicineAdapter) @line 31
+    - setText on holder.tvMedTime @line 50
+    - setText on holder.tvMedicineName @line 51
+    - setText on holder.tvDoseDetails @line 52
+    - setVisibility on holder.ivAlarmDelete @line 56
+    - setVisibility on holder.ivRestore @line 67
+    - setVisibility on holder.ivRestore @line 74
+    - notifyItemRemoved on this(MedicineAdapter) @line 113
+
+- Raw Evidence — Notifications (screen-local)
+  (none)
+
+- Raw Evidence — Alert Effects (screen-local)
+  (none)
+
+- Raw Evidence — Scheduling (screen-local)
+  (none)
+
+- Control Guards for Alert Calls (screen-local)
+  (none)
+
+- Raw Evidence — SharedPreferences (screen-local)
+  • WRITE  MedicineActivity.saveDeletedMedicines → 196 putString("deleted_medicines") | file="DeletedMedicines"
+  • READ  MedicineActivity.loadDeletedMedicines → 202 getString("deleted_medicines", "[]") | file="DeletedMedicines"
+
+- Top App Bar & Menu Items (merged)
+  • menuId=menu_stats | titleText="@string/menu_stats" | icon=ic_statistics | showAsAction=ifRoom | source=xml
+
+- Interactive Widget Tokens (screen-local)
+  • menu:medicine_menu.xml#menu_stats → tokens=[stats, statistics]
+
+- Resolved Resources (screen-local)
+  • @string/menu_stats = "Monthly Report"
+
+- Lifecycle → Calls (screen-local)
+  • onCreate → onCreate | at MedicineActivity.java#?:74
+  • onCreate → setContentView | at MedicineActivity.java#?:74
+  • onCreate → bind | at MedicineActivity.java#?:74
+  • onCreate → setSupportActionBar | at MedicineActivity.java#?:74
+  • onCreate → setLocale | at MedicineActivity.java#?:74
+  • onCreate → java.util.TimeZone.getDefault() | at MedicineActivity.java#?:74
+  • onCreate → setShouldDrawDaysHeader | at MedicineActivity.java#?:74
+  • onCreate → setListener | at MedicineActivity.java#?:74
+  • onCreate → setSubtitle | at MedicineActivity.java#?:74
+  • onCreate → format | at MedicineActivity.java#?:74
+  • onCreate → getInstance | at MedicineActivity.java#?:74
+  • onCreate → setTime | at MedicineActivity.java#?:74
+  • onCreate → get | at MedicineActivity.java#?:74
+  • onCreate → toggleCalendarExpansion | at MedicineActivity.java#?:74
+  • onCreate → reload | at MedicineActivity.java#?:74
+  • onCreate → setSubtitle | at MedicineActivity.java#?:74
+  • onCreate → format | at MedicineActivity.java#?:74
+  • onCreate → setCurrentDate | at MedicineActivity.java#?:74
+  • onCreate → findFragmentById | at MedicineActivity.java#?:74
+  • onCreate → getSupportFragmentManager | at MedicineActivity.java#?:74
+  • onCreate → newInstance | at MedicineActivity.java#?:74
+  • onCreate → addFragmentToActivity | at MedicineActivity.java#?:74
+  • onCreate → getSupportFragmentManager | at MedicineActivity.java#?:74
+  • onCreate → provideMedicineRepository | at MedicineActivity.java#?:74
+  • onCreate → findViewById | at MedicineActivity.java#?:74
+  • onCreate → android.view.View.setOnClickListener(android.view.View.OnClickListener) | at MedicineActivity.java#?:74
+  • onCreate → startActivity | at MedicineActivity.java#?:74
+  • onCreate → loadDeletedMedicines | at MedicineActivity.java#?:74
+
+- Actions & Intents from this screen
+  • startActivity | target=DeletedMedicinesActivity | action= | data= | type= | extras=[] | site=MedicineActivity.java#onCreate:120
+  • startActivity | target=MonthlyReportActivity | action= | data= | type= | extras=[] | site=MedicineActivity.java#onOptionsItemSelected:137

@@ -1,0 +1,1002 @@
+- Resolved style values:
+//   popupTheme = @style/ThemeOverlay.AppCompat.Light
+//   colorControlHighlight = #3fff
+//   colorControlNormal = @android:color/white
+//   theme = @style/Toolbar
+//   android:minHeight = ?attr/actionBarSize
+//   titleTextAppearance = @style/ToolbarTitleTextAppearance
+//   subtitleTextAppearance = @style/ToolbarSubtitleTextAppearance
+//   windowNoTitle = true
+//   windowActionBar = false
+
+- Screen: AddMedicineActivity
+- Layout: activity_add_medicine.xml
+
+- XML Layout:
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".addmedicine.AddMedicineActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/ToolbarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/contentFrame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_edit_task_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/sixteen_dp"
+                app:fabSize="normal"
+                app:layout_anchor="@id/contentFrame"
+                app:layout_anchorGravity="bottom|right|end"
+                app:srcCompat="@drawable/ic_add" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
+
+
+- Associated Layout Files & Full XML:
+    (none)
+
+- Embedded Fragments:
+  (1) AddMedicineFragment:
+    // XML: fragment_add_medicine.xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eight_dp"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/four_dp"
+            app:cardElevation="@dimen/two_dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="@dimen/sixteen_dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.vishwajeeth.medicinetime.views.RobotoBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_medicine_name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_medium" />
+
+                <EditText
+                    android:id="@+id/edit_med_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_enter_med_name" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eight_dp"
+            app:cardCornerRadius="@dimen/four_dp"
+            app:cardElevation="@dimen/two_dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="@dimen/sixteen_dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.vishwajeeth.medicinetime.views.RobotoBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/medicine_days"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_medium" />
+
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/every_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/every_day" />
+
+                <LinearLayout
+                    android:id="@+id/checkbox_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="7">
+
+                    <com.vishwajeeth.medicinetime.views.DayViewCheckBox
+                        android:id="@+id/dv_sunday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_day_view"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="S" />
+
+                    <com.vishwajeeth.medicinetime.views.DayViewCheckBox
+                        android:id="@+id/dv_monday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_day_view"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="M" />
+
+
+                    <com.vishwajeeth.medicinetime.views.DayViewCheckBox
+                        android:id="@+id/dv_tuesday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_day_view"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="T" />
+
+                    <com.vishwajeeth.medicinetime.views.DayViewCheckBox
+                        android:id="@+id/dv_wednesday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_day_view"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="W" />
+
+                    <com.vishwajeeth.medicinetime.views.DayViewCheckBox
+                        android:id="@+id/dv_thursday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_day_view"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="T" />
+
+                    <com.vishwajeeth.medicinetime.views.DayViewCheckBox
+                        android:id="@+id/dv_friday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_day_view"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="F" />
+
+
+                    <com.vishwajeeth.medicinetime.views.DayViewCheckBox
+                        android:id="@+id/dv_saturday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_day_view"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="S" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eight_dp"
+            app:cardCornerRadius="@dimen/four_dp"
+            app:cardElevation="@dimen/two_dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="@dimen/sixteen_dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.vishwajeeth.medicinetime.views.RobotoBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_reminder"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_medium" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.vishwajeeth.medicinetime.views.RobotoBoldTextView
+                        android:id="@+id/tv_medicine_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_underline"
+                        android:gravity="center"
+                        android:padding="@dimen/four_dp"
+                        android:textSize="@dimen/text_large"
+                        android:textStyle="bold"
+                        android:textColor="#4d4d4d"
+                        tools:text="23:30" />
+
+                    <EditText
+                        android:id="@+id/tv_dose_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_underline"
+                        android:gravity="center"
+                        android:padding="@dimen/four_dp"
+                        android:text="1.0" />
+
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/spinner_dose_units"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:entries="@array/medications_shape_array" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+```
+
+    // Full source (AddMedicineFragment.java)
+```java
+package com.vishwajeeth.medicinetime.addmedicine;
+
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.vishwajeeth.medicinetime.R;
+import com.vishwajeeth.medicinetime.alarm.ReminderActivity;
+import com.vishwajeeth.medicinetime.alarm.ReminderFragment;
+import com.vishwajeeth.medicinetime.data.source.MedicineAlarm;
+import com.vishwajeeth.medicinetime.data.source.Pills;
+import com.vishwajeeth.medicinetime.views.DayViewCheckBox;
+import com.vishwajeeth.medicinetime.views.RobotoBoldTextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Random;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnItemSelected;
+import butterknife.Unbinder;
+
+import static android.content.Context.ALARM_SERVICE;
+
+public class AddMedicineFragment extends Fragment implements AddMedicineContract.View {
+
+    public static final String ARGUMENT_EDIT_MEDICINE_ID = "ARGUMENT_EDIT_MEDICINE_ID";
+    public static final String ARGUMENT_EDIT_MEDICINE_NAME = "ARGUMENT_EDIT_MEDICINE_NAME";
+
+    @BindView(R.id.edit_med_name)
+    EditText editMedName;
+
+    @BindView(R.id.every_day)
+    AppCompatCheckBox everyDay;
+
+    @BindView(R.id.dv_sunday)
+    DayViewCheckBox dvSunday;
+    @BindView(R.id.dv_monday)
+    DayViewCheckBox dvMonday;
+    @BindView(R.id.dv_tuesday)
+    DayViewCheckBox dvTuesday;
+    @BindView(R.id.dv_wednesday)
+    DayViewCheckBox dvWednesday;
+    @BindView(R.id.dv_thursday)
+    DayViewCheckBox dvThursday;
+    @BindView(R.id.dv_friday)
+    DayViewCheckBox dvFriday;
+    @BindView(R.id.dv_saturday)
+    DayViewCheckBox dvSaturday;
+
+    @BindView(R.id.checkbox_layout)
+    LinearLayout checkboxLayout;
+
+    @BindView(R.id.tv_medicine_time)
+    RobotoBoldTextView tvMedicineTime;
+
+    @BindView(R.id.tv_dose_quantity)
+    EditText tvDoseQuantity;
+
+    @BindView(R.id.spinner_dose_units)
+    AppCompatSpinner spinnerDoseUnits;
+
+    private List<String> doseUnitList;
+    private boolean[] dayOfWeekList = new boolean[7];
+    private int hour, minute;
+    private AddMedicineContract.Presenter mPresenter;
+    private View rootView;
+    private String doseUnit;
+    private Unbinder unbinder;
+
+    static AddMedicineFragment newInstance() {
+        return new AddMedicineFragment();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        FloatingActionButton fab = Objects.requireNonNull(getActivity()).findViewById(R.id.fab_edit_task_done);
+        fab.setImageResource(R.drawable.ic_done);
+        fab.setOnClickListener(setClickListener);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_add_medicine, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
+        setCurrentTime();
+        setSpinnerDoseUnits();
+        return rootView;
+    }
+
+    @Override
+    public void setPresenter(AddMedicineContract.Presenter presenter) {
+        this.mPresenter = presenter;
+    }
+
+    @Override
+    public void showEmptyMedicineError() {
+        Toast.makeText(getContext(), "Please enter a valid medicine name", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showMedicineList() {
+        Objects.requireNonNull(getActivity()).setResult(Activity.RESULT_OK);
+        getActivity().finish();
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick({R.id.every_day, R.id.dv_monday, R.id.dv_tuesday, R.id.dv_wednesday,
+            R.id.dv_thursday, R.id.dv_friday, R.id.dv_saturday, R.id.dv_sunday})
+    public void onCheckboxClicked(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+        switch (view.getId()) {
+            case R.id.dv_sunday:    dayOfWeekList[0] = checked; break;
+            case R.id.dv_monday:    dayOfWeekList[1] = checked; break;
+            case R.id.dv_tuesday:   dayOfWeekList[2] = checked; break;
+            case R.id.dv_wednesday: dayOfWeekList[3] = checked; break;
+            case R.id.dv_thursday:  dayOfWeekList[4] = checked; break;
+            case R.id.dv_friday:    dayOfWeekList[5] = checked; break;
+            case R.id.dv_saturday:  dayOfWeekList[6] = checked; break;
+        }
+        if (!checked) everyDay.setChecked(false);
+        if (view.getId() == R.id.every_day) {
+            for (int i = 0; i < checkboxLayout.getChildCount(); i++) {
+                View v = checkboxLayout.getChildAt(i);
+                if (v instanceof DayViewCheckBox) {
+                    ((DayViewCheckBox) v).setChecked(checked);
+                    onCheckboxClicked(v);
+                }
+            }
+        }
+    }
+
+    @OnClick(R.id.tv_medicine_time)
+    void onMedicineTimeClick() {
+        showTimePicker();
+    }
+
+    private void showTimePicker() {
+        Calendar mCurrentTime = Calendar.getInstance();
+        hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
+        minute = mCurrentTime.get(Calendar.MINUTE);
+        TimePickerDialog mTimePicker = new TimePickerDialog(getContext(), (timePicker, selectedHour, selectedMinute) -> {
+            hour = selectedHour;
+            minute = selectedMinute;
+            tvMedicineTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
+        }, hour, minute, false);
+        mTimePicker.setTitle("Select Time");
+        mTimePicker.show();
+    }
+
+    private void setCurrentTime() {
+        Calendar current = Calendar.getInstance();
+        hour = current.get(Calendar.HOUR_OF_DAY);
+        minute = current.get(Calendar.MINUTE);
+        tvMedicineTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
+    }
+
+    private void setSpinnerDoseUnits() {
+        doseUnitList = Arrays.asList(getResources().getStringArray(R.array.medications_shape_array));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, doseUnitList);
+        spinnerDoseUnits.setAdapter(adapter);
+    }
+
+    @OnItemSelected(R.id.spinner_dose_units)
+    void onSpinnerItemSelected(int position) {
+        if (doseUnitList != null && !doseUnitList.isEmpty()) {
+            doseUnit = doseUnitList.get(position);
+        }
+    }
+
+    private final View.OnClickListener setClickListener = v -> {
+        String pillName = editMedName.getText().toString().trim();
+        String doseQuantity = tvDoseQuantity.getText().toString().trim();
+        if (pillName.isEmpty()) {
+            showEmptyMedicineError();
+            return;
+        }
+
+        Calendar now = Calendar.getInstance();
+        String dateString = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(now.getTime());
+
+        MedicineAlarm alarm = new MedicineAlarm();
+        int alarmId = new Random().nextInt(1000);
+
+        Pills pill = mPresenter.isMedicineExits(pillName) ? mPresenter.getPillsByName(pillName) : new Pills();
+        pill.setPillName(pillName);
+        alarm.setDateString(dateString);
+        alarm.setHour(hour);
+        alarm.setMinute(minute);
+        alarm.setPillName(pillName);
+        alarm.setDayOfWeek(dayOfWeekList);
+        alarm.setDoseUnit(doseUnit);
+        alarm.setDoseQuantity(doseQuantity);
+        alarm.setAlarmId(alarmId);
+        pill.addAlarm(alarm);
+
+        if (!mPresenter.isMedicineExits(pillName)) {
+            long pillId = mPresenter.addPills(pill);
+            pill.setPillId(pillId);
+        }
+
+        mPresenter.saveMedicine(alarm, pill);
+
+        List<Long> ids = new LinkedList<>();
+        List<MedicineAlarm> alarms = mPresenter.getMedicineByPillName(pillName);
+        for (MedicineAlarm a : alarms) {
+            if (a.getHour() == hour && a.getMinute() == minute) {
+                ids = a.getIds();
+                break;
+            }
+        }
+
+        int count = 0;
+        for (int i = 0; i < 7; i++) {
+            if (dayOfWeekList[i]) {
+                int dayOfWeek = i + 1;
+                long idLong = ids.get(count++);
+                int id = (int) idLong;
+
+                Intent intent = new Intent(getActivity(), ReminderActivity.class);
+                intent.putExtra(ReminderFragment.EXTRA_ID, idLong);
+
+                PendingIntent operation = PendingIntent.getActivity(
+                        getActivity(), id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.HOUR_OF_DAY, hour);
+                cal.set(Calendar.MINUTE, minute);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                cal.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+
+                long triggerAtMillis = cal.getTimeInMillis();
+                if (cal.before(Calendar.getInstance())) {
+                    triggerAtMillis += AlarmManager.INTERVAL_DAY * 7;
+                }
+
+                AlarmManager alarmManager = (AlarmManager) requireActivity().getSystemService(ALARM_SERVICE);
+                if (alarmManager != null) {
+                    alarmManager.setRepeating(
+                            AlarmManager.RTC_WAKEUP,
+                            triggerAtMillis,
+                            AlarmManager.INTERVAL_DAY * 7,
+                            operation
+                    );
+                }
+            }
+        }
+
+        Toast.makeText(getContext(), "Alarm for " + pillName + " is set successfully", Toast.LENGTH_SHORT).show();
+        showMedicineList();  // ✅ returns RESULT_OK to MedicineActivity
+    };
+}
+```
+
+    // methods called within the inlined fragment (AddMedicineFragment.java)
+    // from MedicineAlarm.java: MedicineAlarm
+    public MedicineAlarm() {
+    }
+    
+    // from AddMedicinePresenter.java: isMedicineExits
+    @Override
+    public boolean isMedicineExits(String pillName) {
+        return mMedicineRepository.medicineExits(pillName);
+    }
+    
+    // from Pills.java: Pills
+    public Pills() {
+    }
+    
+    // from AddMedicinePresenter.java: getPillsByName
+    @Override
+    public Pills getPillsByName(String pillName) {
+        return mMedicineRepository.getPillsByName(pillName);
+    }
+    
+    // from Pills.java: setPillName
+    public void setPillName(String pillName) {
+        this.pillName = pillName;
+    }
+    
+    // from MedicineAlarm.java: setDateString
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+    
+    // from MedicineAlarm.java: setHour
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+    
+    // from MedicineAlarm.java: setMinute
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+    
+    // from MedicineAlarm.java: setPillName
+    public void setPillName(String pillName) {
+        this.pillName = pillName;
+    }
+    
+    // from MedicineAlarm.java: setDayOfWeek
+    public void setDayOfWeek(boolean[] dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+    
+    // from MedicineAlarm.java: setDoseUnit
+    public void setDoseUnit(String doseUnit) {
+        this.doseUnit = doseUnit;
+    }
+    
+    // from MedicineAlarm.java: setDoseQuantity
+    public void setDoseQuantity(String doseQuantity) {
+        this.doseQuantity = doseQuantity;
+    }
+    
+    // from MedicineAlarm.java: setAlarmId
+    public void setAlarmId(int alarmId) {
+        this.alarmId = alarmId;
+    }
+    
+    // from Pills.java: addAlarm
+    public void addAlarm(MedicineAlarm medicineAlarm) {
+        medicineAlarms.add(medicineAlarm);
+        Collections.sort(medicineAlarms);
+    }
+    
+    // from AddMedicinePresenter.java: addPills
+    @Override
+    public long addPills(Pills pills) {
+        return mMedicineRepository.savePills(pills);
+    }
+    
+    // from Pills.java: setPillId
+    public void setPillId(long pillId) {
+        this.pillId = pillId;
+    }
+    
+    // from AddMedicinePresenter.java: saveMedicine
+    @Override
+    public void saveMedicine(MedicineAlarm alarm, Pills pills) {
+        mMedicineRepository.saveMedicine(alarm, pills);
+    }
+    
+    // from AddMedicinePresenter.java: getMedicineByPillName
+    @Override
+    public List<MedicineAlarm> getMedicineByPillName(String pillName) {
+        return mMedicineRepository.getMedicineByPillName(pillName);
+    }
+    
+    // from MedicineAlarm.java: getHour
+    public int getHour() {
+        return hour;
+    }
+    
+    // from MedicineAlarm.java: getMinute
+    public int getMinute() {
+        return minute;
+    }
+    
+    // from MedicineAlarm.java: getIds
+    public List<Long> getIds() {
+        return Collections.unmodifiableList(ids);
+    }
+    
+    // from DayViewCheckBox.java: setChecked
+    @Override
+    public void setChecked(boolean t) {
+        if (t) {
+            this.setTextColor(Color.WHITE);
+        } else {
+            this.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        }
+        super.setChecked(t);
+    }
+    
+    // Dialog-related method showTimePicker (already in Source)
+
+- Associated Menus & Full XML:
+    (none)
+
+- Resolved Attributes:
+    (none)
+
+- Source (AddMedicineActivity.java):
+package com.vishwajeeth.medicinetime.addmedicine;
+
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.vishwajeeth.medicinetime.Injection;
+import com.vishwajeeth.medicinetime.R;
+import com.vishwajeeth.medicinetime.utils.ActivityUtils;
+
+public class AddMedicineActivity extends AppCompatActivity {
+
+    public static final int REQUEST_ADD_TASK = 1;
+    public static final String SHOULD_LOAD_DATA_FROM_REPO_KEY = "SHOULD_LOAD_DATA_FROM_REPO_KEY";
+    public static final String EXTRA_TASK_ID = "task_extra_id";
+    public static final String EXTRA_TASK_NAME = "task_extra_name";
+
+    private AddMedicinePresenter mAddMedicinePresenter;
+    private ActionBar mActionBar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_medicine);
+
+        // Setup toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        mActionBar = getSupportActionBar();
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+            mActionBar.setDisplayShowHomeEnabled(true);
+        }
+
+        int medId = getIntent().getIntExtra(AddMedicineFragment.ARGUMENT_EDIT_MEDICINE_ID, 0);
+        String medName = getIntent().getStringExtra(AddMedicineFragment.ARGUMENT_EDIT_MEDICINE_NAME);
+        setToolbarTitle(medName);
+
+        AddMedicineFragment addMedicineFragment = (AddMedicineFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if (addMedicineFragment == null) {
+            addMedicineFragment = AddMedicineFragment.newInstance();
+            if (getIntent().hasExtra(AddMedicineFragment.ARGUMENT_EDIT_MEDICINE_ID)) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(AddMedicineFragment.ARGUMENT_EDIT_MEDICINE_ID, medId);
+                addMedicineFragment.setArguments(bundle);
+            }
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+                    addMedicineFragment, R.id.contentFrame);
+        }
+
+        boolean shouldLoadDataFromRepo = true;
+        if (savedInstanceState != null) {
+            shouldLoadDataFromRepo = savedInstanceState.getBoolean(SHOULD_LOAD_DATA_FROM_REPO_KEY);
+        }
+
+        mAddMedicinePresenter = new AddMedicinePresenter(
+                medId,
+                Injection.provideMedicineRepository(getApplicationContext()),
+                addMedicineFragment,
+                shouldLoadDataFromRepo
+        );
+    }
+
+    public void setToolbarTitle(String medicineName) {
+        if (mActionBar != null) {
+            if (medicineName == null) {
+                mActionBar.setTitle(getString(R.string.new_medicine));
+            } else {
+                mActionBar.setTitle(medicineName);
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putBoolean(SHOULD_LOAD_DATA_FROM_REPO_KEY, mAddMedicinePresenter.isDataMissing());
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+}
+
+
+- Related code:
+    // from AddMedicineFragment.java: newInstance
+    static AddMedicineFragment newInstance() {
+        return new AddMedicineFragment();
+    }
+    
+    // from ActivityUtils.java: addFragmentToActivity
+    /**
+     * The {@code fragment} is added to the container view with id {@code frameId}. The operation is
+     * performed by the {@code fragmentManager}.
+     */
+    public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment, int frameId) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(frameId, fragment);
+        transaction.commit();
+    }
+    
+    // from Injection.java: provideMedicineRepository
+    public static MedicineRepository provideMedicineRepository(@NonNull Context context) {
+        return MedicineRepository.getInstance(MedicinesLocalDataSource.getInstance(context));
+    }
+    
+    // from AddMedicinePresenter.java: AddMedicinePresenter
+    public AddMedicinePresenter(int mMedicineId, @NonNull MedicineDataSource mMedicineRepository, AddMedicineContract.View mAddMedicineView, boolean mIsDataMissing) {
+        this.mMedicineId = mMedicineId;
+        this.mMedicineRepository = mMedicineRepository;
+        this.mAddMedicineView = mAddMedicineView;
+        this.mIsDataMissing = mIsDataMissing;
+        mAddMedicineView.setPresenter(this);
+    }
+    
+    // from AddMedicinePresenter.java: isDataMissing
+    @Override
+    public boolean isDataMissing() {
+        return mIsDataMissing;
+    }
+
+
+- Resolved Strings (screen-local)
+  • @string/new_medicine = "NEW MEDICINE"
+
+- Raw Evidence — Inputs (XML)
+  • edit_med_name [EditText]
+    attrs: android:hint=@string/hint_enter_med_name
+  • tv_dose_quantity [EditText]
+
+- Raw Evidence — View Bindings
+  • toolbar ⇄ R.id.toolbar
+  • fab ⇄ R.id.fab_edit_task_done
+  • editMedName ⇄ R.id.edit_med_name
+  • everyDay ⇄ R.id.every_day
+  • dvSunday ⇄ R.id.dv_sunday
+  • dvMonday ⇄ R.id.dv_monday
+  • dvTuesday ⇄ R.id.dv_tuesday
+  • dvWednesday ⇄ R.id.dv_wednesday
+  • dvThursday ⇄ R.id.dv_thursday
+  • dvFriday ⇄ R.id.dv_friday
+  • dvSaturday ⇄ R.id.dv_saturday
+  • checkboxLayout ⇄ R.id.checkbox_layout
+  • tvMedicineTime ⇄ R.id.tv_medicine_time
+  • tvDoseQuantity ⇄ R.id.tv_dose_quantity
+  • spinnerDoseUnits ⇄ R.id.spinner_dose_units
+  • Annotated Handlers:
+    - @OnClick R.id.every_day, R.id.dv_monday, R.id.dv_tuesday, R.id.dv_wednesday, R.id.dv_thursday, R.id.dv_friday, R.id.dv_saturday, R.id.dv_sunday → onCheckboxClicked @line 146
+    - @OnClick R.id.tv_medicine_time → onMedicineTimeClick @line 171
+    - @OnItemSelected R.id.spinner_dose_units → onSpinnerItemSelected @line 202
+
+- Clickables (XML + Code)
+  (none)
+
+- Raw Evidence — Gesture Handlers & Swipe Behaviors (screen-local)
+  (none)
+
+- Raw Evidence — Input Callsites (addTextChangedListener/setFilters/setInputType/...)
+  (none)
+  • Picker constructions:
+    - new TimePickerDialog(getContext(), (timePicker, selectedHour, selectedMinute) -> {
+    hour = selectedHour;
+    minute = selectedMinute;
+    tvMedicineTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
+}, hour, minute, false) @line 180 in showTimePicker
+
+- Raw Evidence — Search Callbacks (code)
+  (none)
+
+- Raw Evidence — Search Query Sources (verbatim SQL)
+  (none)
+
+- Raw Evidence — Filter Widgets (XML + listeners)
+  (none)
+
+- Raw Evidence — Adapter Filtering
+  (none)
+
+- Raw Evidence — Error Handling (try/catch, user-visible surfaces, guards, logs)
+  • try/catch: (none)
+  • error surfaces:
+    - Toast.makeText(getContext(), "Please enter a valid medicine name", Toast.LENGTH_SHORT) @line 126 in showEmptyMedicineError
+    - Toast.makeText(getContext(), "Alarm for " + pillName + " is set successfully", Toast.LENGTH_SHORT) @line 288 in <init>
+  • guards:
+    - if (mActionBar != null) @line 32
+    - if (getIntent().hasExtra(AddMedicineFragment.ARGUMENT_EDIT_MEDICINE_ID)) @line 44
+    - if (addMedicineFragment == null) @line 42
+    - if (savedInstanceState != null) @line 54
+    - if (medicineName == null) @line 68
+    - if (mActionBar != null) @line 67
+    - if (!checked) @line 159
+    - if (v instanceof DayViewCheckBox) @line 163
+    - if (view.getId() == R.id.every_day) @line 160
+    - if (doseUnitList != null && !doseUnitList.isEmpty()) @line 204
+    - if (pillName.isEmpty()) @line 212
+    - if (!mPresenter.isMedicineExits(pillName)) @line 235
+    - if (a.getHour() == hour && a.getMinute() == minute) @line 245
+    - if (cal.before(Calendar.getInstance())) @line 272
+    - if (alarmManager != null) @line 277
+    - if (dayOfWeekList[i]) @line 253
+  • logs: (none)
+  • results/navigation:
+    - Objects.requireNonNull(getActivity()).setResult(Activity.RESULT_OK) @line 131 in showMedicineList
+    - getActivity().finish() @line 132 in showMedicineList
+
+- Raw Evidence — Context Signals (screen-local)
+  CALL | (none)
+
+- Raw Evidence — Guards Using Context
+  COND | (none)
+
+- Raw Evidence — Outgoing Network Calls (screen-local)
+  NET | (none)
+
+- Raw Evidence — Dynamic Feedback & State (AST)
+  • dynamic:
+    - show on Toast.makeText(getContext(), "Please enter a valid medicine name", Toast.LENGTH_SHORT) @line 126
+    - setText on tvMedicineTime @line 183
+    - setText on tvMedicineTime @line 193
+    - show on Toast.makeText(getContext(), "Alarm for " + pillName + " is set successfully", Toast.LENGTH_SHORT) @line 288
+  • state-preservation:
+    - onSaveInstanceState @line 76
+
+- Raw Evidence — Notifications (screen-local)
+  (none)
+
+- Raw Evidence — Alert Effects (screen-local)
+  (none)
+
+- Raw Evidence — Scheduling (screen-local)
+  (none)
+
+- Control Guards for Alert Calls (screen-local)
+  (none)
+
+- Raw Evidence — SharedPreferences (screen-local)
+  (none)
+
+- Top App Bar & Menu Items (merged)
+  (none)
+
+- Lifecycle → Calls (screen-local)
+  • onCreate → onCreate | at AddMedicineActivity.java#?:23
+  • onCreate → setContentView | at AddMedicineActivity.java#?:23
+  • onCreate → findViewById | at AddMedicineActivity.java#?:23
+  • onCreate → setSupportActionBar | at AddMedicineActivity.java#?:23
+  • onCreate → getSupportActionBar | at AddMedicineActivity.java#?:23
+  • onCreate → setDisplayHomeAsUpEnabled | at AddMedicineActivity.java#?:23
+  • onCreate → setDisplayShowHomeEnabled | at AddMedicineActivity.java#?:23
+  • onCreate → getIntExtra | at AddMedicineActivity.java#?:23
+  • onCreate → getIntent | at AddMedicineActivity.java#?:23
+  • onCreate → getStringExtra | at AddMedicineActivity.java#?:23
+  • onCreate → getIntent | at AddMedicineActivity.java#?:23
+  • onCreate → setToolbarTitle | at AddMedicineActivity.java#?:23
+  • onCreate → findFragmentById | at AddMedicineActivity.java#?:23
+  • onCreate → getSupportFragmentManager | at AddMedicineActivity.java#?:23
+  • onCreate → newInstance | at AddMedicineActivity.java#?:23
+  • onCreate → hasExtra | at AddMedicineActivity.java#?:23
+  • onCreate → getIntent | at AddMedicineActivity.java#?:23
+  • onCreate → putInt | at AddMedicineActivity.java#?:23
+  • onCreate → setArguments | at AddMedicineActivity.java#?:23
+  • onCreate → addFragmentToActivity | at AddMedicineActivity.java#?:23
+  • onCreate → getSupportFragmentManager | at AddMedicineActivity.java#?:23
+  • onCreate → getBoolean | at AddMedicineActivity.java#?:23
+  • onCreate → provideMedicineRepository | at AddMedicineActivity.java#?:23
+  • onCreate → getApplicationContext | at AddMedicineActivity.java#?:23
+
+- Actions & Intents from this screen
+  (none)

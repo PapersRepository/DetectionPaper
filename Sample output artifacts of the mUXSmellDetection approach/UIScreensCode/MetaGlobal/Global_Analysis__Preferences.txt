@@ -1,0 +1,27 @@
+// Preferences:
+  - MedicineActivity.java
+
+// Preferences (Global Key Index):
+  (none detected)
+
+// Java Cross-References:
+- deleted_medicines (not in Global Key Index)
+  reads:
+    - MedicineActivity.java#loadDeletedMedicines:202 (getString) [file: "DeletedMedicines"]
+  writes:
+    - MedicineActivity.java#saveDeletedMedicines:196 (putString) [file: "DeletedMedicines"]
+
+// Preference Files:
+- DeletedMedicines: MedicineActivity#loadDeletedMedicines:201, MedicineActivity#saveDeletedMedicines:193
+
+// Raw preference evidence (A1–A4):
+PREF_READ_DEFAULT  class=com.vishwajeeth.medicinetime.medicine.MedicineActivity  method=loadDeletedMedicines  call=getString("deleted_medicines", "[]")  defaultExpr="[]"  defaultResolved="[]"
+
+// Preferences (used as guards in if-conditions):
+  (none)
+
+// Normalized Preference Access (per callsite):
+PREF_READ key=deleted_medicines file=DeletedMedicines site=MedicineActivity.java#loadDeletedMedicines:202 default="[]"
+PREF_WRITE key=deleted_medicines file=DeletedMedicines site=MedicineActivity.java#saveDeletedMedicines:196
+  // (no direct conditional uses detected)
+

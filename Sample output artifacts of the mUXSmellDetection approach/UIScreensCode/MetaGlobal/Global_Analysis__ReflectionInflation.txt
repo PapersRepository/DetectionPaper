@@ -1,0 +1,4 @@
+// ReflectionInflation:
+  - REFL kind=Method.invoke site=EvaluationInjector.java#hook:161
+  - REFL kind=Method.invoke site=EvaluationInjector.java#invoke:211
+

@@ -1,0 +1,52 @@
+// Values:
+STRING  name=all  text=ALL  src=values/strings.xml
+STRING  name=all_label  text=All Medicines  src=values/strings.xml
+STRING  name=app_name  text=Medicine Time  src=values/strings.xml
+STRING  name=every_day  text=Every day  src=values/strings.xml
+STRING  name=hint_enter_med_name  text=Enter Medicine  src=values/strings.xml
+STRING  name=ignore_label  text=Medicines Ignored  src=values/strings.xml
+STRING  name=ignored  text=IGNORED  src=values/strings.xml
+STRING  name=loading_tasks_error  text=Error while loading medicineAlarms  src=values/strings.xml
+STRING  name=medicine_days  text=Medicine Days  src=values/strings.xml
+STRING  name=menu_filter  text=Filter  src=values/strings.xml
+STRING  name=menu_stats  text=Monthly Report  src=values/strings.xml
+STRING  name=new_medicine  text=NEW MEDICINE  src=values/strings.xml
+STRING  name=no_history  text=No History Found  src=values/strings.xml
+STRING  name=no_ignored_history  text=Well Done  src=values/strings.xml
+STRING  name=no_medicine_added  text=No Medicine Added  src=values/strings.xml
+STRING  name=no_taken_med_history  text=You have not taken any medicine  src=values/strings.xml
+STRING  name=reminder_message  text=It\'s Time to take your medicine  src=values/strings.xml
+STRING  name=successfully_deleted_message  text=Medicine deleted Successfully  src=values/strings.xml
+STRING  name=successfully_saved_me_message  text=Medicine Added Successfully  src=values/strings.xml
+STRING  name=taken  text=TAKEN  src=values/strings.xml
+STRING  name=taken_label  text=Medicine Taken  src=values/strings.xml
+STRING  name=title_continuous_use  text=Continuous use  src=values/strings.xml
+STRING  name=title_medicine_name  text=Medicine Name  src=values/strings.xml
+STRING  name=title_reminder  text=Reminder  src=values/strings.xml
+STRING  name=title_treatment_deadline  text=Treatment deadline  src=values/strings.xml
+ARRAY  name=caregiver_options  items=Help %s | Delete contact | Cancel  src=values/arrays.xml
+ARRAY  name=intervals_array  items=Every 24 hours | Every 12 hours | Every 8 hours | Every 6 hours | Every 4 hours | Every 2 hours  src=values/arrays.xml
+ARRAY  name=medications_shape_array  items=adhesive(s) | capsule(s) | emulsion(s) | drop(s) | inhalation(s) | shot(s) | lotion(s) | tablet(s) | powder(s) | ointment(s) | sachet(s) | unit(s) | solution(s) | spray(s) | suspension(s) | syrup(s)  src=values/arrays.xml
+ARRAY  name=pill_cycle_formats  items=21+7 | 22+6 | 23+5 | 24+4 | 26+2 | 28+0 | 35+7 | 42+7 | 63+7 | 84+7 | 14+14  src=values/arrays.xml
+ARRAY  name=week_days_abbreviations  items=sun | mon | tue | wed | thu | fri | sat  src=values/arrays.xml
+COLOR  name=colorAccent  value=#F40303  src=values/colors.xml
+COLOR  name=colorPrimary  value=#F32121  src=values/colors.xml
+COLOR  name=colorPrimaryDark  value=#D21919  src=values/colors.xml
+COLOR  name=color_light_grey  value=#4d4d4d  src=values/colors.xml
+COLOR  name=splashBackground  value=#FAF7F7  src=values/colors.xml
+DIMEN  name=two_dp  value=2dp  src=values/dimens.xml
+DIMEN  name=four_dp  value=4dp  src=values/dimens.xml
+DIMEN  name=eight_dp  value=8dp  src=values/dimens.xml
+DIMEN  name=sixteen_dp  value=16dp  src=values/dimens.xml
+DIMEN  name=text_medium  value=14sp  src=values/dimens.xml
+DIMEN  name=text_large  value=17sp  src=values/dimens.xml
+DIMEN  name=list_item_padding  value=8dp  src=values/dimens.xml
+STYLE  name=AppTheme  parent=Theme.AppCompat.Light.DarkActionBar  src=values/styles.xml
+STYLE  name=AppTheme.NoActionBar  parent=  src=values/styles.xml
+STYLE  name=AppTheme.AppBarOverlay  parent=ThemeOverlay.AppCompat.Dark.ActionBar  src=values/styles.xml
+STYLE  name=AppTheme.PopupOverlay  parent=ThemeOverlay.AppCompat.Light  src=values/styles.xml
+STYLE  name=Toolbar  parent=Theme.AppCompat  src=values/styles.xml
+STYLE  name=ToolbarStyle  parent=  src=values/styles.xml
+STYLE  name=ToolbarTitleTextAppearance  parent=TextAppearance.Widget.AppCompat.Toolbar.Title  src=values/styles.xml
+STYLE  name=ToolbarSubtitleTextAppearance  parent=TextAppearance.Widget.AppCompat.Toolbar.Subtitle  src=values/styles.xml
+

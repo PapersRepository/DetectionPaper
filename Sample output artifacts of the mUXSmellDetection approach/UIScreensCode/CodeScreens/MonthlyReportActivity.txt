@@ -1,0 +1,669 @@
+- Resolved style values:
+//   popupTheme = @style/ThemeOverlay.AppCompat.Light
+//   colorControlHighlight = #3fff
+//   colorControlNormal = @android:color/white
+//   theme = @style/Toolbar
+//   android:minHeight = ?attr/actionBarSize
+//   titleTextAppearance = @style/ToolbarTitleTextAppearance
+//   subtitleTextAppearance = @style/ToolbarSubtitleTextAppearance
+//   windowNoTitle = true
+//   windowActionBar = false
+
+- Screen: MonthlyReportActivity
+- Layout: activity_monthly_report.xml
+
+- XML Layout:
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/ToolbarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/contentFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+- Associated Layout Files & Full XML:
+    (none)
+
+- Embedded Fragments:
+  (1) MonthlyReportFragment:
+    // XML: fragment_history.xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/tasksLL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/filteringLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/sixteen_dp"
+            android:layout_marginLeft="@dimen/list_item_padding"
+            android:layout_marginRight="@dimen/list_item_padding"
+            android:layout_marginTop="@dimen/sixteen_dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_history_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progressLoader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/no_med_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/noMedIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/icon_my_health" />
+
+        <com.vishwajeeth.medicinetime.views.RobotoLightTextView
+            android:id="@+id/noMedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/list_item_padding"
+            android:text="@string/no_medicine_added" />
+    </LinearLayout>
+</RelativeLayout>
+```
+    // Media Element: id=noMedIcon, type=ImageView
+    //   contentDescriptionPresent: true
+    //   hasCaptionSibling: true (siblingId=noMedText)
+    //   hasSubtitleOrTextTrack: false
+    //   hasTranscriptLink: false
+    //   captionSiblingPosition: next
+    //   captionSiblingTag: com.vishwajeeth.medicinetime.views.RobotoLightTextView
+    
+
+    // Full source (MonthlyReportFragment.java)
+```java
+package com.vishwajeeth.medicinetime.report;
+
+import android.os.Bundle;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.vishwajeeth.medicinetime.R;
+import com.vishwajeeth.medicinetime.data.source.History;
+import com.vishwajeeth.medicinetime.views.RobotoLightTextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+/**
+ * Created by vishwajeeth on 13/07/17.
+ */
+
+public class MonthlyReportFragment extends Fragment implements MonthlyReportContract.View {
+
+    @BindView(R.id.rv_history_list)
+    RecyclerView rvHistoryList;
+
+    @BindView(R.id.progressLoader)
+    ProgressBar progressLoader;
+
+    @BindView(R.id.noMedIcon)
+    ImageView noMedIcon;
+
+    @BindView(R.id.noMedText)
+    RobotoLightTextView noMedText;
+
+    @BindView(R.id.no_med_view)
+    View noMedView;
+
+    Unbinder unbinder;
+
+    @BindView(R.id.filteringLabel)
+    TextView filteringLabel;
+
+    @BindView(R.id.tasksLL)
+    LinearLayout tasksLL;
+
+    private HistoryAdapter mHistoryAdapter;
+
+    private MonthlyReportContract.Presenter presenter;
+
+    public static MonthlyReportFragment newInstance() {
+        Bundle args = new Bundle();
+        MonthlyReportFragment fragment = new MonthlyReportFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mHistoryAdapter = new HistoryAdapter(new ArrayList<History>());
+        setHasOptionsMenu(true);
+    }
+
+    private void setAdapter() {
+        rvHistoryList.setAdapter(mHistoryAdapter);
+        rvHistoryList.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvHistoryList.setHasFixedSize(true);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        setAdapter();
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+            super.onResume();
+            presenter.start();
+    }
+
+    @Override
+    public void setPresenter(MonthlyReportContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        if (getView() == null) {
+            return;
+        }
+        progressLoader.setVisibility(active ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showHistoryList(List<History> historyList) {
+        mHistoryAdapter.replaceData(historyList);
+        tasksLL.setVisibility(View.VISIBLE);
+        noMedView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showLoadingError() {
+
+    }
+
+    @Override
+    public void showNoHistory() {
+        showNoHistoryView(
+                getString(R.string.no_history),
+                R.drawable.icon_my_health
+        );
+    }
+
+    @Override
+    public void showTakenFilterLabel() {
+        filteringLabel.setText(R.string.taken_label);
+    }
+
+    @Override
+    public void showIgnoredFilterLabel() {
+        filteringLabel.setText(R.string.ignore_label);
+    }
+
+    @Override
+    public void showAllFilterLabel() {
+        filteringLabel.setText(R.string.all_label);
+    }
+
+    @Override
+    public void showNoTakenHistory() {
+        showNoHistoryView(
+                getString(R.string.no_taken_med_history),
+                R.drawable.icon_my_health
+        );
+    }
+
+    @Override
+    public void showNoIgnoredHistory() {
+        showNoHistoryView(
+                getString(R.string.no_ignored_history),
+                R.drawable.icon_my_health
+        );
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
+    @Override
+    public void showFilteringPopUpMenu() {
+        PopupMenu popup = new PopupMenu(getContext(), getActivity().findViewById(R.id.menu_filter));
+        popup.getMenuInflater().inflate(R.menu.filter_history, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.all:
+                        presenter.setFiltering(FilterType.ALL_MEDICINES);
+                        break;
+                    case R.id.taken:
+                        presenter.setFiltering(FilterType.TAKEN_MEDICINES);
+                        break;
+                    case R.id.ignored:
+                        presenter.setFiltering(FilterType.IGNORED_MEDICINES);
+                        break;
+                }
+                presenter.loadHistory(true);
+                return true;
+            }
+        });
+        popup.show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.history_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_filter:
+                showFilteringPopUpMenu();
+                break;
+        }
+        return true;
+    }
+
+    private void showNoHistoryView(String mainText, int iconRes) {
+        tasksLL.setVisibility(View.GONE);
+        noMedView.setVisibility(View.VISIBLE);
+
+        noMedText.setText(mainText);
+        noMedIcon.setImageDrawable(getResources().getDrawable(iconRes));
+    }
+}
+```
+
+    // Menus used by this fragment:
+    //   - filter_history.xml
+    //   - history_menu.xml
+
+    // methods called within the inlined fragment (MonthlyReportFragment.java)
+    // from HistoryAdapter.java: HistoryAdapter
+    HistoryAdapter(List<History> historyList) {
+        setList(historyList);
+    }
+    
+    // from MonthlyReportPresenter.java: start
+    @Override
+    public void start() {
+        loadHistory(true);
+    }
+    
+    // from HistoryAdapter.java: replaceData
+    void replaceData(List<History> tasks) {
+        setList(tasks);
+        notifyDataSetChanged();
+    }
+    
+    // from MonthlyReportPresenter.java: setFiltering
+    @Override
+    public void setFiltering(FilterType filterType) {
+        mCurrentFilteringType = filterType;
+    }
+    
+    // from MonthlyReportPresenter.java: loadHistory
+    @Override
+    public void loadHistory(boolean showLoading) {
+        loadHistoryFromDb(showLoading);
+    }
+
+- Associated Menus & Full XML:
+  (1) filter_history.xml:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/all"
+        android:title="@string/all" />
+    <item
+        android:id="@+id/taken"
+        android:title="@string/taken" />
+    <item
+        android:id="@+id/ignored"
+        android:title="@string/ignored" />
+</menu>
+```
+
+  (2) history_menu.xml:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_filter"
+        android:title="@string/menu_filter"
+        android:icon="@drawable/ic_filter_list"
+        app:showAsAction="ifRoom" />
+</menu>
+```
+
+- Resolved Attributes:
+    (none)
+
+- Source (MonthlyReportActivity.java):
+package com.vishwajeeth.medicinetime.report;
+
+import android.os.Bundle;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import android.view.MenuItem;
+
+import com.vishwajeeth.medicinetime.Injection;
+import com.vishwajeeth.medicinetime.R;
+import com.vishwajeeth.medicinetime.utils.ActivityUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MonthlyReportActivity extends AppCompatActivity {
+
+    private static final String CURRENT_FILTERING_TYPE = "current_filtering_type";
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    private MonthlyReportPresenter presenter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_monthly_report);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_clear);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        //Create Fragment
+        MonthlyReportFragment monthlyReportFragment = (MonthlyReportFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if (monthlyReportFragment == null) {
+            monthlyReportFragment = MonthlyReportFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), monthlyReportFragment, R.id.contentFrame);
+        }
+
+        //Create TaskPresenter
+        presenter = new MonthlyReportPresenter(Injection.provideMedicineRepository(MonthlyReportActivity.this), monthlyReportFragment);
+
+        //Load previous saved Instance
+        if (savedInstanceState != null) {
+            FilterType taskFilterType = (FilterType) savedInstanceState.getSerializable(CURRENT_FILTERING_TYPE);
+            presenter.setFiltering(taskFilterType);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(CURRENT_FILTERING_TYPE, presenter.getFilterType());
+        super.onSaveInstanceState(outState);
+    }
+}
+
+
+- Related code:
+    // from MonthlyReportFragment.java: newInstance
+    public static MonthlyReportFragment newInstance() {
+        Bundle args = new Bundle();
+        MonthlyReportFragment fragment = new MonthlyReportFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    
+    // from ActivityUtils.java: addFragmentToActivity
+    /**
+     * The {@code fragment} is added to the container view with id {@code frameId}. The operation is
+     * performed by the {@code fragmentManager}.
+     */
+    public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment, int frameId) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(frameId, fragment);
+        transaction.commit();
+    }
+    
+    // from Injection.java: provideMedicineRepository
+    public static MedicineRepository provideMedicineRepository(@NonNull Context context) {
+        return MedicineRepository.getInstance(MedicinesLocalDataSource.getInstance(context));
+    }
+    
+    // from MonthlyReportPresenter.java: MonthlyReportPresenter
+    public MonthlyReportPresenter(@NonNull MedicineRepository medicineRepository, MonthlyReportContract.View monthlyReportView) {
+        this.mMedicineRepository = medicineRepository;
+        this.mMonthlyReportView = monthlyReportView;
+        mMonthlyReportView.setPresenter(this);
+    }
+    
+    // from MonthlyReportPresenter.java: setFiltering
+    @Override
+    public void setFiltering(FilterType filterType) {
+        mCurrentFilteringType = filterType;
+    }
+    
+    // from MonthlyReportPresenter.java: getFilterType
+    @Override
+    public FilterType getFilterType() {
+        return mCurrentFilteringType;
+    }
+
+
+- Resolved Strings (screen-local)
+
+- Raw Evidence — Inputs (XML)
+  (none)
+
+- Raw Evidence — View Bindings
+  • toolbar ⇄ R.id.toolbar
+  • rvHistoryList ⇄ R.id.rv_history_list
+  • progressLoader ⇄ R.id.progressLoader
+  • noMedIcon ⇄ R.id.noMedIcon
+  • noMedText ⇄ R.id.noMedText
+  • noMedView ⇄ R.id.no_med_view
+  • filteringLabel ⇄ R.id.filteringLabel
+  • tasksLL ⇄ R.id.tasksLL
+
+- Clickables (XML + Code)
+  • origin_type=MENU_ITEM | origin_id=all | tag= | clickable=true | text=ALL | contentDesc= | handler=onOptionsItemSelected | decl=xml:-1
+  • origin_type=MENU_ITEM | origin_id=taken | tag= | clickable=true | text=TAKEN | contentDesc= | handler=onOptionsItemSelected | decl=xml:-1
+  • origin_type=MENU_ITEM | origin_id=ignored | tag= | clickable=true | text=IGNORED | contentDesc= | handler=onOptionsItemSelected | decl=xml:-1
+  • origin_type=MENU_ITEM | origin_id=menu_filter | tag= | clickable=true | text=Filter | contentDesc= | handler=onOptionsItemSelected | decl=xml:-1
+
+- Raw Evidence — Gesture Handlers & Swipe Behaviors (screen-local)
+  (none)
+
+- Raw Evidence — Input Callsites (addTextChangedListener/setFilters/setInputType/...)
+  (none)
+
+- Raw Evidence — Search Callbacks (code)
+  • MonthlyReportFragment.java#onCreateOptionsMenu:200  void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+{
+    inflater.inflate(R.menu.history_menu, menu);
+}
+
+- Raw Evidence — Search Query Sources (verbatim SQL)
+  (none)
+
+- Raw Evidence — Filter Widgets (XML + listeners)
+  (none)
+
+- Raw Evidence — Adapter Filtering
+  (none)
+
+- Raw Evidence — Error Handling (try/catch, user-visible surfaces, guards, logs)
+  • try/catch: (none)
+  • error surfaces: (none)
+  • guards:
+    - if (actionBar != null) @line 32
+    - if (monthlyReportFragment == null) @line 39
+    - if (savedInstanceState != null) @line 48
+    - if (item.getItemId() == android.R.id.home) @line 56
+    - if (getView() == null) @line 106
+  • logs: (none)
+  • results/navigation: (none)
+
+- Raw Evidence — Context Signals (screen-local)
+  CALL | (none)
+
+- Raw Evidence — Guards Using Context
+  COND | (none)
+
+- Raw Evidence — Outgoing Network Calls (screen-local)
+  NET | (none)
+
+- Raw Evidence — Dynamic Feedback & State (AST)
+  • dynamic:
+    - setVisibility on progressLoader @line 109
+    - setVisibility on tasksLL @line 115
+    - setVisibility on noMedView @line 116
+    - setText on filteringLabel @line 134
+    - setText on filteringLabel @line 139
+    - setText on filteringLabel @line 144
+    - setVisibility on tasksLL @line 216
+    - setVisibility on noMedView @line 217
+    - setText on noMedText @line 219
+    - notifyDataSetChanged on this(HistoryAdapter) @line 34
+    - setText on holder.tvMedDate @line 54
+    - setText on holder.tvMedicineName @line 56
+    - setText on holder.tvDoseDetails @line 57
+    - setVisibility on holder.ivMedicineAction @line 65
+    - setVisibility on holder.ivMedicineAction @line 68
+    - setVisibility on holder.ivMedicineAction @line 73
+  • state-preservation:
+    - onSaveInstanceState @line 67
+
+- Raw Evidence — Notifications (screen-local)
+  (none)
+
+- Raw Evidence — Alert Effects (screen-local)
+  (none)
+
+- Raw Evidence — Scheduling (screen-local)
+  (none)
+
+- Control Guards for Alert Calls (screen-local)
+  (none)
+
+- Raw Evidence — SharedPreferences (screen-local)
+  (none)
+
+- Top App Bar & Menu Items (merged)
+  • menuId=all | titleText="@string/all" | icon= | showAsAction= | source=xml
+  • menuId=taken | titleText="@string/taken" | icon= | showAsAction= | source=xml
+  • menuId=ignored | titleText="@string/ignored" | icon= | showAsAction= | source=xml
+  • menuId=menu_filter | titleText="@string/menu_filter" | icon=ic_filter_list | showAsAction=ifRoom | source=xml
+
+- Interactive Widget Tokens (screen-local)
+  • menu:filter_history.xml#all → tokens=[all]
+  • menu:filter_history.xml#taken → tokens=[taken]
+  • menu:filter_history.xml#ignored → tokens=[ignored]
+  • menu:history_menu.xml#menu_filter → tokens=[filter, list]
+
+- Resolved Resources (screen-local)
+  • @string/all = "ALL"
+  • @string/taken = "TAKEN"
+  • @string/ignored = "IGNORED"
+  • @string/menu_filter = "Filter"
+
+- Lifecycle → Calls (screen-local)
+  • onCreate → onCreate | at MonthlyReportActivity.java#?:25
+  • onCreate → setContentView | at MonthlyReportActivity.java#?:25
+  • onCreate → bind | at MonthlyReportActivity.java#?:25
+  • onCreate → setSupportActionBar | at MonthlyReportActivity.java#?:25
+  • onCreate → getSupportActionBar | at MonthlyReportActivity.java#?:25
+  • onCreate → setHomeAsUpIndicator | at MonthlyReportActivity.java#?:25
+  • onCreate → androidx.appcompat.app.ActionBar.setDisplayHomeAsUpEnabled(boolean) | at MonthlyReportActivity.java#?:25
+  • onCreate → findFragmentById | at MonthlyReportActivity.java#?:25
+  • onCreate → getSupportFragmentManager | at MonthlyReportActivity.java#?:25
+  • onCreate → newInstance | at MonthlyReportActivity.java#?:25
+  • onCreate → addFragmentToActivity | at MonthlyReportActivity.java#?:25
+  • onCreate → getSupportFragmentManager | at MonthlyReportActivity.java#?:25
+  • onCreate → provideMedicineRepository | at MonthlyReportActivity.java#?:25
+  • onCreate → getSerializable | at MonthlyReportActivity.java#?:25
+  • onCreate → setFiltering | at MonthlyReportActivity.java#?:25
+
+- Actions & Intents from this screen
+  (none)

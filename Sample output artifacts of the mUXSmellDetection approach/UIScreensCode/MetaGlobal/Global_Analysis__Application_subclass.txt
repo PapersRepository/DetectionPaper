@@ -1,0 +1,45 @@
+// Application subclass:
+  (no signals detected)
+
+package com.vishwajeeth.medicinetime;
+
+import android.app.Application;
+import android.content.Context;
+import android.util.Log; // Import Log if you haven't already
+
+
+/**
+ * Created by vishwajeeth on 12/07/17.
+ */
+
+public class MedicineApp extends Application {
+
+    private static final String TAG = "MedicineApp"; // Optional: Add a TAG for MedicineApp's own logs
+    private static Context mInstance;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.d(TAG, "MedicineApp onCreate called."); // Optional: Add a log to confirm this is running
+
+        if (mInstance == null) {
+            mInstance = getApplicationContext();
+        }
+
+        // --- Add the EvaluationInjector initialization here ---
+        EvaluationInjector.init(this);
+        // --- End Add ---
+
+
+        Log.d(TAG, "MedicineApp onCreate finished."); // Optional: Add a log
+    }
+
+
+
+    public static Context getInstance() {
+        return mInstance;
+    }
+}
+
+  (none detected)
+

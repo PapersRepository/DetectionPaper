@@ -1,0 +1,155 @@
+// build scripts (Groovy & Kotlin DSL):
+ // File: D:\AndroidApps\Medicine-Time-Android-App-Project\app\build.gradle
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'medicine'
+            keyPassword 'test123'
+            storeFile file('/Users/vishwajeeth/Documents/Projects/MedicineTime/app/medicine')
+            storePassword 'test123'
+        }
+    }
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.vishwajeeth.medicinetime"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        signingConfig signingConfigs.config
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+            pseudoLocalesEnabled true
+            proguardFile '/Users/vishwajeeth/Documents/Projects/MedicineTime/app/proguard-rules.pro'
+        }
+    }
+    flavorDimensions "default"
+    // If you need to add more flavors, consider using flavor dimensions.
+    productFlavors {
+        mock {
+            applicationIdSuffix = ".mock"
+            dimension "default"
+        }
+        prod {
+            dimension "default"
+            signingConfig signingConfigs.config
+        }
+    }
+    namespace 'com.vishwajeeth.medicinetime'
+    // Remove mockRelease as it's not needed.
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'release'
+                && variant.getFlavors().get(0).name == 'mock') {
+            variant.setIgnore(true);
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestImplementation "junit:junit:$rootProject.ext.junitVersion"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation "com.github.sundeepk:compact-calendar-view:$rootProject.compactCalendarViewVersion"
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+}
+
+
+tasks.register("printAllDependencies") {
+    group = "help"
+    description = "Dump all .jar files from every non-test RuntimeClasspath"
+    doLast {
+        // find every configuration whose name ends with "RuntimeClasspath"
+        // but exclude unit-test & android-test variants
+        def runtimeConfs = configurations.findAll { conf ->
+            conf.name.endsWith("RuntimeClasspath") &&
+                    !conf.name.toLowerCase().contains("unittest") &&
+                    !conf.name.toLowerCase().contains("androidtest")
+        }
+
+        runtimeConfs.each { conf ->
+            println "\n--- ${conf.name} ---"
+            try {
+                // resolve() will give us all files for that configuration
+                conf.resolve()
+                        .findAll { it.name.endsWith(".jar") }
+                        .each { jar ->
+                            println jar.absolutePath
+                        }
+            } catch (Exception e) {
+                println "⚠️  failed to resolve ${conf.name}: ${e.message}"
+            }
+        }
+    }
+}
+---
+ // File: D:\AndroidApps\Medicine-Time-Android-App-Project\build.gradle
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    repositories {
+        google()
+        //jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.9.0'
+
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        //jcenter()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    minSdkVersion = 16
+    targetSdkVersion = 29
+    compileSdkVersion = 259
+
+    //App Dependencies Version
+    supportLibraryVersion = '28.0.0'
+    compactCalendarViewVersion = '3.0.0'
+    butterKniferVersion = '10.2.1'
+    junitVersion = '4.13'
+}
+
+---
+ // File: D:\AndroidApps\Medicine-Time-Android-App-Project\settings.gradle
+include ':app'
+
+---
+

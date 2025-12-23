@@ -1,0 +1,697 @@
+=== New Session Started (a91befb3-1cd0-4646-ae65-a43b1a785ad1) ===
+2025-11-28 16:14:46.649 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_1 | package: com.android.settings | visible_ui: Back | UI_content:
+Text: UXInteractionLogger
+Text: UX Logger - Tracks swipe and undo actions automatically across all apps.
+Text: Use UXInteractionLogger
+Text: OPTIONS
+Text: UXInteractionLogger shortcut
+Text: Off
+
+2025-11-28 16:14:49.141 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_2 | package: com.google.android.apps.nexuslauncher | visible_ui: Apps list | UI_content:
+Text: 2048
+Text: Android UI Kit
+Text: Anime Watcher
+Text: AntennaPod Debug
+Text: BrandShoesApp
+Text: Calendar
+Text: Chat App
+Text: Chrome
+Text: Cirrus
+Text: Clock
+Text: Contacts
+Text: Currency
+Text: Daily Dozen
+Text: Drive
+Text: Files
+Text: Food App
+Text: Gmail
+Text: Google
+Text: Grocery Store
+Text: GymTrim
+Text: Jogo da Velha
+Text: JungleCart
+Text: LoTa
+Text: Maps
+Text: Medicine Time
+Text: MedLoco
+Text: Messages
+Text: Multi-Calculator
+Text: NotallyX DEBUG
+Text: Messages
+Text: Chrome
+Text: Friday, Nov 28
+Text: 27°C
+
+2025-11-28 16:14:48.038 | SWIPE_EVENT | swipe_id: swipe_1 | package: com.google.android.apps.nexuslauncher | visible_ui: Apps list | Options_shown: Yes | swiped_ui_item: "Back" | item_id: item_a7743999
+2025-11-28 16:14:48.038 | SWIPE_EVENT | swipe_id: swipe_2 | package: com.google.android.apps.nexuslauncher | visible_ui: Apps list | Options_shown: Yes | swiped_ui_item: "UXInteractionLogger | Use UXInteractionLogger" | item_id: item_d6e98f7f
+2025-11-28 16:14:48.038 | SWIPE_EVENT | swipe_id: swipe_3 | package: com.google.android.apps.nexuslauncher | visible_ui: Apps list | Options_shown: Yes | swiped_ui_item: "UXInteractionLogger shortcut | UX Logger - Tracks swipe and undo actions automatically across all apps." | item_id: item_98f37b14
+2025-11-28 16:14:48.038 | SWIPE_EVENT | swipe_id: swipe_4 | package: com.google.android.apps.nexuslauncher | visible_ui: Apps list | Options_shown: Yes | swiped_ui_item: "Shortcut settings" | item_id: item_4286c853
+2025-11-28 16:14:51.546 | SWIPE_EVENT | swipe_id: swipe_5 | package: com.google.android.apps.nexuslauncher | visible_ui: Apps list | Options_shown: Yes | swiped_ui_item: "Friday, Nov 28" | item_id: item_9c6dbc05
+2025-11-28 16:14:51.546 | SWIPE_EVENT | swipe_id: swipe_6 | package: com.google.android.apps.nexuslauncher | visible_ui: Apps list | Options_shown: Yes | swiped_ui_item: "27°C" | item_id: item_6e43de08
+2025-11-28 16:14:53.324 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_3 | package: com.google.android.apps.nexuslauncher | visible_ui: Search | UI_content:
+Text: 2048
+Text: Android UI Kit
+Text: Anime Watcher
+Text: AntennaPod Debug
+Text: BrandShoesApp
+Text: Calendar
+Text: Chat App
+Text: Chrome
+Text: Cirrus
+Text: Clock
+Text: Contacts
+Text: Currency
+Text: Daily Dozen
+Text: Drive
+Text: Files
+Text: Food App
+Text: Gmail
+Text: Google
+Text: Grocery Store
+Text: GymTrim
+Text: Jogo da Velha
+Text: JungleCart
+Text: LoTa
+Text: Maps
+Text: Medicine Time
+Text: MedLoco
+Text: Messages
+Text: Multi-Calculator
+Text: NotallyX DEBUG
+Text: Phone
+Text: Photos
+Text: Play Movies & TV
+Text: Settings
+Text: Shopping App
+Text: Spendee
+
+2025-11-28 16:14:54.794 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_4 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | UI_content:
+Text: Medicine Time
+
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_7 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "Search | Android UI Kit | Anime Watcher | AntennaPod Debug" | item_id: item_0ef43568
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_8 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "2048" | item_id: item_b710d319
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_9 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "Voice search | BrandShoesApp" | item_id: item_e2e31007
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_10 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "Calendar | Chat App" | item_id: item_3f7ce8ae
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_11 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "Chrome | Cirrus" | item_id: item_cd0c962b
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_12 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "Clock" | item_id: item_e24aebba
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_13 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "Contacts | Currency" | item_id: item_86d8ed4c
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_14 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "Daily Dozen | Drive" | item_id: item_7536f1f4
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_15 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "Files" | item_id: item_274f9e01
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_16 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: Yes | swiped_ui_item: "Food App | Gmail" | item_id: item_ee207228
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_17 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: Yes | swiped_ui_item: "Google | Grocery Store" | item_id: item_9f2c52a7
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_18 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: Yes | swiped_ui_item: "GymTrim" | item_id: item_cd71f1a3
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_19 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: Yes | swiped_ui_item: "Jogo da Velha | JungleCart" | item_id: item_25975475
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_20 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: Yes | swiped_ui_item: "LoTa | Maps" | item_id: item_111df970
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_21 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "MedLoco | Messages | Photos | Play Movies & TV" | item_id: item_292fd8da
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_22 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "Multi-Calculator | NotallyX DEBUG" | item_id: item_4ff86b17
+2025-11-28 16:14:53.847 | SWIPE_EVENT | swipe_id: swipe_23 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Time | Options_shown: No | swiped_ui_item: "Phone" | item_id: item_c22fc8be
+2025-11-28 16:14:58.331 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_5 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | UI_content:
+Text: Medicine Time
+Text: Deleted
+Text: Nov 28
+Text: 1:52 pm
+Text: 6:28 pm
+Text: 7:39 pm
+Text: 8:36 pm
+Text: 9:00 pm
+Text: Zinc
+Text: 1.0 capsule(s)
+Text: FeroGlobean
+Text: 1.0 capsule(s)
+Text: ff
+Text: 1.0 adhesive(s)
+Text: Augmantien
+Text: 1.0 capsule(s)
+Text: B12
+Text: 1.0 capsule(s)
+
+2025-11-28 16:14:57.533 | SWIPE_EVENT | swipe_id: swipe_24 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: No | swiped_ui_item: "Medicine Time" | item_id: item_eef356f1
+2025-11-28 16:14:59.858 | APP_SWITCH | APP_SWITCH_id: APP_SWITCH_1 | from: com.google.android.apps.nexuslauncher | to: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | UI_content:
+Text: Medicine Time
+Text: Deleted
+Text: Nov 28
+Text: 1:52 pm
+Text: 6:28 pm
+Text: 7:39 pm
+Text: 8:36 pm
+Text: 9:00 pm
+Text: Zinc
+Text: 1.0 capsule(s)
+Text: FeroGlobean
+Text: 1.0 capsule(s)
+Text: ff
+Text: 1.0 adhesive(s)
+Text: Augmantien
+Text: 1.0 capsule(s)
+Text: B12
+Text: 1.0 capsule(s)
+
+2025-11-28 16:15:04.927 | SWIPE_EVENT | swipe_id: swipe_25 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: No | swiped_ui_item: "1:52 pm" | item_id: item_6cc8df06
+2025-11-28 16:15:05.260 | SWIPE_EVENT | swipe_id: swipe_26 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: No | swiped_ui_item: "7:39 pm | ff | 1.0 adhesive(s)" | item_id: item_fd575454
+2025-11-28 16:15:05.260 | SWIPE_EVENT | swipe_id: swipe_27 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: No | swiped_ui_item: "9:00 pm" | item_id: item_44e19398
+2025-11-28 16:15:05.921 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_6 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine deleted | UI_content:
+Text: Medicine deleted
+Text: Medicine Time
+Text: Deleted
+Text: Nov 28
+Text: 6:28 pm
+Text: 6:28 pm
+Text: 8:36 pm
+Text: 8:36 pm
+Text: 9:41 pm
+Text: FeroGlobean
+Text: 1.0 capsule(s)
+Text: FeroGlobean
+Text: 1.0 capsule(s)
+Text: Augmantien
+Text: 1.0 capsule(s)
+Text: Augmantien
+Text: 1.0 capsule(s)
+Text: OO
+Text: 1.0 adhesive(s)
+
+2025-11-28 16:15:05.934 | UNDO_ACTION | swipe_id: swipe_26 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine deleted | undone_ui_item: "7:39 pm" | item_id: item_fd575454
+2025-11-28 16:15:05.934 | UNDO_ACTION | swipe_id: swipe_27 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine deleted | undone_ui_item: "9:00 pm" | item_id: item_44e19398
+2025-11-28 16:15:08.029 | SWIPE_EVENT | swipe_id: swipe_28 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine deleted | Options_shown: No | swiped_ui_item: "9:41 pm" | item_id: item_5c4df2c6
+2025-11-28 16:15:09.058 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_7 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | UI_content:
+Text: Medicine Time
+Text: 11:12 am
+Text: 1:24 pm
+Text: 2:44 pm
+Text: 3:28 pm
+Text: Med3
+Text: 1.0 adhesive(s)
+Text: 11
+Text: L adhesive(s)
+Text: Med4
+Text: 1.0 adhesive(s)
+Text: aa
+Text: 1.0 adhesive(s)
+
+2025-11-28 16:15:08.800 | SWIPE_EVENT | swipe_id: swipe_29 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "B12 | 1.0 capsule(s) | Medicine deleted" | item_id: item_078ac901
+2025-11-28 16:15:08.800 | SWIPE_EVENT | swipe_id: swipe_30 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "Deleted" | item_id: item_9e6fe788
+2025-11-28 16:15:08.800 | SWIPE_EVENT | swipe_id: swipe_31 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "Nov 28" | item_id: item_a0f14589
+2025-11-28 16:15:08.800 | SWIPE_EVENT | swipe_id: swipe_32 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "6:28 pm | FeroGlobean | 1.0 capsule(s)" | item_id: item_decaaf8e
+2025-11-28 16:15:08.800 | SWIPE_EVENT | swipe_id: swipe_33 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "7:39 pm | ff" | item_id: item_fd575454
+2025-11-28 16:15:08.800 | SWIPE_EVENT | swipe_id: swipe_34 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "8:36 pm | Augmantien | 1.0 capsule(s)" | item_id: item_63fada54
+2025-11-28 16:15:08.800 | SWIPE_EVENT | swipe_id: swipe_35 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "9:00 pm" | item_id: item_44e19398
+2025-11-28 16:15:08.800 | UNDO_ACTION | swipe_id: swipe_24 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | undone_ui_item: "Medicine Time" | item_id: item_eef356f1
+2025-11-28 16:15:10.837 | SWIPE_EVENT | swipe_id: swipe_36 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "11:12 am | Med3" | item_id: item_1795184f
+2025-11-28 16:15:10.837 | SWIPE_EVENT | swipe_id: swipe_37 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "1:24 pm | 11 | L adhesive(s)" | item_id: item_a1ecb2f6
+2025-11-28 16:15:11.158 | SWIPE_EVENT | swipe_id: swipe_38 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "3:28 pm | 2:44 pm | Med4" | item_id: item_2097d713
+2025-11-28 16:15:11.549 | SWIPE_EVENT | swipe_id: swipe_39 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "9:14 am | Test4" | item_id: item_3199a0f2
+2025-11-28 16:15:11.549 | SWIPE_EVENT | swipe_id: swipe_40 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "aa" | item_id: item_8021f3a7
+2025-11-28 16:15:12.005 | SWIPE_EVENT | swipe_id: swipe_41 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "4.0 inhalation(s)" | item_id: item_9b0ea0c1
+2025-11-28 16:15:12.358 | SWIPE_EVENT | swipe_id: swipe_42 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "6:12 am" | item_id: item_bbbb9749
+2025-11-28 16:15:12.702 | SWIPE_EVENT | swipe_id: swipe_43 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "6:10 am" | item_id: item_2caa1434
+2025-11-28 16:15:12.857 | SWIPE_EVENT | swipe_id: swipe_44 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "5:01 am | CC" | item_id: item_1583ee25
+2025-11-28 16:15:12.857 | SWIPE_EVENT | swipe_id: swipe_45 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "3.0 emulsion(s)" | item_id: item_220b85bc
+2025-11-28 16:15:13.335 | SWIPE_EVENT | swipe_id: swipe_46 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "12:09 am | Test3" | item_id: item_7dc85c5f
+2025-11-28 16:15:13.569 | SWIPE_EVENT | swipe_id: swipe_47 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "AA" | item_id: item_24d822bc
+2025-11-28 16:15:14.225 | SWIPE_EVENT | swipe_id: swipe_48 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "10:46 pm" | item_id: item_cd30419c
+2025-11-28 16:15:14.225 | SWIPE_EVENT | swipe_id: swipe_49 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "10:48 pm | SS" | item_id: item_847dd622
+2025-11-28 16:15:14.930 | SWIPE_EVENT | swipe_id: swipe_50 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "7:23 pm | EEE | 1.0 adhesive(s)" | item_id: item_87ffdf12
+2025-11-28 16:15:15.618 | SWIPE_EVENT | swipe_id: swipe_51 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "1:06 pm | Vitamin D | 3 drop(s)" | item_id: item_7ac80603
+2025-11-28 16:15:16.857 | SWIPE_EVENT | swipe_id: swipe_52 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "2:09 pm" | item_id: item_01c9523d
+2025-11-28 16:15:16.857 | SWIPE_EVENT | swipe_id: swipe_53 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "4:18 pm" | item_id: item_486c366b
+2025-11-28 16:15:17.170 | SWIPE_EVENT | swipe_id: swipe_54 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "Fefadol | Iron | 5.0 shot(s)" | item_id: item_71da3023
+2025-11-28 16:15:17.926 | SWIPE_EVENT | swipe_id: swipe_55 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "3:54 pm | Vitamin B12" | item_id: item_b6d97450
+2025-11-28 16:15:18.994 | SWIPE_EVENT | swipe_id: swipe_56 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "1:52 pm | Zinc" | item_id: item_6cc8df06
+2025-11-28 16:15:18.994 | UNDO_ACTION | swipe_id: swipe_55 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | undone_ui_item: "3:54 pm" | item_id: item_b6d97450
+2025-11-28 16:15:21.599 | UNDO_ACTION | swipe_id: swipe_56 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | undone_ui_item: "1:52 pm" | item_id: item_6cc8df06
+2025-11-28 16:15:22.503 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_8 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | UI_content:
+Text: Medicine Time
+Text: Deleted
+Text: Nov 28
+Text: 1:52 pm
+Text: 6:28 pm
+Text: 7:39 pm
+Text: 8:36 pm
+Text: 9:00 pm
+Text: Zinc
+Text: 1.0 capsule(s)
+Text: FeroGlobean
+Text: 1.0 capsule(s)
+Text: ff
+Text: 1.0 adhesive(s)
+Text: Augmantien
+Text: 1.0 capsule(s)
+Text: B12
+Text: 1.0 capsule(s)
+
+2025-11-28 16:15:22.486 | UNDO_ACTION | swipe_id: swipe_25 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | undone_ui_item: "1:52 pm" | item_id: item_6cc8df06
+2025-11-28 16:15:22.486 | UNDO_ACTION | swipe_id: swipe_30 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | undone_ui_item: "Deleted" | item_id: item_9e6fe788
+2025-11-28 16:15:22.486 | UNDO_ACTION | swipe_id: swipe_31 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | undone_ui_item: "Nov 28" | item_id: item_a0f14589
+2025-11-28 16:15:22.486 | UNDO_ACTION | swipe_id: swipe_32 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | undone_ui_item: "6:28 pm" | item_id: item_decaaf8e
+2025-11-28 16:15:22.486 | UNDO_ACTION | swipe_id: swipe_33 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | undone_ui_item: "7:39 pm" | item_id: item_fd575454
+2025-11-28 16:15:22.486 | UNDO_ACTION | swipe_id: swipe_34 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | undone_ui_item: "8:36 pm" | item_id: item_63fada54
+2025-11-28 16:15:22.486 | UNDO_ACTION | swipe_id: swipe_35 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | undone_ui_item: "9:00 pm" | item_id: item_44e19398
+2025-11-28 16:15:27.982 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_9 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | UI_content:
+Text: NEW MEDICINE
+Text: Medicine Name
+Text: Enter Medicine
+Text: Medicine Days
+Text: Every day
+Text: Reminder
+Text: S
+Text: M
+Text: T
+Text: W
+Text: T
+Text: F
+Text: S
+Text: 16:15
+Text: 1.0
+Text: adhesive(s)
+
+2025-11-28 16:15:27.836 | SWIPE_EVENT | swipe_id: swipe_57 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "Deleted" | item_id: item_9e6fe788
+2025-11-28 16:15:27.836 | SWIPE_EVENT | swipe_id: swipe_58 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "Nov 28" | item_id: item_a0f14589
+2025-11-28 16:15:27.836 | SWIPE_EVENT | swipe_id: swipe_59 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "1:52 pm | Zinc | 1.0 capsule(s)" | item_id: item_6cc8df06
+2025-11-28 16:15:27.836 | SWIPE_EVENT | swipe_id: swipe_60 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "6:28 pm | FeroGlobean | 1.0 capsule(s)" | item_id: item_decaaf8e
+2025-11-28 16:15:27.836 | SWIPE_EVENT | swipe_id: swipe_61 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "7:39 pm | ff | 1.0 adhesive(s)" | item_id: item_fd575454
+2025-11-28 16:15:27.836 | SWIPE_EVENT | swipe_id: swipe_62 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "8:36 pm | Augmantien | 1.0 capsule(s)" | item_id: item_63fada54
+2025-11-28 16:15:27.836 | SWIPE_EVENT | swipe_id: swipe_63 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "9:00 pm" | item_id: item_44e19398
+2025-11-28 16:15:32.270 | SWIPE_EVENT | swipe_id: swipe_64 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "Enter Medicine" | item_id: item_d4310f2a
+2025-11-28 16:15:32.455 | User_input | User_input_id: input_1 | ui_item_id: com.vishwajeeth.medicinetime.mock:id/edit_med_name | label_context: Enter Medicine | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up
+2025-11-28 16:15:32.976 | User_input | User_input_id: input_2 | ui_item_id: com.vishwajeeth.medicinetime.mock:id/edit_med_name | label_context: Enter Medicine | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up
+2025-11-28 16:15:33.884 | User_input | User_input_id: input_3 | ui_item_id: com.vishwajeeth.medicinetime.mock:id/edit_med_name | label_context: Enter Medicine | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up
+2025-11-28 16:15:36.074 | User_input | User_input_id: input_4 | ui_item_id: com.vishwajeeth.medicinetime.mock:id/edit_med_name | label_context: Enter Medicine | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up
+2025-11-28 16:15:36.223 | SWIPE_EVENT | swipe_id: swipe_65 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "B1" | item_id: item_fbdd6d4f
+2025-11-28 16:15:36.401 | User_input | User_input_id: input_5 | ui_item_id: com.vishwajeeth.medicinetime.mock:id/edit_med_name | label_context: Enter Medicine | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up
+2025-11-28 16:15:37.112 | User_input | User_input_id: input_6 | ui_item_id: com.vishwajeeth.medicinetime.mock:id/edit_med_name | label_context: Enter Medicine | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up
+2025-11-28 16:15:40.754 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_10 | package: com.vishwajeeth.medicinetime.mock | visible_ui: AM | UI_content:
+Text: 4
+Text: :
+Text: 15
+Text: AM
+Text: PM
+Text: CANCEL
+Text: OK
+
+2025-11-28 16:15:40.730 | SWIPE_EVENT | swipe_id: swipe_66 | package: com.vishwajeeth.medicinetime.mock | visible_ui: AM | Options_shown: Yes | swiped_ui_item: "CANCEL | OK" | item_id: item_12fb114c
+2025-11-28 16:15:40.827 | UNDO_ACTION | swipe_id: swipe_66 | package: com.vishwajeeth.medicinetime.mock | visible_ui: AM | undone_ui_item: "CANCEL" | item_id: item_12fb114c
+2025-11-28 16:15:41.065 | Popup_shown | popup_id: popup_1 | popup_type: 4 | package: com.vishwajeeth.medicinetime.mock | visible_ui: 4 | popup_text_options: [4, :, 15, AM, PM, CANCEL, OK]
+2025-11-28 16:15:44.175 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_11 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | UI_content:
+Text: NEW MEDICINE
+Text: Medicine Name
+Text: B6
+Text: Medicine Days
+Text: Every day
+Text: Reminder
+Text: S
+Text: M
+Text: T
+Text: W
+Text: T
+Text: F
+Text: S
+Text: 23:15
+Text: 1.0
+Text: adhesive(s)
+
+2025-11-28 16:15:44.136 | SWIPE_EVENT | swipe_id: swipe_67 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "11 | 15" | item_id: item_0da2588a
+2025-11-28 16:15:44.136 | SWIPE_EVENT | swipe_id: swipe_68 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "CANCEL | OK" | item_id: item_12fb114c
+2025-11-28 16:15:46.137 | User_Response [POPUP] | popup_id: popup_1 | popup_type: 4 | visible_ui: 4 | user_action: dismissed | package: com.vishwajeeth.medicinetime.mock
+2025-11-28 16:15:46.272 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_12 | package: com.vishwajeeth.medicinetime.mock | visible_ui: unknown_ui | UI_content:
+Text: adhesive(s)
+Text: capsule(s)
+Text: emulsion(s)
+Text: drop(s)
+Text: inhalation(s)
+Text: shot(s)
+Text: lotion(s)
+
+2025-11-28 16:15:46.167 | SWIPE_EVENT | swipe_id: swipe_69 | package: com.vishwajeeth.medicinetime.mock | visible_ui: unknown_ui | Options_shown: No | swiped_ui_item: "Navigate up" | item_id: item_a73ace49
+2025-11-28 16:15:46.167 | SWIPE_EVENT | swipe_id: swipe_70 | package: com.vishwajeeth.medicinetime.mock | visible_ui: unknown_ui | Options_shown: No | swiped_ui_item: "NEW MEDICINE | Medicine Name" | item_id: item_2121f9b2
+2025-11-28 16:15:46.167 | SWIPE_EVENT | swipe_id: swipe_71 | package: com.vishwajeeth.medicinetime.mock | visible_ui: unknown_ui | Options_shown: No | swiped_ui_item: "B6 | Medicine Days" | item_id: item_785777b6
+2025-11-28 16:15:46.167 | SWIPE_EVENT | swipe_id: swipe_72 | package: com.vishwajeeth.medicinetime.mock | visible_ui: unknown_ui | Options_shown: No | swiped_ui_item: "Every day" | item_id: item_2ea76eb6
+2025-11-28 16:15:46.167 | SWIPE_EVENT | swipe_id: swipe_73 | package: com.vishwajeeth.medicinetime.mock | visible_ui: unknown_ui | Options_shown: No | swiped_ui_item: "Reminder | adhesive(s) | 1.0" | item_id: item_f79b0944
+2025-11-28 16:15:46.167 | SWIPE_EVENT | swipe_id: swipe_74 | package: com.vishwajeeth.medicinetime.mock | visible_ui: unknown_ui | Options_shown: No | swiped_ui_item: "23:15" | item_id: item_91918a3a
+2025-11-28 16:15:46.718 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_13 | package: com.vishwajeeth.medicinetime.mock | visible_ui: adhesive(s) | UI_content:
+Text: adhesive(s)
+Text: capsule(s)
+Text: emulsion(s)
+Text: drop(s)
+Text: inhalation(s)
+Text: shot(s)
+Text: lotion(s)
+
+2025-11-28 16:15:54.084 | SWIPE_EVENT | swipe_id: swipe_75 | package: com.vishwajeeth.medicinetime.mock | visible_ui: capsule(s) | Options_shown: No | swiped_ui_item: "adhesive(s)" | item_id: item_999ee5eb
+2025-11-28 16:15:54.103 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_14 | package: com.vishwajeeth.medicinetime.mock | visible_ui: capsule(s) | UI_content:
+Text: capsule(s)
+Text: emulsion(s)
+Text: drop(s)
+Text: inhalation(s)
+Text: shot(s)
+Text: lotion(s)
+Text: tablet(s)
+Text: powder(s)
+
+2025-11-28 16:15:54.803 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_15 | package: com.vishwajeeth.medicinetime.mock | visible_ui: emulsion(s) | UI_content:
+Text: emulsion(s)
+Text: drop(s)
+Text: inhalation(s)
+Text: shot(s)
+Text: lotion(s)
+Text: tablet(s)
+Text: powder(s)
+Text: ointment(s)
+
+2025-11-28 16:15:54.717 | SWIPE_EVENT | swipe_id: swipe_76 | package: com.vishwajeeth.medicinetime.mock | visible_ui: emulsion(s) | Options_shown: No | swiped_ui_item: "capsule(s)" | item_id: item_f1091fd9
+2025-11-28 16:15:55.022 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_16 | package: com.vishwajeeth.medicinetime.mock | visible_ui: drop(s) | UI_content:
+Text: drop(s)
+Text: inhalation(s)
+Text: shot(s)
+Text: lotion(s)
+Text: tablet(s)
+Text: powder(s)
+Text: ointment(s)
+Text: sachet(s)
+
+2025-11-28 16:15:55.019 | SWIPE_EVENT | swipe_id: swipe_77 | package: com.vishwajeeth.medicinetime.mock | visible_ui: drop(s) | Options_shown: No | swiped_ui_item: "emulsion(s)" | item_id: item_75cede46
+2025-11-28 16:15:55.568 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_17 | package: com.vishwajeeth.medicinetime.mock | visible_ui: inhalation(s) | UI_content:
+Text: inhalation(s)
+Text: shot(s)
+Text: lotion(s)
+Text: tablet(s)
+Text: powder(s)
+Text: ointment(s)
+Text: sachet(s)
+Text: unit(s)
+
+2025-11-28 16:15:55.532 | SWIPE_EVENT | swipe_id: swipe_78 | package: com.vishwajeeth.medicinetime.mock | visible_ui: inhalation(s) | Options_shown: No | swiped_ui_item: "drop(s)" | item_id: item_37dd8e28
+2025-11-28 16:15:55.651 | SWIPE_EVENT | swipe_id: swipe_79 | package: com.vishwajeeth.medicinetime.mock | visible_ui: shot(s) | Options_shown: No | swiped_ui_item: "inhalation(s)" | item_id: item_27fd457a
+2025-11-28 16:15:55.774 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_18 | package: com.vishwajeeth.medicinetime.mock | visible_ui: shot(s) | UI_content:
+Text: shot(s)
+Text: lotion(s)
+Text: tablet(s)
+Text: powder(s)
+Text: ointment(s)
+Text: sachet(s)
+Text: unit(s)
+Text: solution(s)
+
+2025-11-28 16:15:56.280 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_19 | package: com.vishwajeeth.medicinetime.mock | visible_ui: lotion(s) | UI_content:
+Text: lotion(s)
+Text: tablet(s)
+Text: powder(s)
+Text: ointment(s)
+Text: sachet(s)
+Text: unit(s)
+Text: solution(s)
+Text: spray(s)
+
+2025-11-28 16:15:56.277 | SWIPE_EVENT | swipe_id: swipe_80 | package: com.vishwajeeth.medicinetime.mock | visible_ui: lotion(s) | Options_shown: No | swiped_ui_item: "shot(s)" | item_id: item_cc2ed5ed
+2025-11-28 16:15:56.902 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_20 | package: com.vishwajeeth.medicinetime.mock | visible_ui: tablet(s) | UI_content:
+Text: tablet(s)
+Text: powder(s)
+Text: ointment(s)
+Text: sachet(s)
+Text: unit(s)
+Text: solution(s)
+Text: spray(s)
+Text: suspension(s)
+
+2025-11-28 16:15:56.897 | SWIPE_EVENT | swipe_id: swipe_81 | package: com.vishwajeeth.medicinetime.mock | visible_ui: tablet(s) | Options_shown: No | swiped_ui_item: "lotion(s)" | item_id: item_94a7f0bd
+2025-11-28 16:15:57.683 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_21 | package: com.vishwajeeth.medicinetime.mock | visible_ui: powder(s) | UI_content:
+Text: powder(s)
+Text: ointment(s)
+Text: sachet(s)
+Text: unit(s)
+Text: solution(s)
+Text: spray(s)
+Text: suspension(s)
+Text: syrup(s)
+
+2025-11-28 16:15:57.653 | SWIPE_EVENT | swipe_id: swipe_82 | package: com.vishwajeeth.medicinetime.mock | visible_ui: powder(s) | Options_shown: No | swiped_ui_item: "tablet(s)" | item_id: item_07bfb9e7
+2025-11-28 16:15:59.205 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_22 | package: com.vishwajeeth.medicinetime.mock | visible_ui: ointment(s) | UI_content:
+Text: ointment(s)
+Text: sachet(s)
+Text: unit(s)
+Text: solution(s)
+Text: spray(s)
+Text: suspension(s)
+Text: syrup(s)
+
+2025-11-28 16:15:59.193 | SWIPE_EVENT | swipe_id: swipe_83 | package: com.vishwajeeth.medicinetime.mock | visible_ui: ointment(s) | Options_shown: No | swiped_ui_item: "powder(s)" | item_id: item_fb2e2212
+2025-11-28 16:16:03.162 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_23 | package: com.vishwajeeth.medicinetime.mock | visible_ui: powder(s) | UI_content:
+Text: powder(s)
+Text: ointment(s)
+Text: sachet(s)
+Text: unit(s)
+Text: solution(s)
+Text: spray(s)
+Text: suspension(s)
+Text: syrup(s)
+
+2025-11-28 16:16:03.158 | UNDO_ACTION | swipe_id: swipe_83 | package: com.vishwajeeth.medicinetime.mock | visible_ui: powder(s) | undone_ui_item: "powder(s)" | item_id: item_fb2e2212
+2025-11-28 16:16:03.521 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_24 | package: com.vishwajeeth.medicinetime.mock | visible_ui: tablet(s) | UI_content:
+Text: tablet(s)
+Text: powder(s)
+Text: ointment(s)
+Text: sachet(s)
+Text: unit(s)
+Text: solution(s)
+Text: spray(s)
+Text: suspension(s)
+
+2025-11-28 16:16:03.518 | SWIPE_EVENT | swipe_id: swipe_84 | package: com.vishwajeeth.medicinetime.mock | visible_ui: tablet(s) | Options_shown: No | swiped_ui_item: "syrup(s)" | item_id: item_46bb73c1
+2025-11-28 16:16:03.518 | UNDO_ACTION | swipe_id: swipe_82 | package: com.vishwajeeth.medicinetime.mock | visible_ui: tablet(s) | undone_ui_item: "tablet(s)" | item_id: item_07bfb9e7
+2025-11-28 16:16:04.070 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_25 | package: com.vishwajeeth.medicinetime.mock | visible_ui: lotion(s) | UI_content:
+Text: lotion(s)
+Text: tablet(s)
+Text: powder(s)
+Text: ointment(s)
+Text: sachet(s)
+Text: unit(s)
+Text: solution(s)
+Text: spray(s)
+
+2025-11-28 16:16:04.065 | SWIPE_EVENT | swipe_id: swipe_85 | package: com.vishwajeeth.medicinetime.mock | visible_ui: lotion(s) | Options_shown: No | swiped_ui_item: "suspension(s)" | item_id: item_bfd48f03
+2025-11-28 16:16:04.065 | UNDO_ACTION | swipe_id: swipe_81 | package: com.vishwajeeth.medicinetime.mock | visible_ui: lotion(s) | undone_ui_item: "lotion(s)" | item_id: item_94a7f0bd
+2025-11-28 16:16:04.436 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_26 | package: com.vishwajeeth.medicinetime.mock | visible_ui: shot(s) | UI_content:
+Text: shot(s)
+Text: lotion(s)
+Text: tablet(s)
+Text: powder(s)
+Text: ointment(s)
+Text: sachet(s)
+Text: unit(s)
+Text: solution(s)
+
+2025-11-28 16:16:04.432 | SWIPE_EVENT | swipe_id: swipe_86 | package: com.vishwajeeth.medicinetime.mock | visible_ui: shot(s) | Options_shown: No | swiped_ui_item: "spray(s)" | item_id: item_ffe2159a
+2025-11-28 16:16:04.432 | UNDO_ACTION | swipe_id: swipe_80 | package: com.vishwajeeth.medicinetime.mock | visible_ui: shot(s) | undone_ui_item: "shot(s)" | item_id: item_cc2ed5ed
+2025-11-28 16:16:06.745 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_27 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | UI_content:
+Text: NEW MEDICINE
+Text: Medicine Name
+Text: B6
+Text: Medicine Days
+Text: Every day
+Text: Reminder
+Text: S
+Text: M
+Text: T
+Text: W
+Text: T
+Text: F
+Text: S
+Text: 23:15
+Text: 1.0
+Text: tablet(s)
+
+2025-11-28 16:16:06.691 | SWIPE_EVENT | swipe_id: swipe_87 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "lotion(s)" | item_id: item_94a7f0bd
+2025-11-28 16:16:06.691 | SWIPE_EVENT | swipe_id: swipe_88 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "powder(s) | ointment(s)" | item_id: item_fb2e2212
+2025-11-28 16:16:06.691 | SWIPE_EVENT | swipe_id: swipe_89 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "sachet(s) | unit(s)" | item_id: item_6fbb49ba
+2025-11-28 16:16:06.691 | SWIPE_EVENT | swipe_id: swipe_90 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "solution(s)" | item_id: item_857d3c23
+2025-11-28 16:16:06.691 | UNDO_ACTION | swipe_id: swipe_69 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | undone_ui_item: "Navigate up" | item_id: item_a73ace49
+2025-11-28 16:16:06.691 | UNDO_ACTION | swipe_id: swipe_70 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | undone_ui_item: "NEW MEDICINE" | item_id: item_2121f9b2
+2025-11-28 16:16:06.691 | UNDO_ACTION | swipe_id: swipe_71 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | undone_ui_item: "B6" | item_id: item_785777b6
+2025-11-28 16:16:06.691 | UNDO_ACTION | swipe_id: swipe_72 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | undone_ui_item: "Every day" | item_id: item_2ea76eb6
+2025-11-28 16:16:06.691 | UNDO_ACTION | swipe_id: swipe_73 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | undone_ui_item: "Reminder" | item_id: item_f79b0944
+2025-11-28 16:16:06.691 | UNDO_ACTION | swipe_id: swipe_74 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | undone_ui_item: "23:15" | item_id: item_91918a3a
+2025-11-28 16:16:13.659 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_28 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | UI_content:
+Text: Medicine Added Successfully
+Text: Medicine Time
+Text: Deleted
+Text: Nov 28
+Text: 1:52 pm
+Text: 6:28 pm
+Text: 7:39 pm
+Text: 8:36 pm
+Text: 9:00 pm
+Text: Zinc
+Text: 1.0 capsule(s)
+Text: FeroGlobean
+Text: 1.0 capsule(s)
+Text: ff
+Text: 1.0 adhesive(s)
+Text: Augmantien
+Text: 1.0 capsule(s)
+Text: B12
+Text: 1.0 capsule(s)
+
+2025-11-28 16:16:12.437 | SWIPE_EVENT | swipe_id: swipe_91 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: Yes | swiped_ui_item: "Navigate up" | item_id: item_a73ace49
+2025-11-28 16:16:12.437 | SWIPE_EVENT | swipe_id: swipe_92 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: Yes | swiped_ui_item: "NEW MEDICINE | Medicine Name" | item_id: item_2121f9b2
+2025-11-28 16:16:12.437 | SWIPE_EVENT | swipe_id: swipe_93 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: No | swiped_ui_item: "B6 | Medicine Days" | item_id: item_785777b6
+2025-11-28 16:16:12.437 | SWIPE_EVENT | swipe_id: swipe_94 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: Yes | swiped_ui_item: "Every day" | item_id: item_2ea76eb6
+2025-11-28 16:16:12.437 | SWIPE_EVENT | swipe_id: swipe_95 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: No | swiped_ui_item: "Reminder | tablet(s) | 1.0" | item_id: item_f79b0944
+2025-11-28 16:16:12.437 | SWIPE_EVENT | swipe_id: swipe_96 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: Yes | swiped_ui_item: "23:15" | item_id: item_91918a3a
+2025-11-28 16:16:14.849 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_29 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Medicine Added Successfully | UI_content:
+Text: Medicine Added Successfully
+Text: Medicine Time
+Text: Deleted
+Text: Nov 28
+Text: 1:52 pm
+Text: 6:28 pm
+Text: 7:39 pm
+Text: 8:36 pm
+Text: 9:00 pm
+Text: Zinc
+Text: 1.0 capsule(s)
+Text: FeroGlobean
+Text: 1.0 capsule(s)
+Text: ff
+Text: 1.0 adhesive(s)
+Text: Augmantien
+Text: 1.0 capsule(s)
+Text: B12
+Text: 1.0 capsule(s)
+
+2025-11-28 16:16:16.460 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_30 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | UI_content:
+Text: Medicine Time
+Text: Deleted
+Text: Nov 28
+Text: 1:52 pm
+Text: 6:28 pm
+Text: 7:39 pm
+Text: 8:36 pm
+Text: 9:00 pm
+Text: Zinc
+Text: 1.0 capsule(s)
+Text: FeroGlobean
+Text: 1.0 capsule(s)
+Text: ff
+Text: 1.0 adhesive(s)
+Text: Augmantien
+Text: 1.0 capsule(s)
+Text: B12
+Text: 1.0 capsule(s)
+
+2025-11-28 16:16:17.771 | UNDO_ACTION | swipe_id: swipe_91 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | undone_ui_item: "Navigate up" | item_id: item_a73ace49
+2025-11-28 16:16:17.924 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_31 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | UI_content:
+Text: Medicine Time
+Text: All Medicines
+Text: Nov 26, 2025 10:50 pm
+Text: SS
+Text: 1.0 adhesive(s)
+
+2025-11-28 16:16:20.371 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_32 | package: com.vishwajeeth.medicinetime.mock | visible_ui: ALL | UI_content:
+Text: ALL
+Text: TAKEN
+Text: IGNORED
+
+2025-11-28 16:16:21.950 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_33 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | UI_content:
+Text: Medicine Time
+Text: Well Done
+
+2025-11-28 16:16:21.908 | SWIPE_EVENT | swipe_id: swipe_97 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "ALL | TAKEN" | item_id: item_6fb4ba07
+2025-11-28 16:16:21.908 | SWIPE_EVENT | swipe_id: swipe_98 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "IGNORED" | item_id: item_ec0f56ae
+2025-11-28 16:16:24.626 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_34 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | UI_content:
+Text: Medicine Time
+Text: Deleted
+Text: Nov 28
+Text: 1:52 pm
+Text: 6:28 pm
+Text: 7:39 pm
+Text: 8:36 pm
+Text: 9:00 pm
+Text: Zinc
+Text: 1.0 capsule(s)
+Text: FeroGlobean
+Text: 1.0 capsule(s)
+Text: ff
+Text: 1.0 adhesive(s)
+Text: Augmantien
+Text: 1.0 capsule(s)
+Text: B12
+Text: 1.0 capsule(s)
+
+2025-11-28 16:16:24.582 | SWIPE_EVENT | swipe_id: swipe_99 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: Yes | swiped_ui_item: "Navigate up" | item_id: item_a73ace49
+2025-11-28 16:16:24.582 | SWIPE_EVENT | swipe_id: swipe_100 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: Yes | swiped_ui_item: "Medicine Time" | item_id: item_eef356f1
+2025-11-28 16:16:24.582 | SWIPE_EVENT | swipe_id: swipe_101 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Deleted | Options_shown: No | swiped_ui_item: "Well Done" | item_id: item_ddd1fd0b
+2025-11-28 16:16:26.975 | UNDO_ACTION | swipe_id: swipe_99 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | undone_ui_item: "Navigate up" | item_id: item_a73ace49
+2025-11-28 16:16:26.975 | UNDO_ACTION | swipe_id: swipe_100 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | undone_ui_item: "Medicine Time" | item_id: item_eef356f1
+2025-11-28 16:16:27.245 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_35 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | UI_content:
+Text: Medicine Time
+Text: 11:12 am
+Text: 1:24 pm
+Text: 2:44 pm
+Text: 3:28 pm
+Text: Med3
+Text: 1.0 adhesive(s)
+Text: 11
+Text: L adhesive(s)
+Text: Med4
+Text: 1.0 adhesive(s)
+Text: aa
+Text: 1.0 adhesive(s)
+
+2025-11-28 16:16:30.470 | SWIPE_EVENT | swipe_id: swipe_102 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "11:12 am | Med3" | item_id: item_1795184f
+2025-11-28 16:16:30.893 | SWIPE_EVENT | swipe_id: swipe_103 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "1:24 pm | 11 | L adhesive(s)" | item_id: item_a1ecb2f6
+2025-11-28 16:16:31.431 | SWIPE_EVENT | swipe_id: swipe_104 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "2:44 pm | Med4" | item_id: item_f840187c
+2025-11-28 16:16:31.738 | SWIPE_EVENT | swipe_id: swipe_105 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "3:28 pm | aa" | item_id: item_2097d713
+2025-11-28 16:16:31.738 | SWIPE_EVENT | swipe_id: swipe_106 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "9:14 am | Test4 | 4.0 inhalation(s)" | item_id: item_3199a0f2
+2025-11-28 16:16:32.666 | SWIPE_EVENT | swipe_id: swipe_107 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "6:12 am | Med2" | item_id: item_bbbb9749
+2025-11-28 16:16:32.666 | SWIPE_EVENT | swipe_id: swipe_108 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "5:01 am" | item_id: item_1583ee25
+2025-11-28 16:16:33.422 | SWIPE_EVENT | swipe_id: swipe_109 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "6:10 am | Test2 | 3.0 emulsion(s)" | item_id: item_2caa1434
+2025-11-28 16:16:33.649 | SWIPE_EVENT | swipe_id: swipe_110 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "12:09 am" | item_id: item_7dc85c5f
+2025-11-28 16:16:34.129 | SWIPE_EVENT | swipe_id: swipe_111 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "10:46 pm | AA" | item_id: item_cd30419c
+2025-11-28 16:16:34.129 | SWIPE_EVENT | swipe_id: swipe_112 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "2 capsule(s)" | item_id: item_74b68667
+2025-11-28 16:16:34.973 | SWIPE_EVENT | swipe_id: swipe_113 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "10:48 pm | SS" | item_id: item_847dd622
+2025-11-28 16:16:35.173 | SWIPE_EVENT | swipe_id: swipe_114 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: Yes | swiped_ui_item: "7:23 pm" | item_id: item_87ffdf12
+2025-11-28 16:16:35.243 | SWIPE_EVENT | swipe_id: swipe_115 | package: com.vishwajeeth.medicinetime.mock | visible_ui: Navigate up | Options_shown: No | swiped_ui_item: "1.0 adhesive(s)" | item_id: item_6dc9376f
+2025-11-28 16:16:45.092 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_36 | package: com.google.android.apps.nexuslauncher | visible_ui:  | UI_content:
+Text: Clear all
+Text: Screenshot
+Text: Select
+
+2025-11-28 16:16:44.830 | SWIPE_EVENT | swipe_id: swipe_116 | package: com.google.android.apps.nexuslauncher | visible_ui:  | Options_shown: Yes | swiped_ui_item: "Navigate up" | item_id: item_a73ace49
+2025-11-28 16:16:44.830 | SWIPE_EVENT | swipe_id: swipe_117 | package: com.google.android.apps.nexuslauncher | visible_ui:  | Options_shown: No | swiped_ui_item: "1:06 pm | Vitamin D | 3 drop(s)" | item_id: item_7ac80603
+2025-11-28 16:16:44.830 | SWIPE_EVENT | swipe_id: swipe_118 | package: com.google.android.apps.nexuslauncher | visible_ui:  | Options_shown: No | swiped_ui_item: "2:09 pm | Fefadol | 5.0 shot(s)" | item_id: item_01c9523d
+2025-11-28 16:16:44.830 | SWIPE_EVENT | swipe_id: swipe_119 | package: com.google.android.apps.nexuslauncher | visible_ui:  | Options_shown: No | swiped_ui_item: "4:18 pm | Iron | 1.0 capsule(s)" | item_id: item_486c366b
+2025-11-28 16:16:44.830 | SWIPE_EVENT | swipe_id: swipe_120 | package: com.google.android.apps.nexuslauncher | visible_ui:  | Options_shown: No | swiped_ui_item: "3:54 pm" | item_id: item_b6d97450
+2025-11-28 16:16:48.798 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_37 | package: com.google.android.apps.nexuslauncher | visible_ui: unknown_ui | UI_content:
+
+2025-11-28 16:16:48.410 | SWIPE_EVENT | swipe_id: swipe_121 | package: com.google.android.apps.nexuslauncher | visible_ui: unknown_ui | Options_shown: No | swiped_ui_item: "Settings" | item_id: item_cc2ad739
+2025-11-28 16:16:48.410 | SWIPE_EVENT | swipe_id: swipe_122 | package: com.google.android.apps.nexuslauncher | visible_ui: unknown_ui | Options_shown: No | swiped_ui_item: "Screenshot" | item_id: item_f5c6abc2
+2025-11-28 16:16:48.410 | SWIPE_EVENT | swipe_id: swipe_123 | package: com.google.android.apps.nexuslauncher | visible_ui: unknown_ui | Options_shown: No | swiped_ui_item: "Select" | item_id: item_d6fe739a
+2025-11-28 16:16:48.942 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_38 | package: com.android.settings | visible_ui: Back | UI_content:
+Text: UXInteractionLogger
+Text: UX Logger - Tracks swipe and undo actions automatically across all apps.
+Text: Use UXInteractionLogger
+Text: OPTIONS
+Text: UXInteractionLogger shortcut
+Text: Off
+
+2025-11-28 16:16:48.855 | UNDO_ACTION | swipe_id: swipe_1 | package: com.google.android.apps.nexuslauncher | visible_ui: Back | undone_ui_item: "Back" | item_id: item_a7743999
+2025-11-28 16:16:48.855 | UNDO_ACTION | swipe_id: swipe_2 | package: com.google.android.apps.nexuslauncher | visible_ui: Back | undone_ui_item: "UXInteractionLogger" | item_id: item_d6e98f7f
+2025-11-28 16:16:48.855 | UNDO_ACTION | swipe_id: swipe_3 | package: com.google.android.apps.nexuslauncher | visible_ui: Back | undone_ui_item: "UXInteractionLogger shortcut" | item_id: item_98f37b14
+2025-11-28 16:16:48.855 | UNDO_ACTION | swipe_id: swipe_4 | package: com.google.android.apps.nexuslauncher | visible_ui: Back | undone_ui_item: "Shortcut settings" | item_id: item_4286c853
+2025-11-28 16:16:49.991 | UI_SNAPSHOT | UI_SNAPSHOT_id: UI_SNAPSHOT_39 | package: com.android.settings | visible_ui: Stop UXInteractionLogger? | UI_content:
+Text: Stop UXInteractionLogger?
+Text: Cancel
+Text: Stop
+Text: Tapping Stop will stop UXInteractionLogger.
+
+2025-11-28 16:16:49.746 | SWIPE_EVENT | swipe_id: swipe_124 | package: com.android.settings | visible_ui: Stop UXInteractionLogger? | Options_shown: No | swiped_ui_item: "Back" | item_id: item_a7743999
+2025-11-28 16:16:49.746 | SWIPE_EVENT | swipe_id: swipe_125 | package: com.android.settings | visible_ui: Stop UXInteractionLogger? | Options_shown: No | swiped_ui_item: "UXInteractionLogger | Use UXInteractionLogger" | item_id: item_d6e98f7f
+2025-11-28 16:16:49.746 | SWIPE_EVENT | swipe_id: swipe_126 | package: com.android.settings | visible_ui: Stop UXInteractionLogger? | Options_shown: No | swiped_ui_item: "UXInteractionLogger shortcut | UX Logger - Tracks swipe and undo actions automatically across all apps." | item_id: item_98f37b14
+2025-11-28 16:16:49.746 | SWIPE_EVENT | swipe_id: swipe_127 | package: com.android.settings | visible_ui: Stop UXInteractionLogger? | Options_shown: No | swiped_ui_item: "Shortcut settings" | item_id: item_4286c853
+2025-11-28 16:16:50.490 | Popup_shown | popup_id: popup_2 | popup_type: Stop UXInteractionLogger? | package: com.android.settings | visible_ui: Stop UXInteractionLogger? | popup_text_options: [Stop UXInteractionLogger?, Cancel, Stop, Tapping Stop will stop UXInteractionLogger.]
+2025-11-28 16:16:50.502 | APP_SWITCH | APP_SWITCH_id: APP_SWITCH_2 | from: com.vishwajeeth.medicinetime.mock | to: com.google.android.apps.nexuslauncher | visible_ui: Stop UXInteractionLogger? | UI_content:
+Text: Stop UXInteractionLogger?
+Text: Cancel
+Text: Stop
+Text: Tapping Stop will stop UXInteractionLogger.
+
+2025-11-28 16:16:55.501 | User_Response [POPUP] | popup_id: popup_2 | popup_type: Stop UXInteractionLogger? | visible_ui: Stop UXInteractionLogger? | user_action: dismissed | package: com.android.settings

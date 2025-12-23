@@ -1,0 +1,9 @@
+// Menu:
+MENU file=filter_history.xml owner=MonthlyReportFragment id=all titleRef=@string/all title="ALL" icon= showAsAction= actionViewClass= groupId= order= checkable=
+MENU file=filter_history.xml owner=MonthlyReportFragment id=taken titleRef=@string/taken title="TAKEN" icon= showAsAction= actionViewClass= groupId= order= checkable=
+MENU file=filter_history.xml owner=MonthlyReportFragment id=ignored titleRef=@string/ignored title="IGNORED" icon= showAsAction= actionViewClass= groupId= order= checkable=
+
+MENU file=history_menu.xml owner=MonthlyReportFragment id=menu_filter titleRef=@string/menu_filter title="Filter" icon=@drawable/ic_filter_list showAsAction=ifRoom actionViewClass= groupId= order= checkable=
+
+MENU file=medicine_menu.xml owner=MedicineActivity id=menu_stats titleRef=@string/menu_stats title="Monthly Report" icon=@drawable/ic_statistics showAsAction=ifRoom actionViewClass= groupId= order= checkable=
+

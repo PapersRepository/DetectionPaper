@@ -1,0 +1,61 @@
+// Drawable:
+DRAWABLE name=background_configure_alarm_button type=xml folder=drawable root=selector path=drawable/background_configure_alarm_button.xml
+
+DRAWABLE name=background_configure_medication type=xml folder=drawable root=selector path=drawable/background_configure_medication.xml
+
+DRAWABLE name=background_day_view type=xml folder=drawable root=selector path=drawable/background_day_view.xml
+
+DRAWABLE name=background_status_medication type=xml folder=drawable root=selector path=drawable/background_status_medication.xml
+
+DRAWABLE name=background_take_alarm_button type=xml folder=drawable root=selector path=drawable/background_take_alarm_button.xml
+
+DRAWABLE name=background_take_medication type=xml folder=drawable root=selector path=drawable/background_take_medication.xml
+
+DRAWABLE name=drawable_underline type=xml folder=drawable root=layer-list path=drawable/drawable_underline.xml
+
+DRAWABLE name=ic_add type=png folder=drawable-hdpi path=drawable-hdpi/ic_add.png
+
+DRAWABLE name=ic_arrow_drop_down type=png folder=drawable-hdpi path=drawable-hdpi/ic_arrow_drop_down.png
+
+DRAWABLE name=ic_clear type=png folder=drawable-hdpi path=drawable-hdpi/ic_clear.png
+
+DRAWABLE name=ic_done type=png folder=drawable-hdpi path=drawable-hdpi/ic_done.png
+
+DRAWABLE name=ic_filter_list type=png folder=drawable-hdpi path=drawable-hdpi/ic_filter_list.png
+DREF drawable=ic_filter_list usedBy=history_menu.xml#menu_filter owner=MonthlyReportFragment
+
+DRAWABLE name=ic_launcher type=xml folder=mipmap-anydpi-v26 root=adaptive-icon path=mipmap-anydpi-v26/ic_launcher.xml
+
+DRAWABLE name=ic_launcher_background type=xml folder=drawable root=vector path=drawable/ic_launcher_background.xml
+
+DRAWABLE name=ic_launcher_foreground type=png folder=mipmap-hdpi path=mipmap-hdpi/ic_launcher_foreground.png
+
+DRAWABLE name=ic_launcher_round type=xml folder=mipmap-anydpi-v26 root=adaptive-icon path=mipmap-anydpi-v26/ic_launcher_round.xml
+
+DRAWABLE name=ic_statistics type=png folder=drawable-hdpi path=drawable-hdpi/ic_statistics.png
+DREF drawable=ic_statistics usedBy=medicine_menu.xml#menu_stats owner=MedicineActivity
+
+DRAWABLE name=icon_blister type=png folder=drawable path=drawable/icon_blister.png
+
+DRAWABLE name=icon_my_health type=png folder=drawable path=drawable/icon_my_health.png
+
+DRAWABLE name=image_reminder_configure type=png folder=drawable path=drawable/image_reminder_configure.png
+
+DRAWABLE name=image_reminder_configure_disabled type=png folder=drawable path=drawable/image_reminder_configure_disabled.png
+
+DRAWABLE name=image_reminder_configure_pressed type=png folder=drawable path=drawable/image_reminder_configure_pressed.png
+
+DRAWABLE name=image_reminder_not_taken type=png folder=drawable path=drawable/image_reminder_not_taken.png
+
+DRAWABLE name=image_reminder_take type=png folder=drawable path=drawable/image_reminder_take.png
+
+DRAWABLE name=image_reminder_take_disabled type=png folder=drawable path=drawable/image_reminder_take_disabled.png
+
+DRAWABLE name=image_reminder_take_pressed type=png folder=drawable path=drawable/image_reminder_take_pressed.png
+
+DRAWABLE name=image_reminder_taken type=png folder=drawable path=drawable/image_reminder_taken.png
+
+DRAWABLE name=logo type=png folder=drawable path=drawable/logo.png
+
+DRAWABLE name=touch_feedback type=xml folder=drawable root=selector path=drawable/touch_feedback.xml
+
